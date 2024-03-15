@@ -1,0 +1,14 @@
+﻿@model ReviewModel
+@{
+    ViewData["Title"] = "Delete Reviews";
+}
+
+<h2>Confirm Deletion</h2>
+<h3>@Model.Date</h3>
+
+<form asp-action="Delete" method="Post">
+    <input type="hidden" asp-for="ReviewId" />
+
+    <button type="submit" class="btn btn-primary">Delete</button>
+    <a asp-controller="Reviews" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

@@ -1,0 +1,25 @@
+﻿@model ReviewModel
+@{
+    string title = ViewBag.Action + " Recommendation";
+    ViewData["Title"] = title;
+}
+
+<form asp-action ="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Review" class="form-label">Review:</label>
+        <input asp-for="Review" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label">Rating:</label>
+        <input asp-for="Rating" min="1" max="5" class="form-control" />
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="ReviewId" />
+    
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-controller="Reviews" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

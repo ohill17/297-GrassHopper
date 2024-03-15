@@ -1,0 +1,14 @@
+﻿@model PhotoModel
+@{
+    ViewData["Title"] = "Delete Photo";
+}
+
+<h2>Confirm Deletion</h2>
+<h3>@Model.PhotoName (@Model.PhotoId)</h3>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="PhotoId" />
+
+    <button type="submit" class="btn btn-primary">Delete</button>
+    <a asp-controller="Photos" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

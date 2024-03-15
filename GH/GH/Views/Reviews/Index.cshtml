@@ -1,0 +1,32 @@
+﻿@model List<ReviewModel>
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<div class="mb-2">
+    <a asp-controller="Reviews" asp-action="Add" class="btn btn-primary">Add a Review</a>
+</div>
+
+<table class="table table-borded table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Review</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var review in Model)
+        {
+            <tr>
+                <td>@review.Date</td>
+                <td>@review.Review</td>
+                <td>@review.Rating</td>
+                <td>
+                    <a href="/Reviews/Edit?reviewId=@review.ReviewId">Edit</a>
+                    <a href="Reviews/Delete?reviewId=@review.ReviewId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
