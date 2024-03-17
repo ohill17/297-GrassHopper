@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using GH.Models;
 using GH.Data;
 using GH.Data.Repositories;
-
+using GH.Data.Respositories;
 
 namespace GH.Controllers
 {
@@ -24,8 +24,8 @@ namespace GH.Controllers
 
         public IActionResult Index()
         {
-            var reviews = rrepository.GetReviews();
-            return View(reviews);
+            var review = rrepository.GetReviews();
+            return View(review);
         }
 
         [HttpGet]
@@ -46,33 +46,30 @@ namespace GH.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ReviewModel review)
         {
-            if (ModelState.IsValid)
-            {
+
+            if (!ModelState.IsValid)
                 review.Date = DateTime.Now;
-                if (review.ReviewId == 0)
-                    await rrepository.StoreReviewsAsync(review);
-                else
-                    rrepository.UpdateReviews(review);
-                return RedirectToAction("Index", "Reviews");
-            }
-            else
-            {
-                ViewBag.Action = (review.ReviewId == 0) ? "Add" : "Edit";
                 return View(review);
-            }
+
+            if (review.ReviewId == 0)
+                await rrepository.StoreReviewsAsync(review);
+            else
+                rrepository.UpdateReviews(review);
+
+            return RedirectToAction("Index", "Reviews");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int reviewId)
+        public async Task<IActionResult> Delete(int id)
         {
-            var review = await rrepository.GetReviewsByIdAsync(reviewId);
+            var review = await rrepository.GetReviewsByIdAsync(id);
             return View(review);
         }
 
         [HttpPost]
-        public IActionResult Delete(ReviewModel model)
+        public IActionResult Delete(ReviewModel review)
         {
-            rrepository.DeleteReviews(model.ReviewId);
+            rrepository.DeleteReviews(review.ReviewId);
             return RedirectToAction("Index", "Reviews");
         }
     }

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GH.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using GH.Models;
 
-namespace GH.Data.Repositories
+namespace GH.Data.Respositories
 {
     public interface IReviewsRepository
     {
@@ -45,9 +45,9 @@ namespace GH.Data.Repositories
             return context.SaveChanges();
         }
 
-        public int DeleteReviews(int modelId)
+        public int DeleteReviews(int modelid)
         {
-            ReviewModel review = GetReviewsByIdAsync(modelId).Result;
+            ReviewModel review = GetReviewsByIdAsync(modelid).Result;
             context.Reviews.Remove(review);
             return context.SaveChanges();
         }
