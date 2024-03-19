@@ -1,0 +1,15 @@
+﻿@model IEnumerable<PhotoModel>
+@{
+    ViewData["Title"] = "Portfolio";
+}
+
+<h1>Photos</h1>
+@foreach (var image in Model)
+{
+    var base64 = Convert.ToBase64String(image.Photo);
+    var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+
+    <h3>@image.PhotoName</h3>
+    <p><img src="@imgSrc" /></p>
+    <p>@image.PhotoDescription</p>
+}

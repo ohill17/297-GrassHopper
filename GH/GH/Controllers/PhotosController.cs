@@ -23,6 +23,12 @@ namespace GH.Controllers
             userManager = u;
         }
 
+        public IActionResult Portfolio()
+        {
+            var photos = prepository.GetPhotos();
+            return View(photos);
+        }
+
         public IActionResult Index()
         {
             var photos = prepository.GetPhotos();
