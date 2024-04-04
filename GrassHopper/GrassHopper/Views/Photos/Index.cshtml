@@ -1,0 +1,22 @@
+﻿@model IEnumerable<PhotoModel>
+@{
+    ViewData["Title"] = "Pictures";
+}
+
+<div class=" = mb-2">
+    <a asp-controller="Photos" asp-action="Add" class="btn btn-primary">Add a Photo</a>
+</div>
+
+<h2>Photos</h2>
+@foreach (var image in Model)
+{
+    var base64 = Convert.ToBase64String(image.Photo);
+    var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+
+    <h3>@image.PhotoName</h3>
+    <p><img src="@imgSrc" /></p>
+    <p>@image.PhotoDescription</p>
+    <p>
+        <a href="/Photos/Delete?photoId=@image.PhotoId">Delete Photo</a>
+    </p>
+}

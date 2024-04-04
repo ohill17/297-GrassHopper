@@ -1,0 +1,24 @@
+﻿@model PhotoUploadModel
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<form asp-action="Add" asp-controller="Photos" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="PhotoName">Photo Name:</label>
+        <input asp-for="PhotoName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PhotoDescription">Photo Description:</label>
+        <input asp-for="PhotoDescription" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="file">Upload Photo:</label>
+        <input type="file" id="file" name="file" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Upload</button>
+    <a asp-controller="Photos" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>
