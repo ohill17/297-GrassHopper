@@ -5,58 +5,53 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using GrassHopper.Data;
-using GrassHopper.Data.Repositories;
 using GrassHopper.Models;
+using GrassHopper.Data.Repositories;
 
 namespace GrassHopper.Controllers
 {
     public class PhotosController : Controller
     {
-        private readonly IPhotosRepository prepository;
+        private readonly IPhotoRepository pRepository;
         private readonly AppDbContext context;
         //private readonly UserManager<AppUserModel> userManager;
 
-        public PhotosController(IPhotosRepository p, AppDbContext c /*UserManager<AppUserModel> u*/)
+        public PhotosController(IPhotoRepository p, AppDbContext c /*UserManager<AppUserModel> u*/)
         {
-            prepository = p;
+            pRepository = p;
             context = c;
             //userManager = u;
         }
 
         public IActionResult Index()
         {
-            var photos = prepository.GetPhotos();
+            var photos = pRepository.GetAllPhotos();
             return View(photos);
         }
 
         [HttpGet]
-        public IActionResult Add(int id)
+        public async Task<IActionResult> AddPhoto(int id)
         {
             ViewBag.Action = "Add";
-            var photo = prepository.GetPhotosByIdAsync(id).Result;
+            var photo = await pRepository.GetPhoto(id);
             return View(photo);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PhotoUploadModel model)
+        public async Task<IActionResult> AddPhoto(PhotoUploadVM model)
         {
-            if (model.file.Length > 0)
+            if (model.File != null)
             {
-                using (var stream = new MemoryStream())
-                {
-                    await model.file.CopyToAsync(stream);
-                    model.Photo = stream.ToArray();
-                }
-            }
-
-            if (model.Photo != null)
-            {
-                await prepository.StorePhotosAsync(new PhotoModel
+                //This should result in a close to unique string to use as a unique file name
+                string imageCode = model.PhotoName + '_' + model.File.Length.GetHashCode().ToString() 
+                    + model.File.Headers.GetHashCode().ToString() + model.File.Name.GetHashCode().ToString();
+                PhotoModel photo = new()
                 {
                     PhotoName = model.PhotoName,
-                    PhotoDescription = model.PhotoDescription,
-                    Photo = model.Photo
-                });
+                    PhotoCode = imageCode,
+                    PhotoDescription = model.PhotoDescription
+                };
+                //MORE TO COME
             }
 
             return RedirectToAction("Index", "Photos");
@@ -66,14 +61,14 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int photoId)
         {
-            var photo = await prepository.GetPhotosByIdAsync(photoId);
+            var photo = 5;//await pRepository.GetPhotosByIdAsync(photoId);
             return View(photo);
         }
 
         [HttpPost]
         public IActionResult Delete(PhotoModel model)
         {
-            prepository.DeletePhotos(model.PhotoId);
+            //pRepository.DeletePhotos(model.PhotoId);
             return RedirectToAction("Index", "Photos");
         }
         
