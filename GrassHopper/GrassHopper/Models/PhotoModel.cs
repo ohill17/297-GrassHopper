@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GrassHopper.Models
+namespace Crochet.Models
 {
     public class PhotoModel
     {
