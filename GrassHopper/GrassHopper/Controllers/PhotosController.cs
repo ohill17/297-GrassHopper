@@ -25,16 +25,14 @@ namespace GrassHopper.Controllers
 
         public IActionResult Index()
         {
-            var photos = prepository.GetPhotos();
-            return View(photos);
+            return View();
         }
 
         [HttpGet]
         public IActionResult Add(int id)
         {
             ViewBag.Action = "Add";
-            var photo = prepository.GetPhotosByIdAsync(id).Result;
-            return View(photo);
+            return View();
         }
 
         [HttpPost]
@@ -51,12 +49,6 @@ namespace GrassHopper.Controllers
 
             if (model.Photo != null)
             {
-                await prepository.StorePhotosAsync(new PhotoModel
-                {
-                    PhotoName = model.PhotoName,
-                    PhotoDescription = model.PhotoDescription,
-                    Photo = model.Photo
-                });
             }
 
             return RedirectToAction("Index", "Photos");
@@ -66,14 +58,12 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int photoId)
         {
-            var photo = await prepository.GetPhotosByIdAsync(photoId);
-            return View(photo);
+            return View();
         }
 
         [HttpPost]
         public IActionResult Delete(PhotoModel model)
         {
-            prepository.DeletePhotos(model.PhotoId);
             return RedirectToAction("Index", "Photos");
         }
         
