@@ -6,7 +6,7 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <h1>Upload a photo: </h1>
-<form method="post" asp-action="AddPhoto">
+<form method="post" asp-action="AddPhoto" enctype="multipart/form-data">
     <label asp-for="PhotoName">Name: </label>
     <input asp-for="PhotoName"><br>
     <label asp-for="PhotoDescription">Description: </label>

@@ -12,7 +12,7 @@
 <h2>Photos</h2>
 @foreach (var image in Model)
 {
-    @*Gets the image source path*@
+    @*Gets the image source path, this is probably wrong for now*@
     var imgSrc = String.Format($"../../Photos/{image.PhotoCode}");
 
     <h3>@image.PhotoName</h3>
