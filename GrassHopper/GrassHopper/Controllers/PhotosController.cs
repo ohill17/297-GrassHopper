@@ -48,7 +48,7 @@ namespace GrassHopper.Controllers
 
                 if (model.File.Length > 0)
                 {
-                    //Creates a file path to the 'photos' folder (probably) and append the target file name
+                    //Creates a file path to the 'photos' folder and append the target file name
                     var filePath = Path.Combine("./Photos/", imageCode);
 
                     //Creates the target file and copies the data to it
@@ -62,6 +62,7 @@ namespace GrassHopper.Controllers
                         PhotoDescription = model.PhotoDescription,
                     };
 
+                    //Adds a 'photo' to the database (actually just a reference to the url)
                     //await pRepository.AddPhoto(photo);
                     await fileTask;
                 }
@@ -71,6 +72,9 @@ namespace GrassHopper.Controllers
         }
 
         
+
+        //These are currently non-functional for a number of reasons
+
         [HttpGet]
         public async Task<IActionResult> Delete(int photoId)
         {
