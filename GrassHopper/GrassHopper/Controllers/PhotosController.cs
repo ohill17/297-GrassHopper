@@ -7,6 +7,8 @@ using System.Text.Json.Serialization;
 using GrassHopper.Data;
 using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
+using System.IO;
+using System.Web;
 
 namespace GrassHopper.Controllers
 {
@@ -30,11 +32,9 @@ namespace GrassHopper.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddPhoto(int id)
+        public IActionResult AddPhoto()
         {
-            ViewBag.Action = "Add";
-            var photo = await pRepository.GetPhoto(id);
-            return View(photo);
+            return View();
         }
 
         [HttpPost]
@@ -44,14 +44,27 @@ namespace GrassHopper.Controllers
             {
                 //This should result in a close to unique string to use as a unique file name
                 string imageCode = model.PhotoName + '_' + model.File.Length.GetHashCode().ToString() 
-                    + model.File.Headers.GetHashCode().ToString() + model.File.Name.GetHashCode().ToString();
-                PhotoModel photo = new()
+                    + model.File.Headers.GetHashCode().ToString() + model.File.Name.GetHashCode().ToString() + Path.GetExtension(model.File.FileName);
+
+                if (model.File.Length > 0)
                 {
-                    PhotoName = model.PhotoName,
-                    PhotoCode = imageCode,
-                    PhotoDescription = model.PhotoDescription
-                };
-                //MORE TO COME
+                    //Creates a file path to the 'photos' folder (probably) and append the target file name
+                    var filePath = Path.Combine("../Photos/", imageCode);
+
+                    //Creates the target file and copies the data to it
+                    using var stream = System.IO.File.Create(filePath);
+                    var fileTask = model.File.CopyToAsync(stream);
+
+                    PhotoModel photo = new()
+                    {
+                        PhotoName = model.PhotoName,
+                        PhotoCode = imageCode,
+                        PhotoDescription = model.PhotoDescription,
+                    };
+
+                    //await pRepository.AddPhoto(photo);
+                    await fileTask;
+                }
             }
 
             return RedirectToAction("Index", "Photos");

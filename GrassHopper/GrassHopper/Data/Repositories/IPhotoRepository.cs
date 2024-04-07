@@ -5,7 +5,7 @@ namespace GrassHopper.Data.Repositories
     public interface IPhotoRepository
     {
         public Task<PhotoModel> GetPhoto(int id);
-        public Task<List<PhotoModel>> GetAllPhotos();
+        public List<PhotoModel> GetAllPhotos();
         public Task<int> AddPhoto(PhotoModel photo);
         public Task<int> UpdatePhoto(PhotoModel photo);
         public Task<int> DeletePhoto(int id);

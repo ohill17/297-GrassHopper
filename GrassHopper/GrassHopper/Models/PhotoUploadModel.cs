@@ -1,5 +1,6 @@
 ﻿namespace GrassHopper.Models
 {
+    //DEPRECATED, DO NOT USE THIS
     public class PhotoUploadModel
     {
         public IFormFile file { get; set; }

@@ -6,7 +6,7 @@ namespace GrassHopper.Models
     public class PhotoUploadVM
     {
         public IFormFile File {  get; set; }
-        public string PhotoName { get; set; }
-        public string PhotoDescription { get; set; }
+        public string PhotoName { get; set; } = null!;
+        public string PhotoDescription { get; set; } = null!;
     }
 }

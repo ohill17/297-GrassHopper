@@ -3,6 +3,8 @@
     ViewData["Title"] = "Pictures";
 }
 
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
 <div class=" = mb-2">
     <a asp-controller="Photos" asp-action="AddPhoto" class="btn btn-primary">Add a Photo</a>
 </div>
@@ -10,7 +12,8 @@
 <h2>Photos</h2>
 @foreach (var image in Model)
 {
-    var imgSrc = String.Format($"/{image.PhotoCode}");
+    @*Gets the image source path*@
+    var imgSrc = String.Format($"../../Photos/{image.PhotoCode}");
 
     <h3>@image.PhotoName</h3>
     <p><img src="@imgSrc" /></p>
