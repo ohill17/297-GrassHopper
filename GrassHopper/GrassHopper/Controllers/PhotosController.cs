@@ -59,7 +59,7 @@ namespace GrassHopper.Controllers
 					using var stream = System.IO.File.Create(filePath);
 					var fileTask = model.File.CopyToAsync(stream);
 
-					PhotoModel photo = new()
+					Photo photo = new()
 					{
 						PhotoName = model.PhotoName,
 						PhotoCode = imageCode,
@@ -111,7 +111,7 @@ namespace GrassHopper.Controllers
                         using var stream = System.IO.File.Create(filePath);
                         var fileTask = file.CopyToAsync(stream);
 
-						PhotoModel photo = new()
+						Photo photo = new()
 						{
 							PhotoName = group.GroupName + i.ToString(),
 							PhotoCode = imageCode,
@@ -145,7 +145,7 @@ namespace GrassHopper.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Delete(PhotoModel model)
+		public IActionResult Delete(Photo model)
 		{
 			//pRepository.DeletePhotos(model.PhotoId);
 			return RedirectToAction("Index", "Photos");

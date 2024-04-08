@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GrassHopper.Models
 {
-    public class PhotoModel
+    public class Photo
     {
         [Key]
         public int PhotoId { get; set; }

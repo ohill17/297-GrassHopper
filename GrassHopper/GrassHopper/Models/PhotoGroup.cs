@@ -8,6 +8,6 @@ namespace GrassHopper.Models
 		public int GroupId { get; set; }
 		public string GroupName { get; set; } = null!;
 		public string GroupDescription { get; set; } = null!;
-		public List<PhotoModel> Photos { get; set; } = new();
+		public List<Photo> Photos { get; set; } = new();
 	}
 }
