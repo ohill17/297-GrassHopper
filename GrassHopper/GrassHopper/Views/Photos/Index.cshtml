@@ -3,15 +3,17 @@
     ViewData["Title"] = "Pictures";
 }
 
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
 <div class=" = mb-2">
-    <a asp-controller="Photos" asp-action="Add" class="btn btn-primary">Add a Photo</a>
+    <a asp-controller="Photos" asp-action="AddPhoto" class="btn btn-primary">Add a Photo</a>
 </div>
 
 <h2>Photos</h2>
 @foreach (var image in Model)
 {
-    var base64 = Convert.ToBase64String(image.Photo);
-    var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+    @*Gets the image source path, this is probably wrong for now. Correct might be either '../Photos' or './Photos'*@
+    var imgSrc = String.Format($"../../Photos/{image.PhotoCode}");
 
     <h3>@image.PhotoName</h3>
     <p><img src="@imgSrc" /></p>

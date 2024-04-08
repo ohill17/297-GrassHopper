@@ -23,5 +23,6 @@
 
 	<ItemGroup>
 	  <Folder Include="wwwroot\resources\" />
+	  <Folder Include="Photos\" />
 	</ItemGroup>
 </Project>
