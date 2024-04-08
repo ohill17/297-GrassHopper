@@ -48,8 +48,12 @@ namespace GrassHopper.Controllers
 
 				if (model.File.Length > 0)
 				{
+					//Confirms that the directory exists and creates it if not
+					if(!Directory.Exists("./wwwroot/photos"))
+						Directory.CreateDirectory("./wwwroot/photos");
+
 					//Creates a file path to the 'photos' folder and append the target file name
-					var filePath = Path.Combine("./Photos/", imageCode);
+					var filePath = Path.Combine("./wwwroot/photos/", imageCode);
 
 					//Creates the target file and copies the data to it
 					using var stream = System.IO.File.Create(filePath);
@@ -69,6 +73,59 @@ namespace GrassHopper.Controllers
 			}
 
 			return RedirectToAction("Index", "Photos");
+		}
+
+		[HttpGet]
+		public IActionResult AddGroup()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddGroup(GroupUploadVM model)
+		{
+            if (model.Files != null)
+            {
+				PhotoGroupModel group = new()
+				{
+					GroupName = model.GroupName,
+					GroupDescription = model.GroupDescription
+				};
+
+				for (int i = 0; i < model.Files.Count; i++)
+				{
+					IFormFile file = model.Files[i];
+					string imageCode = model.GroupName + i.ToString() + '_' + file.Length.GetHashCode().ToString()
+						+ file.Headers.GetHashCode().ToString() + file.Name.GetHashCode().ToString() + Path.GetExtension(file.FileName);
+
+					if (file.Length > 0)
+					{
+                        //Confirms that the directory exists and creates it if not
+                        if (!Directory.Exists("./wwwroot/photos"))
+                            Directory.CreateDirectory("./wwwroot/photos");
+
+                        //Creates a file path to the 'photos' folder and append the target file name
+                        var filePath = Path.Combine("./wwwroot/photos/", imageCode);
+
+                        //Creates the target file and copies the data to it
+                        using var stream = System.IO.File.Create(filePath);
+                        var fileTask = file.CopyToAsync(stream);
+
+                        PhotoModel photo = new()
+                        {
+                            PhotoName = group.GroupName + i.ToString(),
+                            PhotoCode = imageCode,
+                            PhotoDescription = group.GroupDescription + i.ToString()
+                        };
+
+                        //Adds a 'photo' to the database (actually just a reference to the url)
+                        //await pRepository.AddPhoto(photo);
+                        await fileTask;
+                    }
+				}
+            }
+
+            return RedirectToAction("Index", "Photos");
 		}
 
 
