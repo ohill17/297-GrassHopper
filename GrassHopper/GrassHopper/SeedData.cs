@@ -24,7 +24,7 @@ namespace GrassHopper
             {
                 ReviewID = 2,
                 ReviewerName = "Jane Toe",
-                ReviewBody = "Love my new pinewood deck.",
+                ReviewBody = "Love my new spruce deck.",
                 ReviewRating = 5,
                 ReviewDate = DateOnly.Parse("02/27/2006")
             };

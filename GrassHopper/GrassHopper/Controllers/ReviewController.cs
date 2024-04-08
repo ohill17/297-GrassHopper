@@ -17,6 +17,14 @@ namespace GrassHopper.Controllers
             return View();
         }
 
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public IActionResult Review() 
+        { 
+            _context.
+            return View(); 
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SubmitReview(Review review)
