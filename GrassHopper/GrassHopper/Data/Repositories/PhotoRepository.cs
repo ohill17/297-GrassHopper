@@ -11,13 +11,13 @@ namespace GrassHopper.Data.Repositories
         {
             dbContext = dbCntxt;
         }
-        public async Task<int> AddPhoto(PhotoModel photo)
+        public async Task<int> AddPhoto(Photo photo)
         {
             await dbContext.Photos.AddAsync(photo);
             return dbContext.SaveChanges();
         }
 
-        public async Task<int> UpdatePhoto(PhotoModel photo)
+        public async Task<int> UpdatePhoto(Photo photo)
         {
             throw new NotImplementedException();
         }
@@ -38,12 +38,12 @@ namespace GrassHopper.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<PhotoModel> GetAllPhotos()
+        public List<Photo> GetAllPhotos()
         {
             return new();//dbContext.Photos.ToList(); //Database currently not functional
         }
 
-        public async Task<PhotoModel> GetPhoto(int id)
+        public async Task<Photo> GetPhoto(int id)
         {
             return new();//dbContext.Photos.Find(id);//Database currently not functional
         }
