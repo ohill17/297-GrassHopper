@@ -22,7 +22,7 @@ namespace GrassHopper.Controllers
             context = c;
             //userManager = u;
         }
-
+        /*
         public IActionResult Index()
         {
             var photos = prepository.GetPhotos();
@@ -76,6 +76,7 @@ namespace GrassHopper.Controllers
             prepository.DeletePhotos(model.PhotoId);
             return RedirectToAction("Index", "Photos");
         }
+        */
         
     }
 }
