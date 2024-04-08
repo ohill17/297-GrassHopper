@@ -19,7 +19,15 @@ builder.Services.AddControllersWithViews()
         o.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GHConnection")));
+
+var connectionString =
+    builder.Configuration.GetConnectionString("MySqlConnection");
+
+
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 
 builder.Services.AddTransient<IPhotoRepository, PhotoRepository>();
 
