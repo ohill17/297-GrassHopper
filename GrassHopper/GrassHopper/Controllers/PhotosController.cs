@@ -24,7 +24,7 @@ namespace GrassHopper.Controllers
             context = c;
             //userManager = u;
         }
-        /*
+        
         public IActionResult Index()
         {
 
