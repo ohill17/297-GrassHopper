@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GrassHopper.Models;
 using GrassHopper.Data;
+using GrassHopper.Data.Repositories;
 
 namespace GrassHopper.Controllers
 {
     public class ReviewController : Controller
     {
         private readonly AppDbContext _context; // Corrected field name
+        private readonly IReviewRepository _reviewRepo;
 
-        public ReviewController(AppDbContext context)
+        public ReviewController(AppDbContext context, IReviewRepository reviewRepo)
         {
             _context = context;
+            _reviewRepo = reviewRepo;
         }
         public IActionResult ReviewPost()
         {
@@ -20,9 +23,9 @@ namespace GrassHopper.Controllers
         [HttpGet]
         [ValidateAntiForgeryToken]
         public IActionResult Review() 
-        { 
-            _context.
-            return View(); 
+        {
+            var reviews = _reviewRepo.GetAllReviews();
+            return View(reviews); 
         }
 
         [HttpPost]
