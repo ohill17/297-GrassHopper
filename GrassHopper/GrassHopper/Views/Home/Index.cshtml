@@ -2,8 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+@if (Model != null && Model.Any())
+{
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         @foreach (var image in Model)
         {
@@ -23,3 +24,4 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+}
