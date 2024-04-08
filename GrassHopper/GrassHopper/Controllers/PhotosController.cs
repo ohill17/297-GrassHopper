@@ -111,18 +111,23 @@ namespace GrassHopper.Controllers
                         using var stream = System.IO.File.Create(filePath);
                         var fileTask = file.CopyToAsync(stream);
 
-                        PhotoModel photo = new()
-                        {
-                            PhotoName = group.GroupName + i.ToString(),
-                            PhotoCode = imageCode,
-                            PhotoDescription = group.GroupDescription + i.ToString()
+						PhotoModel photo = new()
+						{
+							PhotoName = group.GroupName + i.ToString(),
+							PhotoCode = imageCode,
+							PhotoDescription = group.GroupDescription,
+							Group = group
                         };
+
+						group.Photos.Add(photo);
 
                         //Adds a 'photo' to the database (actually just a reference to the url)
                         //await pRepository.AddPhoto(photo);
                         await fileTask;
                     }
 				}
+				//Adds the group of photos to the database
+                //await pRepository.AddGroup(group);
             }
 
             return RedirectToAction("Index", "Photos");

@@ -17,6 +17,22 @@ namespace GrassHopper.Data.Repositories
             return dbContext.SaveChanges();
         }
 
+        public async Task<int> UpdatePhoto(PhotoModel photo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<int> AddGroup(PhotoGroupModel group)
+        {
+            await dbContext.PhotoGroups.AddAsync(group);
+            return dbContext.SaveChanges();
+        }
+
+        public async Task<int> UpdateGroup(PhotoGroupModel group)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<int> DeletePhoto(int id)
         {
             throw new NotImplementedException();
@@ -32,7 +48,7 @@ namespace GrassHopper.Data.Repositories
             return new();//dbContext.Photos.Find(id);//Database currently not functional
         }
 
-        public async Task<int> UpdatePhoto(PhotoModel photo)
+        public async Task<PhotoGroupModel> GetPhotoGroup(int id)
         {
             throw new NotImplementedException();
         }
