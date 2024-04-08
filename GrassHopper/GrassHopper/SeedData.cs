@@ -16,6 +16,21 @@ namespace GrassHopper
                 ReviewRating = 5,
                 ReviewDate = DateOnly.Parse("02/27/2006")
             };
+
+            context.Reviews.Add(review1);
+            context.SaveChanges();
+
+            Review review2 = new Review
+            {
+                ReviewID = 2,
+                ReviewerName = "Jane Toe",
+                ReviewBody = "Love my new pinewood deck.",
+                ReviewRating = 5,
+                ReviewDate = DateOnly.Parse("02/27/2006")
+            };
+
+            context.Reviews.Add(review2);
+            context.SaveChanges();
         }
     }
 }
