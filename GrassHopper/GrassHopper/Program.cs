@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GHConnection")));
 
-builder.Services.AddTransient<IPhotosRepository, PhotosRepository>();
+builder.Services.AddTransient<IPhotoRepository, PhotoRepository>();
 
 var app = builder.Build();
 

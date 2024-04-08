@@ -1,0 +1,17 @@
+﻿@model PhotoUploadVM
+@{
+    ViewData["Title"] = "Add Photo";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
+<h1>Upload a photo: </h1>
+<form method="post" asp-action="AddPhoto" enctype="multipart/form-data">
+    <label asp-for="PhotoName">Name: </label>
+    <input asp-for="PhotoName"><br>
+    <label asp-for="PhotoDescription">Description: </label>
+    <input asp-for="PhotoDescription"><br>
+    <label asp-for="File">Upload a file: </label>
+    <input asp-for="File" type="file" accept="image/*" required>
+    <input type="submit" value="Submit">
+</form>

@@ -5,67 +5,70 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using GrassHopper.Data;
-using GrassHopper.Data.Repositories;
 using GrassHopper.Models;
+using GrassHopper.Data.Repositories;
+using System.IO;
+using System.Web;
 
 namespace GrassHopper.Controllers
 {
     public class PhotosController : Controller
     {
-        private readonly IPhotosRepository prepository;
+        private readonly IPhotoRepository pRepository;
         private readonly AppDbContext context;
         //private readonly UserManager<AppUserModel> userManager;
 
-        public PhotosController(IPhotosRepository p, AppDbContext c /*UserManager<AppUserModel> u*/)
+        public PhotosController(IPhotoRepository p, AppDbContext c /*UserManager<AppUserModel> u*/)
         {
-            prepository = p;
+            pRepository = p;
             context = c;
             //userManager = u;
         }
-
+        /*
         public IActionResult Index()
         {
-            return View();
+
         }
 
         [HttpGet]
-        public IActionResult Add(int id)
+        public IActionResult AddPhoto()
         {
-            ViewBag.Action = "Add";
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PhotoUploadModel model)
+        public async Task<IActionResult> AddPhoto(PhotoUploadVM model)
         {
-            if (model.file.Length > 0)
+            if (model.File != null)
             {
-                using (var stream = new MemoryStream())
-                {
-                    await model.file.CopyToAsync(stream);
-                    model.Photo = stream.ToArray();
-                }
-            }
+                //This should result in a close to unique string to use as a unique file name
+                string imageCode = model.PhotoName + '_' + model.File.Length.GetHashCode().ToString() 
+                    + model.File.Headers.GetHashCode().ToString() + model.File.Name.GetHashCode().ToString() + Path.GetExtension(model.File.FileName);
 
-            if (model.Photo != null)
-            {
+
             }
 
             return RedirectToAction("Index", "Photos");
         }
 
         
+
+        //These are currently non-functional for a number of reasons
+
         [HttpGet]
         public async Task<IActionResult> Delete(int photoId)
         {
-            return View();
+
         }
 
         [HttpPost]
         public IActionResult Delete(PhotoModel model)
         {
+
             return RedirectToAction("Index", "Photos");
         }
+        */
         
     }
 }

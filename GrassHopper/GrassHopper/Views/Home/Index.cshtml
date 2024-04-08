@@ -2,8 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+@if (Model != null && Model.Any())
+{
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -15,3 +16,4 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+}
