@@ -6,14 +6,6 @@
 {
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        @foreach (var image in Model)
-        {
-            var base64 = Convert.ToBase64String(image.Photo);
-            var imgSrc = String.Format($"data:image/gif;base64,{base64}");
-            <div class="carousel-item @(image == Model.First() ? "active" : "")">
-                <img class="d-block w-100" src="@imgSrc" alt="Slide">
-            </div>
-        }
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -10,15 +10,4 @@
 </div>
 
 <h2>Photos</h2>
-@foreach (var image in Model)
-{
-    @*Gets the image source path, this is probably wrong for now. Correct might be either '../Photos' or './Photos'*@
-    var imgSrc = String.Format($"../../Photos/{image.PhotoCode}");
 
-    <h3>@image.PhotoName</h3>
-    <p><img src="@imgSrc" /></p>
-    <p>@image.PhotoDescription</p>
-    <p>
-        <a href="/Photos/Delete?photoId=@image.PhotoId">Delete Photo</a>
-    </p>
-}
