@@ -25,7 +25,7 @@ namespace GrassHopper.Data.Repositories
 
         public List<Review> GetAllReviews()
         {
-            return new();//dbContext.Reviews.ToList(); //Database currently not functional
+            return dbContext.Reviews.ToList();
         }
 
         public async Task<Review> GetReview(int id)

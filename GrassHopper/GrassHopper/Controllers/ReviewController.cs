@@ -21,8 +21,7 @@ namespace GrassHopper.Controllers
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        public IActionResult Review() 
+        public IActionResult Index() 
         {
             var reviews = _reviewRepo.GetAllReviews();
             return View(reviews); 
@@ -37,7 +36,7 @@ namespace GrassHopper.Controllers
                 
                 _context.Reviews.Add(review);
                 _context.SaveChanges();
-                return RedirectToAction("Review", "Review");
+                return RedirectToAction("Index");
             }
             return View("Review", "ReviewPost");
         }
