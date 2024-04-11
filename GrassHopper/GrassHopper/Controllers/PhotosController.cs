@@ -67,7 +67,7 @@ namespace GrassHopper.Controllers
 					};
 
 					//Adds a 'photo' to the database (actually just a reference to the url)
-					//await pRepository.AddPhoto(photo);
+					await pRepository.AddPhoto(photo);
 					await fileTask;
 				}
 			}
@@ -122,12 +122,12 @@ namespace GrassHopper.Controllers
 						group.Photos.Add(photo);
 
                         //Adds a 'photo' to the database (actually just a reference to the url)
-                        //await pRepository.AddPhoto(photo);
+                        await pRepository.AddPhoto(photo);
                         await fileTask;
                     }
 				}
 				//Adds the group of photos to the database
-                //await pRepository.AddGroup(group);
+                await pRepository.AddGroup(group);
             }
 
             return RedirectToAction("Index", "Photos");
@@ -140,7 +140,7 @@ namespace GrassHopper.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(int photoId)
 		{
-			var photo = 5;//await pRepository.GetPhotosByIdAsync(photoId);
+			var photo = 5; //await pRepository.GetPhoto(photoId);
 			return View(photo);
 		}
 

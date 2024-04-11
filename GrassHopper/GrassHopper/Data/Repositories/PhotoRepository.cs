@@ -38,19 +38,21 @@ namespace GrassHopper.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Photo> GetAllPhotos()
+        public async Task<List<Photo>> GetAllPhotos()
         {
-            return new();//dbContext.Photos.ToList(); //Database currently not functional
+            return await dbContext.Photos.ToListAsync(); //Database currently not functional
         }
 
         public async Task<Photo> GetPhoto(int id)
         {
-            return new();//dbContext.Photos.Find(id);//Database currently not functional
+            return await dbContext.Photos.FindAsync(id); //Database currently not functional
         }
 
         public async Task<PhotoGroupModel> GetPhotoGroup(int id)
         {
-            throw new NotImplementedException();
+            return await dbContext.PhotoGroups.Where(g => g.GroupId == id)
+                .Include(g => g.Photos)
+                .FirstAsync();
         }
     }
 }

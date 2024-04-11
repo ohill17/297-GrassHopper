@@ -6,7 +6,7 @@ namespace GrassHopper.Data.Repositories
     {
         public Task<Photo> GetPhoto(int id);
         public Task<PhotoGroupModel> GetPhotoGroup(int id);
-        public List<Photo> GetAllPhotos();
+        public Task<List<Photo>> GetAllPhotos();
         public Task<int> AddPhoto(Photo photo);
         public Task<int> UpdatePhoto(Photo photo);
         public Task<int> AddGroup(PhotoGroupModel group);

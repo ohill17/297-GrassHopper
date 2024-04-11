@@ -14,7 +14,7 @@ namespace GrassHopper
                 ReviewerName = "John Doe",
                 ReviewBody = "Grasshopper General Construction did a great job on my bathroom remodel!",
                 ReviewRating = 5,
-                ReviewDate = DateOnly.Parse("02/27/2006")
+                //ReviewDate = DateOnly.Parse("02/27/2006")
             };
         }
     }
