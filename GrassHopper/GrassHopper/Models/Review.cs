@@ -9,7 +9,7 @@ namespace GrassHopper.Models
        public string ReviewerName { get; set; }
        public string ReviewBody { get; set; }
        public int ReviewRating {  get; set; }
-       public DateOnly Date { get; set; }
+       public DateOnly ReviewDate { get; set; }
     
     }
 }
