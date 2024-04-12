@@ -72,12 +72,12 @@ namespace GrassHopper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
                     b.Property<string>("ReviewBody")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateOnly>("ReviewDate")
+                        .HasColumnType("date");
 
                     b.Property<int>("ReviewRating")
                         .HasColumnType("int");
