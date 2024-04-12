@@ -22,13 +22,13 @@ namespace GrassHopper.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<int> AddGroup(PhotoGroupModel group)
+        public async Task<int> AddGroup(PhotoGroup group)
         {
             await dbContext.PhotoGroups.AddAsync(group);
             return dbContext.SaveChanges();
         }
 
-        public async Task<int> UpdateGroup(PhotoGroupModel group)
+        public async Task<int> UpdateGroup(PhotoGroup group)
         {
             throw new NotImplementedException();
         }
@@ -40,7 +40,7 @@ namespace GrassHopper.Data.Repositories
 
         public async Task<List<Photo>> GetAllPhotos()
         {
-            return await dbContext.Photos.ToListAsync(); //Database currently not functional
+            return await dbContext.Photos.Include(p => p.Group).ToListAsync(); //Database currently not functional
         }
 
         public async Task<Photo> GetPhoto(int id)
@@ -48,11 +48,18 @@ namespace GrassHopper.Data.Repositories
             return await dbContext.Photos.FindAsync(id); //Database currently not functional
         }
 
-        public async Task<PhotoGroupModel> GetPhotoGroup(int id)
+        public async Task<PhotoGroup> GetPhotoGroup(int id)
         {
             return await dbContext.PhotoGroups.Where(g => g.GroupId == id)
                 .Include(g => g.Photos)
                 .FirstAsync();
+        }
+
+        public async Task<List<PhotoGroup>> GetAllGroups()
+        {
+            return await dbContext.PhotoGroups
+                .Include(g => g.Photos)
+                .ToListAsync();
         }
     }
 }

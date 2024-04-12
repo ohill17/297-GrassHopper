@@ -1,6 +1,6 @@
 ﻿@model GroupUploadVM
 @{
-    ViewData["Title"] = "Add Photo";
+    ViewData["Title"] = "Add Group";
 }
 
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
@@ -12,6 +12,7 @@
     <label asp-for="GroupDescription">Description: </label>
     <input asp-for="GroupDescription"><br>
     <label asp-for="Files">Upload a file: </label>
-    <input asp-for="Files" type="file" accept="image/*" required multiple>
+    <input asp-for="Files" type="file" accept="image/*" required multiple><br >
+    <span>Hold down SHIFT or CTRL to select multiple files</span><br>
     <input type="submit" value="Submit">
 </form>

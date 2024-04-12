@@ -2,7 +2,7 @@
 
 namespace GrassHopper.Models
 {
-	public class PhotoGroupModel
+	public class PhotoGroup
 	{
 		[Key]
 		public int GroupId { get; set; }

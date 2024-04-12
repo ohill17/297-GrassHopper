@@ -25,9 +25,9 @@ namespace GrassHopper.Controllers
 			//userManager = u;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			var photos = pRepository.GetAllPhotos();
+			var photos = await pRepository.GetAllPhotos();
 			return View(photos);
 		}
 
@@ -86,7 +86,7 @@ namespace GrassHopper.Controllers
 		{
             if (model.Files != null)
             {
-				PhotoGroupModel group = new()
+				PhotoGroup group = new()
 				{
 					GroupName = model.GroupName,
 					GroupDescription = model.GroupDescription
@@ -121,8 +121,6 @@ namespace GrassHopper.Controllers
 
 						group.Photos.Add(photo);
 
-                        //Adds a 'photo' to the database (actually just a reference to the url)
-                        await pRepository.AddPhoto(photo);
                         await fileTask;
                     }
 				}
@@ -133,7 +131,11 @@ namespace GrassHopper.Controllers
             return RedirectToAction("Index", "Photos");
 		}
 
-
+		public async Task<IActionResult> Groups()
+		{
+			var groups = await pRepository.GetAllGroups();
+			return View(groups);
+		}
 
 		//These are currently non-functional for a number of reasons
 
