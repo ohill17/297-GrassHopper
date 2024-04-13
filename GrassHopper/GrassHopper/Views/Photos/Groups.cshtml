@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Photo>
+﻿@model IEnumerable<PhotoGroup>
 @{
-	ViewData["Title"] = "Pictures";
+	ViewData["Title"] = "Groups";
 }
 
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
@@ -17,19 +17,14 @@
 
 <h2>Photos</h2>
 
-@foreach (Photo p in Model)
+@foreach (PhotoGroup g in Model)
 {
 	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
-	string url = "/photos/" + p.PhotoCode;
-	if (p.Group != null)
+	<h4>@g.GroupName</h4>
+	<span>@g.GroupDescription</span>
+	@foreach (Photo p in g.Photos)
 	{
-		<h4>@p.Group.GroupName</h4>
+		string url = "/photos/" + p.PhotoCode;
+		<img src="@url" alt="@p.PhotoDescription">
 	}
-	else
-	{
-		<h4>@p.PhotoName</h4>
-	}
-	<img src="@url" alt="@p.PhotoDescription">
-	<figcaption>@p.PhotoDescription</figcaption>
 }
-

@@ -1,4 +1,4 @@
-﻿using GrassHopper.Data;
+using GrassHopper.Data;
 using GrassHopper.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -10,7 +10,7 @@ namespace GrassHopper
         {
             if (!context.Reviews.Any())
             {
-                Review review1 = new Review
+              Review review1 = new Review
                 {
                     ReviewID = 1,
                     ReviewerName = "John Doe",
@@ -34,7 +34,6 @@ namespace GrassHopper
                 context.Reviews.Add(review2);
                 context.SaveChanges();
             }
-                
         }
     }
 }

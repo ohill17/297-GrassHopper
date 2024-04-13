@@ -16,6 +16,6 @@ namespace GrassHopper.Models
         public string PhotoCode { get; set; } = null!;
         public string PhotoName { get; set; } = null!;
         public string PhotoDescription { get; set; } = null!;
-        public PhotoGroupModel? Group { get; set; }
+        public PhotoGroup? Group { get; set; }
     }
 }
