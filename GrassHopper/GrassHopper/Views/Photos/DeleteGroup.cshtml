@@ -1,6 +1,6 @@
-﻿@model GroupUploadVM
+﻿@model PhotoGroup
 @{
-    ViewData["Title"] = "Add Group";
+    ViewData["Title"] = "Delete Group";
 }
 
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
@@ -20,14 +20,26 @@
 	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
 </div>
 
-<h1>Upload a group of photos: </h1>
-<form method="post" asp-action="AddGroup" enctype="multipart/form-data">
-    <label asp-for="GroupName">Name: </label>
-    <input asp-for="GroupName"><br>
-    <label asp-for="GroupDescription">Description: </label>
-    <input asp-for="GroupDescription"><br>
-    <label asp-for="Files">Upload a file: </label>
-    <input asp-for="Files" type="file" accept="image/*" required multiple><br >
-    <span>Hold down SHIFT or CTRL to select multiple files</span><br>
-    <input type="submit" value="Submit">
+<h1>Are you sure you want to delete this group of photos?</h1>
+
+<h4>@Model.GroupName</h4>
+<span>@Model.GroupDescription</span>
+<hr>
+@foreach (Photo p in Model.Photos)
+{
+	string url = "/photos/" + p.PhotoCode;
+	<img src="@url" alt="@p.PhotoDescription">
+    <hr>
+}
+
+<br>
+<form method="post" asp-controller="Photos" asp-action="DeleteGroup">
+    <input asp-for="GroupId" hidden>
+    <input asp-for="GroupName" hidden>
+    <input asp-for="GroupDescription" hidden>
+    <input type="submit" value="Delete" class="btn btn-danger">
 </form>
+<hr>
+<a asp-controller="Photos" asp-action="HideGroup" asp-route-groupId="@Model.GroupId" class="btn btn-warning">Hide Group</a>
+<hr>
+<a asp-controller="Photos" asp-action="Index" class="btn btn-secondary">Cancel</a>

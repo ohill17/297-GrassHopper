@@ -27,7 +27,7 @@ namespace GrassHopper.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var photos = await pRepository.GetAllPhotos();
+			var photos = await pRepository.GetAllUngrouped();
 			return View(photos);
 		}
 
@@ -43,8 +43,7 @@ namespace GrassHopper.Controllers
 			if (model.File != null)
 			{
 				//This should result in a close to unique string to use as a unique file name
-				string imageCode = model.PhotoName + '_' + model.File.Length.GetHashCode().ToString()
-					+ model.File.Headers.GetHashCode().ToString() + model.File.Name.GetHashCode().ToString() + Path.GetExtension(model.File.FileName);
+				string imageCode = MakeFileName(model.PhotoName, model.File);
 
 				if (model.File.Length > 0)
 				{
@@ -95,8 +94,7 @@ namespace GrassHopper.Controllers
 				for (int i = 0; i < model.Files.Count; i++)
 				{
 					IFormFile file = model.Files[i];
-					string imageCode = model.GroupName + i.ToString() + '_' + file.Length.GetHashCode().ToString()
-						+ file.Headers.GetHashCode().ToString() + file.Name.GetHashCode().ToString() + Path.GetExtension(file.FileName);
+					string imageCode = MakeFileName(model.GroupName, file);
 
 					if (file.Length > 0)
 					{
@@ -128,7 +126,13 @@ namespace GrassHopper.Controllers
                 await pRepository.AddGroup(group);
             }
 
-            return RedirectToAction("Index", "Photos");
+            return RedirectToAction("Groups", "Photos");
+		}
+
+		private string MakeFileName(string prefix, IFormFile file)
+		{
+			return prefix + '_' + file.Length.GetHashCode().ToString() + file.Name.GetHashCode().ToString()
+				+ DateTime.Now.GetHashCode().ToString() + Path.GetExtension(file.FileName); ;
 		}
 
 		public async Task<IActionResult> Groups()
@@ -137,20 +141,70 @@ namespace GrassHopper.Controllers
 			return View(groups);
 		}
 
-		//These are currently non-functional for a number of reasons
-
 		[HttpGet]
-		public async Task<IActionResult> Delete(int photoId)
+		public async Task<IActionResult> DeletePhoto(int photoId)
 		{
-			var photo = 5; //await pRepository.GetPhoto(photoId);
+			var photo = await pRepository.GetPhoto(photoId);
 			return View(photo);
 		}
 
-		[HttpPost]
-		public IActionResult Delete(Photo model)
+		public async Task<IActionResult> HidePhoto(int photoId)
 		{
-			//pRepository.DeletePhotos(model.PhotoId);
+			await pRepository.HidePhoto(photoId);
 			return RedirectToAction("Index", "Photos");
-		}        
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> DeletePhoto(Photo photo)
+		{
+			await pRepository.DeletePhoto(photo.PhotoId);
+			return RedirectToAction("Index", "Photos");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> DeleteGroup(int groupId)
+		{
+			var group = await pRepository.GetPhotoGroup(groupId);
+			return View(group);
+		}
+
+		public async Task<IActionResult> HideGroup(int groupId)
+		{
+			await pRepository.HideGroup(groupId);
+			return RedirectToAction("Groups", "Photos");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteGroup(PhotoGroup group)
+		{
+			await pRepository.DeleteGroup(group.GroupId);
+			return RedirectToAction("Groups", "Photos");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> HiddenPhotos()
+		{
+			var photos = await pRepository.GetHiddenPhotos();
+			return View(photos);
+		}
+
+		public async Task<IActionResult> RestorePhoto(int photoId)
+		{
+			await pRepository.RestorePhoto(photoId);
+			return RedirectToAction("Index", "Photos");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> HiddenGroups()
+		{
+			var groups = await pRepository.GetHiddenGroups();
+			return View(groups);
+		}
+
+		public async Task<IActionResult> RestoreGroup(int groupId)
+		{
+			await pRepository.RestoreGroup(groupId);
+			return RedirectToAction("Groups", "Photos");
+		}
     }
 }
