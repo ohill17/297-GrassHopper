@@ -1,6 +1,6 @@
-﻿@model GroupUploadVM
+﻿@model IEnumerable<Photo>
 @{
-    ViewData["Title"] = "Add Group";
+	ViewData["Title"] = "Hidden Photos";
 }
 
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
@@ -20,14 +20,25 @@
 	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
 </div>
 
-<h1>Upload a group of photos: </h1>
-<form method="post" asp-action="AddGroup" enctype="multipart/form-data">
-    <label asp-for="GroupName">Name: </label>
-    <input asp-for="GroupName"><br>
-    <label asp-for="GroupDescription">Description: </label>
-    <input asp-for="GroupDescription"><br>
-    <label asp-for="Files">Upload a file: </label>
-    <input asp-for="Files" type="file" accept="image/*" required multiple><br >
-    <span>Hold down SHIFT or CTRL to select multiple files</span><br>
-    <input type="submit" value="Submit">
-</form>
+<h1>Hidden photos</h1>
+
+@foreach (Photo p in Model)
+{
+	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
+	string url = "/photos/" + p.PhotoCode;
+	if (p.Group != null)
+	{
+		<h4>@p.Group.GroupName</h4>
+	}
+	else
+	{
+		<h4>@p.PhotoName</h4>
+	}
+	<img src="@url" alt="@p.PhotoDescription">
+	<figcaption>@p.PhotoDescription</figcaption>
+	<br>
+	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn btn-danger">Delete Photo</a>
+	<hr>
+	<a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@p.PhotoId" class="btn btn-success">Restore Photo</a>
+	<hr>
+}
