@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Photo>
 @{
-	ViewData["Title"] = "Photos";
+	ViewData["Title"] = "Hidden Photos";
 }
 
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
@@ -17,10 +17,10 @@
 <div class="row p-2">
 	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn btn-primary col-md-2">Hidden Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a> 
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
 </div>
 
-<h1>Photos</h1>
+<h1>Hidden photos</h1>
 
 @foreach (Photo p in Model)
 {
@@ -39,5 +39,6 @@
 	<br>
 	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn btn-danger">Delete Photo</a>
 	<hr>
+	<a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@p.PhotoId" class="btn btn-success">Restore Photo</a>
+	<hr>
 }
-

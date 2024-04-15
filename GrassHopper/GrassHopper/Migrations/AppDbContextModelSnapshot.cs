@@ -19,11 +19,17 @@ namespace GrassHopper.Migrations
                 .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("GrassHopper.Models.PhotoModel", b =>
+            modelBuilder.Entity("GrassHopper.Models.Photo", b =>
                 {
                     b.Property<int>("PhotoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PhotoCode")
                         .IsRequired()
@@ -39,7 +45,31 @@ namespace GrassHopper.Migrations
 
                     b.HasKey("PhotoId");
 
+                    b.HasIndex("GroupId");
+
                     b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("GrassHopper.Models.PhotoGroup", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("GroupDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("PhotoGroups");
                 });
 
             modelBuilder.Entity("GrassHopper.Models.Review", b =>
@@ -65,6 +95,20 @@ namespace GrassHopper.Migrations
                     b.HasKey("ReviewID");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("GrassHopper.Models.Photo", b =>
+                {
+                    b.HasOne("GrassHopper.Models.PhotoGroup", "Group")
+                        .WithMany("Photos")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("GrassHopper.Models.PhotoGroup", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

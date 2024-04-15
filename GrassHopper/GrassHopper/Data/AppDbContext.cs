@@ -13,7 +13,8 @@ namespace GrassHopper.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
 
-        public DbSet<PhotoModel> Photos { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<PhotoGroup> PhotoGroups { get; set; }
         public DbSet<Review> Reviews { get; set; }
     }
 }
