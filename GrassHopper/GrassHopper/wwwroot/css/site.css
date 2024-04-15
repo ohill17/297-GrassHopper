@@ -1,3 +1,4 @@
+/*Burner Plate Elements*/
 html {
   font-size: 14px;
 }
@@ -17,12 +18,37 @@ body {
     margin-bottom: 60px;
     background-color: #f5fce4;
 }
+
+/*UI Elements*/
 .btn {
     background-color: #C3FF0F;
 }
     .btn:hover {
         background-color: #A4DB00;
     }
+
+/*Navbar Elements*/
 .navbar {
     background-color: #E4F7B6;
+}
+.dropdown-menu {
+    animation: slide-in 0.3s ease forwards;
+    display: none;
+    background-color: #E4F7B6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.navbar-nav .dropdown-menu a.dropdown-item:hover {
+    background-color: #D3F288;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

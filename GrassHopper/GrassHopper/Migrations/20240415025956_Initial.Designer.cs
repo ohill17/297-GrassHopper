@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrassHopper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240413223601_HidePhotos")]
-    partial class HidePhotos
+    [Migration("20240415025956_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
