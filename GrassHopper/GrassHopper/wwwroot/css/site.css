@@ -23,11 +23,18 @@ body {
 .btn {
     background-color: #C3FF0F;
 }
-    .btn:hover {
-        background-color: #A4DB00;
-    }
+.btn:hover {
+    background-color: #A4DB00;
+ }
 
 /*Navbar Elements*/
+
+.navbar-nav .nav-item:hover .nav-link {
+    background-color: #D3F288;
+}
+.navbar-nav .nav-item:hover .nav-link {
+    color: #000;
+}
 .navbar {
     background-color: #E4F7B6;
 }
@@ -52,3 +59,33 @@ body {
         opacity: 1;
     }
 }
+/*Card Elements*/
+
+.body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    flex: 0 1 calc(33.33% - 20px);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-text {
+    margin-bottom: 10px;
+}
+
+    .card-text:last-child {
+        margin-bottom: 0;
+    }
