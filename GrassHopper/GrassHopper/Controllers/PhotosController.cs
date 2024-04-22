@@ -132,7 +132,7 @@ namespace GrassHopper.Controllers
 		private string MakeFileName(string prefix, IFormFile file)
 		{
 			return prefix + '_' + file.Length.GetHashCode().ToString() + file.Name.GetHashCode().ToString()
-				+ DateTime.Now.GetHashCode().ToString() + Path.GetExtension(file.FileName); ;
+				+ DateTime.Now.GetHashCode().ToString() + Path.GetExtension(file.FileName);
 		}
 
 		public async Task<IActionResult> Groups()
