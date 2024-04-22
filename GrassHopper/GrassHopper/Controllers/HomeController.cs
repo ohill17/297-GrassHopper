@@ -1,21 +1,33 @@
-﻿using GrassHopper.Models;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using System.Net.Http.Json;
+using System.Text.Json.Serialization;
 using System.Diagnostics;
+using GrassHopper.Data;
+using GrassHopper.Data.Repositories;
+using GrassHopper.Models;
 
 namespace GrassHopper.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext context;
+        private readonly IPhotoRepository prepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext c, IPhotoRepository p)
         {
             _logger = logger;
+            context = c;
+            prepository = p;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var photos = await prepository.GetAllPhotos();
+            return View(photos);
         }
 
         public IActionResult Privacy()
