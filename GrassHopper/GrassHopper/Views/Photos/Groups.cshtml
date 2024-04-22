@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PhotoGroup>
+@{
+	ViewData["Title"] = "Groups";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
+<div class="row p-2">
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn btn-primary col-md-2">Add a Photo</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="AddGroup" class="btn btn-primary col-md-2">Add a Group</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="Index" class="btn btn-primary col-md-2">View Photos</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="Groups" class="btn btn-primary col-md-2">View Groups</a>
+</div>
+<div class="row p-2">
+	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn btn-primary col-md-2">Hidden Photos</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
+</div>
+
+<h1>Groups</h1>
+
+@foreach (PhotoGroup g in Model)
+{
+	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
+	<h4>@g.GroupName</h4>
+	<span>@g.GroupDescription</span>
+	<hr>
+	@foreach (Photo p in g.Photos)
+	{
+		string url = "/photos/" + p.PhotoCode;
+		<img src="@url" alt="@p.PhotoDescription">
+		<hr>
+	}
+	<br>
+	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn btn-danger">Delete Group</a>
+	<hr>
+}

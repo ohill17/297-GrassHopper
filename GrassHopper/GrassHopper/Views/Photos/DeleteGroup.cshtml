@@ -1,0 +1,45 @@
+﻿@model PhotoGroup
+@{
+    ViewData["Title"] = "Delete Group";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
+<div class="row p-2">
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn btn-primary col-md-2">Add a Photo</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="AddGroup" class="btn btn-primary col-md-2">Add a Group</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="Index" class="btn btn-primary col-md-2">View Photos</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="Groups" class="btn btn-primary col-md-2">View Groups</a>
+</div>
+<div class="row p-2">
+	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn btn-primary col-md-2">Hidden Photos</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
+</div>
+
+<h1>Are you sure you want to delete this group of photos?</h1>
+
+<h4>@Model.GroupName</h4>
+<span>@Model.GroupDescription</span>
+<hr>
+@foreach (Photo p in Model.Photos)
+{
+	string url = "/photos/" + p.PhotoCode;
+	<img src="@url" alt="@p.PhotoDescription">
+    <hr>
+}
+
+<br>
+<form method="post" asp-controller="Photos" asp-action="DeleteGroup">
+    <input asp-for="GroupId" hidden>
+    <input asp-for="GroupName" hidden>
+    <input asp-for="GroupDescription" hidden>
+    <input type="submit" value="Delete" class="btn btn-danger">
+</form>
+<hr>
+<a asp-controller="Photos" asp-action="HideGroup" asp-route-groupId="@Model.GroupId" class="btn btn-warning">Hide Group</a>
+<hr>
+<a asp-controller="Photos" asp-action="Index" class="btn btn-secondary">Cancel</a>

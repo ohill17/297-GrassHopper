@@ -1,0 +1,35 @@
+﻿@model GrassHopper.Models.Review
+@{
+    ViewData["Title"] = "Leave a Review";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Leave a Review</h2>
+            <form asp-action="SubmitReview" method="post">
+                <div class="form-group">
+                    <label for="ReviewerName">Your Name</label>
+                    <input type="text" class="form-control" id="ReviewerName" name="ReviewerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ReviewBody">Review</label>
+                    <textarea class="form-control" id="ReviewBody" name="ReviewBody" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ReviewRating">Rating</label>
+                    <select class="form-control" id="ReviewRating" name="ReviewRating" required>
+                        <option value="">Select a rating</option>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                    </select>
+                </div>
+                <br />
+                <button type="submit" class="btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</div>

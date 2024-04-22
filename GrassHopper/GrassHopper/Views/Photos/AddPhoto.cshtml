@@ -1,0 +1,32 @@
+﻿@model PhotoUploadVM
+@{
+    ViewData["Title"] = "Add Photo";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
+<div class="row p-2">
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn btn-primary col-md-2">Add a Photo</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="AddGroup" class="btn btn-primary col-md-2">Add a Group</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="Index" class="btn btn-primary col-md-2">View Photos</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="Groups" class="btn btn-primary col-md-2">View Groups</a>
+</div>
+<div class="row p-2">
+	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn btn-primary col-md-2">Hidden Photos</a>
+	<span class="col-md-1"></span>
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
+</div>
+
+<h1>Upload a photo: </h1>
+<form method="post" asp-action="AddPhoto" enctype="multipart/form-data">
+    <label asp-for="PhotoName">Name: </label>
+    <input asp-for="PhotoName"><br>
+    <label asp-for="PhotoDescription">Description: </label>
+    <input asp-for="PhotoDescription"><br>
+    <label asp-for="File">Upload a file: </label>
+    <input asp-for="File" type="file" accept="image/*" required><br>
+    <input type="submit" value="Submit">
+</form>
