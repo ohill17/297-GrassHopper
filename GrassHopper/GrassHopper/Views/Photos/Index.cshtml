@@ -34,7 +34,7 @@
 	{
 		<h4>@p.PhotoName</h4>
 	}
-	<img src="@url" alt="@p.PhotoDescription">
+	<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
 	<figcaption>@p.PhotoDescription</figcaption>
 	<br>
 	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn btn-danger">Delete Photo</a>

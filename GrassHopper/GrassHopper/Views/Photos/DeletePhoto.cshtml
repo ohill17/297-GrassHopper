@@ -31,7 +31,7 @@ else
 {
     <h4>@Model.PhotoName</h4>
 }
-<img src="@url" alt="@Model.PhotoDescription">
+<img src="@url" alt="@Model.PhotoDescription" style="aspect-ratio:auto; width:50%;">
 <figcaption>@Model.PhotoDescription</figcaption>
 <hr>
 <form method="post" asp-controller="Photos" asp-action="DeletePhoto">
