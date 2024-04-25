@@ -142,6 +142,55 @@ namespace GrassHopper.Controllers
 		}
 
 		[HttpGet]
+		public async Task<IActionResult> EditPhoto(int photoId)
+		{
+			Photo photo = await pRepository.GetPhoto(photoId);
+			return View(photo);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> EditPhoto(Photo photo)
+		{
+			int result = await pRepository.UpdatePhoto(photo); //Potential hook for later
+			return RedirectToAction("Index", "Photos");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> UnGroup(int photoId)
+		{
+			int result = await pRepository.RemoveFromGroup(photoId);
+			return RedirectToAction("Index", "Photos");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddToGroup(int photoId, int groupId)
+		{
+			int result = await pRepository.AddToGroup(photoId, groupId);
+			return RedirectToAction("Groups", "Photos");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> EditGroup(int groupId)
+		{
+			PhotoGroup group = await pRepository.GetPhotoGroup(groupId);
+			return View(group);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> EditGroup(PhotoGroup group)
+		{
+			int result = await pRepository.UpdateGroup(group);
+			return RedirectToAction("Groups", "Photos");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> BreakGroup(int groupId)
+		{
+			int result = await pRepository.BreakGroup(groupId);
+			return RedirectToAction("Index", "Photos");
+		}
+
+		[HttpGet]
 		public async Task<IActionResult> DeletePhoto(int photoId)
 		{
 			var photo = await pRepository.GetPhoto(photoId);
