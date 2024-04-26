@@ -2,3 +2,36 @@
 @{
     ViewData["Title"] = "Edit Group";
 }
+<h1>Edit Group</h1>
+<form method="post" asp-action="EditGroup">
+    <input asp-for="GroupId" hidden>
+    <label asp-for="GroupName">Name: </label>
+    <input asp-for="GroupName"><br>
+    <label asp-for="GroupDescription">Description: </label>
+    <input asp-for="GroupDescription"><br>
+    <input type="submit" value="Submit">
+</form>
+<hr>
+@foreach (Photo p in Model.Photos)
+{
+	string url = "/photos/" + p.PhotoCode;
+	<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
+    <br />
+    <a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@p.PhotoId" class="btn">Edit Photo</a>
+	<hr>
+}
+<br>
+<a asp-controller="Photos" asp-action="BreakGroup" asp-route-groupId="@Model.GroupId" class="btn">Dissolve Group</a>
+<br><br>
+@if (Model.IsHidden)
+{
+    <a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@Model.GroupId" class="btn">Restore Group</a>
+}
+else
+{
+    <a asp-controller="Photos" asp-action="HideGroup" asp-route-groupId="@Model.GroupId" class="btn">Hide Group</a>
+}
+<br><br>
+<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@Model.GroupId" class="btn">Delete Group</a>
+<br><br>
+<a asp-controller="Photos" asp-action="Groups" class="btn">Cancel</a>

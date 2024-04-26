@@ -61,7 +61,7 @@ namespace GrassHopper.Data.Repositories
 
 		public async Task<Photo> GetPhoto(int id)
 		{
-			return await dbContext.Photos.FindAsync(id);
+			return await dbContext.Photos.Where(p => p.PhotoId == id).Include(p => p.Group).FirstAsync();
 		}
 
 		public async Task<PhotoGroup> GetPhotoGroup(int id)
@@ -182,7 +182,7 @@ namespace GrassHopper.Data.Repositories
 		public async Task<int> AddToGroup(int photoId, int groupId)
 		{
 			Photo photo = await GetPhoto(photoId);
-			PhotoGroup group = await GetPhotoGroup(photoId);
+			PhotoGroup group = await GetPhotoGroup(groupId);
 			photo.Group = group;
 			group.Photos.Add(photo);
 			dbContext.Photos.Update(photo);
