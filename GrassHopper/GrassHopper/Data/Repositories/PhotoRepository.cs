@@ -42,22 +42,34 @@ namespace GrassHopper.Data.Repositories
 			return dbContext.SaveChanges();
 		}
 
-		public async Task<List<Photo>> GetAllPhotos()
+		public async Task<List<PhotoVM>> GetAllPhotos(PhotoSize size)
 		{
-			return await dbContext.Photos
+			var photos = await dbContext.Photos
 				.Where(p => p.IsHidden == false
 					&& (p.Group == null || p.Group.IsHidden == false))
 				.Include(p => p.Group)
 				.ToListAsync();
+			List<PhotoVM> photoVMs = new List<PhotoVM>();
+			foreach(Photo p in photos)
+			{
+				photoVMs.Add(new PhotoVM(p, size));
+			}
+			return photoVMs;
 		}
 
-		public async Task<List<Photo>> GetHiddenPhotos()
+		public async Task<List<PhotoVM>> GetHiddenPhotos(PhotoSize size)
 		{
-			return await dbContext.Photos
+			var photos = await dbContext.Photos
 				.Where(p => p.IsHidden)
 				.Include(p => p.Group)
 				.ToListAsync();
-		}
+            List<PhotoVM> photoVMs = new List<PhotoVM>();
+            foreach (Photo p in photos)
+            {
+                photoVMs.Add(new PhotoVM(p, size));
+            }
+            return photoVMs;
+        }
 
 		public async Task<Photo> GetPhoto(int id)
 		{
@@ -87,13 +99,19 @@ namespace GrassHopper.Data.Repositories
 				.ToListAsync();
 		}
 
-		public async Task<List<Photo>> GetAllUngrouped()
+		public async Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size)
 		{
-			return await dbContext.Photos
+			var photos = await dbContext.Photos
 				.Where(p => p.Group == null
     					&& p.IsHidden == false)
 				.ToListAsync();
-		}
+            List<PhotoVM> photoVMs = new List<PhotoVM>();
+            foreach (Photo p in photos)
+            {
+                photoVMs.Add(new PhotoVM(p, size));
+            }
+            return photoVMs;
+        }
 
 		public async Task<int> HidePhoto(int id)
 		{
