@@ -6,18 +6,18 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <div class="row p-2">
-	<a asp-controller="Photos" asp-action="AddPhoto" class="btn btn-primary col-md-2">Add a Photo</a>
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn col-md-2">Add a Photo</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="AddGroup" class="btn btn-primary col-md-2">Add a Group</a>
+	<a asp-controller="Photos" asp-action="AddGroup" class="btn col-md-2">Add a Group</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="Index" class="btn btn-primary col-md-2">View Photos</a>
+	<a asp-controller="Photos" asp-action="Index" class="btn col-md-2">View Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="Groups" class="btn btn-primary col-md-2">View Groups</a>
+	<a asp-controller="Photos" asp-action="Groups" class="btn col-md-2">View Groups</a>
 </div>
 <div class="row p-2">
-	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn btn-primary col-md-2">Hidden Photos</a>
+	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn col-md-2">Hidden Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn btn-primary col-md-2">Hidden Groups</a>
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn col-md-2">Hidden Groups</a>
 </div>
 
 <h1>Hidden Groups</h1>
@@ -31,12 +31,12 @@
 	@foreach (Photo p in g.Photos)
 	{
 		string url = "/photos/" + p.PhotoCode;
-		<img src="@url" alt="@p.PhotoDescription">
+		<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
 		<hr>
 	}
 	<br>
-	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn btn-danger">Delete Group</a>
+	<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
 	<hr>
-	<a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@g.GroupId" class="btn btn-success">Restore Group</a>
+	<a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@g.GroupId" class="btn">Restore Group</a>
 	<hr>
 }

@@ -1,4 +1,5 @@
 ﻿using GrassHopper.Models;
+using System.ComponentModel;
 
 namespace GrassHopper.Data.Repositories
 {
@@ -21,6 +22,8 @@ namespace GrassHopper.Data.Repositories
         public Task<int> HideGroup(int id);
         public Task<int> RestoreGroup(int id);
         public Task<int> DeleteGroup(int id);
-
+        public Task<int> RemoveFromGroup(int photoId);
+        public Task<int> AddToGroup(int photoId, int groupId);
+        public Task<int> BreakGroup(int groupId); //Dissolves a group, leaving behind all photos that were part of it
     }
 }

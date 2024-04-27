@@ -20,7 +20,11 @@ namespace GrassHopper.Data.Repositories
 
 		public async Task<int> UpdatePhoto(Photo photo)
 		{
-			throw new NotImplementedException();
+			Photo oldPhoto = await GetPhoto(photo.PhotoId);
+			oldPhoto.PhotoName = photo.PhotoName;
+			oldPhoto.PhotoDescription = photo.PhotoDescription;
+			dbContext.Photos.Update(oldPhoto);
+			return dbContext.SaveChanges();
 		}
 
 		public async Task<int> AddGroup(PhotoGroup group)
@@ -31,7 +35,11 @@ namespace GrassHopper.Data.Repositories
 
 		public async Task<int> UpdateGroup(PhotoGroup group)
 		{
-			throw new NotImplementedException();
+			PhotoGroup oldGroup = await GetPhotoGroup(group.GroupId);
+			oldGroup.GroupName = group.GroupName;
+			oldGroup.GroupDescription = group.GroupDescription;
+			dbContext.PhotoGroups.Update(oldGroup);
+			return dbContext.SaveChanges();
 		}
 
 		public async Task<List<Photo>> GetAllPhotos()
@@ -53,7 +61,7 @@ namespace GrassHopper.Data.Repositories
 
 		public async Task<Photo> GetPhoto(int id)
 		{
-			return await dbContext.Photos.FindAsync(id);
+			return await dbContext.Photos.Where(p => p.PhotoId == id).Include(p => p.Group).FirstAsync();
 		}
 
 		public async Task<PhotoGroup> GetPhotoGroup(int id)
@@ -152,6 +160,47 @@ namespace GrassHopper.Data.Repositories
 				dbContext.Photos.Remove(photo);
 			}
 			dbContext.PhotoGroups.Remove(group);
+			return dbContext.SaveChanges();
+		}
+
+		public async Task<int> RemoveFromGroup(int photoId)
+		{
+			Photo photo = await GetPhoto(photoId);
+			PhotoGroup group;
+			try
+			{
+				group = await GetPhotoGroup(photo.Group.GroupId);
+			}
+			catch { return 100; } //Could not find group, or photo was not in a group
+			group.Photos.Remove(photo);
+			photo.Group = null;
+			dbContext.Photos.Update(photo);
+			dbContext.PhotoGroups.Update(group);
+			return dbContext.SaveChanges();
+		}
+
+		public async Task<int> AddToGroup(int photoId, int groupId)
+		{
+			Photo photo = await GetPhoto(photoId);
+			PhotoGroup group = await GetPhotoGroup(groupId);
+			photo.Group = group;
+			group.Photos.Add(photo);
+			dbContext.Photos.Update(photo);
+			dbContext.PhotoGroups.Update(group);
+			return dbContext.SaveChanges();
+		}
+
+		public async Task<int> BreakGroup(int groupId)
+		{
+			PhotoGroup group = await GetPhotoGroup(groupId);
+			foreach(Photo p in group.Photos)
+			{
+				Photo photo = await GetPhoto(p.PhotoId);
+				photo.Group = null;
+				dbContext.Photos.Update(photo);
+			}
+			group.Photos.Clear();
+			dbContext.PhotoGroups.Update(group);
 			return dbContext.SaveChanges();
 		}
 	}
