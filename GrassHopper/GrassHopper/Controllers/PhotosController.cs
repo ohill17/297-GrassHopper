@@ -189,7 +189,7 @@ namespace GrassHopper.Controllers
 
         public async Task<IActionResult> Groups()
         {
-            var groups = await pRepository.GetAllGroups();
+            var groups = await pRepository.GetAllGroups(PhotoSize.Medium);
             return View(groups);
         }
 
@@ -197,7 +197,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> EditPhoto(int photoId)
         {
             Photo photo = await pRepository.GetPhoto(photoId);
-            ViewBag.Groups = await pRepository.GetAllGroups();
+            ViewBag.Groups = await pRepository.GetAllGroups(PhotoSize.Medium);
             return View(photo);
         }
 
@@ -297,7 +297,7 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> HiddenGroups()
         {
-            var groups = await pRepository.GetHiddenGroups();
+            var groups = await pRepository.GetHiddenGroups(PhotoSize.Medium);
             return View(groups);
         }
 

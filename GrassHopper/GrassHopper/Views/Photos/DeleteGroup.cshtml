@@ -27,7 +27,7 @@
 <hr>
 @foreach (Photo p in Model.Photos)
 {
-	string url = "/photos/" + p.PhotoCode;
+	string url = "/photos/" + p.PhotoCode + "LG" + p.Extension;
 	<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
     <hr>
 }

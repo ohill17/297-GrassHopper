@@ -83,20 +83,22 @@ namespace GrassHopper.Data.Repositories
 				.FirstAsync();
 		}
 
-		public async Task<List<PhotoGroup>> GetAllGroups()
+		public async Task<List<GroupVM>> GetAllGroups(PhotoSize size)
 		{
-			return await dbContext.PhotoGroups
+			var groups = await dbContext.PhotoGroups
 				.Where(g => g.IsHidden == false)
 				.Include(g => g.Photos)
 				.ToListAsync();
+			return GVMMaker.MakeGroupVM(groups, size);
 		}
 
-		public async Task<List<PhotoGroup>> GetHiddenGroups()
+		public async Task<List<GroupVM>> GetHiddenGroups(PhotoSize size)
 		{
-			return await dbContext.PhotoGroups
+			var groups = await dbContext.PhotoGroups
 				.Where(g => g.IsHidden)
 				.Include(g => g.Photos)
 				.ToListAsync();
+			return GVMMaker.MakeGroupVM(groups, size);
 		}
 
 		public async Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size)
