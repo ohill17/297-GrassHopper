@@ -42,7 +42,8 @@ namespace GrassHopper.Migrations
                     ReviewBody = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReviewRating = table.Column<int>(type: "int", nullable: false),
-                    ReviewDate = table.Column<DateOnly>(type: "date", nullable: false)
+                    ReviewDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    IsFromFacebook = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
