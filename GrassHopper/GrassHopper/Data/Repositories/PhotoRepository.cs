@@ -82,7 +82,8 @@ namespace GrassHopper.Data.Repositories
 		public async Task<List<Photo>> GetAllUngrouped()
 		{
 			return await dbContext.Photos
-				.Where(p => p.Group == null)
+				.Where(p => p.Group == null
+    					&& p.IsHidden == false)
 				.ToListAsync();
 		}
 
