@@ -3,8 +3,8 @@
 <script>
     let APP_ID = '1146299576721168';
     let PAGE_ID = '227047383835993';
-    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABOyMBikuvRjMhKuu4lCr8TbCFUVwopymEoHicBWQkOurgKcilh2r8kKushvztkyFHHmAu07yvSzSNYcNt7xb9HwnxC2iUB6SKlJpPRBAcITCkHpl5Rrb4Qhb3ZCW42FDVqB3WZCXVJabTIm3HZCvAejXZCeT2UOawmBEd2zeMJl3tVJShO4jo6XBTxHcWnXUiH5ZALO7JTZCrYZD';
-    let PATH = `/ ${PAGE_ID}/ratings`;
+    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO6NNxotBYr0Tyk8LS8JERQout077xYeY0Dhy5h18asHCsyOpyXl7vvhGBfxaYr3yZBjiM4a7y9sD2aOHUUILVTIyJZAr179SA8ReYy4sMyHVT28QLZCUGSjC2skeplAMF9D2CLd30sxQuKt4iCKifNhIflWDv3FeokeO7ET8tYgT5gnO8ALEDkiMZA4ZBvyL7bCnYqjFxO8IZD';
+    let PATH = `/ ${PAGE_ID}/ratings?fields=created_time,review_text,rating`;
     let METHOD = 'GET';
     let PARAMS = {
         access_token: PAGE_ACCESS_TOKEN
@@ -13,7 +13,21 @@
     let CALLBACK = (response) => {
         let reviews = response.data; //this is an array of reviews
         console.log(reviews);
-    };
+        
+        //let reviewsString = reviews.toString();
+
+        //<a class="nav-link text-dark" asp-area="" asp-controller="Photos" asp-action="Index">Photos</a>
+        var reviewsString = encodeURIComponent(JSON.stringify(reviews));
+
+        let el = document.createElement('a');
+        el.setAttribute('href', "/Review/Index?reviewsFromFacebook=" + reviewsString);
+ 
+        el.innerHTML = "load facebook reviews too";
+        document.body.appendChild(el);
+        console.log("the element: " + el);
+
+
+        };
 
     window.fbAsyncInit = function () {
         FB.init({

@@ -2,6 +2,8 @@
 using GrassHopper.Models;
 using GrassHopper.Data;
 using GrassHopper.Data.Repositories;
+using Newtonsoft.Json;
+using System.Web;
 
 namespace GrassHopper.Controllers
 {
@@ -21,9 +23,15 @@ namespace GrassHopper.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index() 
+        public IActionResult Index(string reviewsFromFacebook) 
         {
             var reviews = _reviewRepo.GetAllReviews();
+            if (reviewsFromFacebook != null && reviewsFromFacebook.Length > 0)
+            {
+                Review r = FacebookReviews.NewFromFacebook(HttpUtility.UrlDecode(reviewsFromFacebook));
+                reviews.Add(r);
+            }
+
             return View(reviews); 
         }
 
