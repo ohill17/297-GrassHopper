@@ -32,11 +32,11 @@ else
             }
             else
             {
-                foreach (PhotoGroup g in ViewBag.Groups)
+                foreach (GroupVM g in ViewBag.Groups)
                 {
                     <li>
                         <a class="dropdown-item" asp-controller="Photos" asp-action="AddToGroup"
-                           asp-route-photoId="@Model.PhotoId" asp-route-groupId="@g.GroupId">@g.GroupName</a>
+                           asp-route-photoId="@Model.PhotoId" asp-route-groupId="@g.GroupId">@g.Name</a>
                     </li>
                 }
             }
