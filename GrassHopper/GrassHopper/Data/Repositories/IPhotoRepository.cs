@@ -7,11 +7,11 @@ namespace GrassHopper.Data.Repositories
     {
         public Task<Photo> GetPhoto(int id);
         public Task<PhotoGroup> GetPhotoGroup(int id);
-        public Task<List<Photo>> GetAllPhotos();
-        public Task<List<Photo>> GetHiddenPhotos();
-        public Task<List<PhotoGroup>> GetAllGroups();
-        public Task<List<PhotoGroup>> GetHiddenGroups();
-        public Task<List<Photo>> GetAllUngrouped();
+        public Task<List<PhotoVM>> GetAllPhotos(PhotoSize size);
+        public Task<List<PhotoVM>> GetHiddenPhotos(PhotoSize size);
+        public Task<List<GroupVM>> GetAllGroups(PhotoSize size);
+        public Task<List<GroupVM>> GetHiddenGroups(PhotoSize size);
+        public Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size);
         public Task<int> AddPhoto(Photo photo);
         public Task<int> UpdatePhoto(Photo photo);
         public Task<int> AddGroup(PhotoGroup group);

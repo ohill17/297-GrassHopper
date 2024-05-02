@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Photo>
+﻿@model IEnumerable<PhotoVM>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -12,7 +12,7 @@
 
 @if (Model != null && Model.Any())
 {
-    <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+    @* <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
             {
@@ -41,5 +41,5 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div>
+    </div> *@
 }

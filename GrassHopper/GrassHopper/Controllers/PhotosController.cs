@@ -9,6 +9,9 @@ using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
 using System.IO;
 using System.Web;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 
 namespace GrassHopper.Controllers
 {
@@ -27,7 +30,7 @@ namespace GrassHopper.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var photos = await pRepository.GetAllUngrouped();
+            var photos = await pRepository.GetAllUngrouped(PhotoSize.Medium);
             return View(photos);
         }
 
@@ -44,6 +47,7 @@ namespace GrassHopper.Controllers
             {
                 //This should result in a close to unique string to use as a unique file name
                 string imageCode = MakeFileName(model.PhotoName, model.File);
+                string extension = Path.GetExtension(model.File.FileName);
 
                 if (model.File.Length > 0)
                 {
@@ -52,22 +56,39 @@ namespace GrassHopper.Controllers
                         Directory.CreateDirectory("./wwwroot/photos");
 
                     //Creates a file path to the 'photos' folder and append the target file name
-                    var filePath = Path.Combine("./wwwroot/photos/", imageCode);
+                    var filePathSM = Path.Combine("./wwwroot/photos/", imageCode + "SM" + extension);
+                    var filePathMD = Path.Combine("./wwwroot/photos/", imageCode + "MD" + extension);
+                    var filePathLG = Path.Combine("./wwwroot/photos/", imageCode + "LG" + extension);
 
                     //Creates the target file and copies the data to it
-                    using var stream = System.IO.File.Create(filePath);
-                    var fileTask = model.File.CopyToAsync(stream);
+                    if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                        throw new Exception();
+                    using (var memStream = new MemoryStream())
+                    {
+                        await model.File.CopyToAsync(memStream);
+                        using var img = Image.FromStream(memStream);
+                        Bitmap bmpPhoto = new(img);
+                        Image image = ScaleImage(bmpPhoto, 256);
+                        image.Save(filePathSM);
+
+                        image = ScaleImage(bmpPhoto, 512);
+                        image.Save(filePathMD);
+
+                        image = ScaleImage(bmpPhoto, 1024);
+                        image.Save(filePathLG);
+                    }
 
                     Photo photo = new()
                     {
                         PhotoName = model.PhotoName,
                         PhotoCode = imageCode,
+                        Extension = extension,
                         PhotoDescription = model.PhotoDescription,
+                        Group = null
                     };
 
                     //Adds a 'photo' to the database (actually just a reference to the url)
                     await pRepository.AddPhoto(photo);
-                    await fileTask;
                 }
             }
 
@@ -95,6 +116,7 @@ namespace GrassHopper.Controllers
                 {
                     IFormFile file = model.Files[i];
                     string imageCode = MakeFileName(model.GroupName, file);
+                    string extension = Path.GetExtension(file.FileName);
 
                     if (file.Length > 0)
                     {
@@ -103,23 +125,38 @@ namespace GrassHopper.Controllers
                             Directory.CreateDirectory("./wwwroot/photos");
 
                         //Creates a file path to the 'photos' folder and append the target file name
-                        var filePath = Path.Combine("./wwwroot/photos/", imageCode);
+                        var filePathSM = Path.Combine("./wwwroot/photos/", imageCode + "SM" + extension);
+                        var filePathMD = Path.Combine("./wwwroot/photos/", imageCode + "MD" + extension);
+                        var filePathLG = Path.Combine("./wwwroot/photos/", imageCode + "LG" + extension);
 
                         //Creates the target file and copies the data to it
-                        using var stream = System.IO.File.Create(filePath);
-                        var fileTask = file.CopyToAsync(stream);
+                        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                            throw new Exception();
+                        using (var memStream = new MemoryStream())
+                        {
+                            await file.CopyToAsync(memStream);
+                            using var img = Image.FromStream(memStream);
+                            Bitmap bmpPhoto = new(img);
+                            Image image = ScaleImage(bmpPhoto, 256);
+                            image.Save(filePathSM);
+
+                            image = ScaleImage(bmpPhoto, 512);
+                            image.Save(filePathMD);
+
+                            image = ScaleImage(bmpPhoto, 1024);
+                            image.Save(filePathLG);
+                        }
 
                         Photo photo = new()
                         {
                             PhotoName = group.GroupName + i.ToString(),
                             PhotoCode = imageCode,
+                            Extension = extension,
                             PhotoDescription = group.GroupDescription,
                             Group = group
                         };
 
                         group.Photos.Add(photo);
-
-                        await fileTask;
                     }
                 }
                 //Adds the group of photos to the database
@@ -131,13 +168,28 @@ namespace GrassHopper.Controllers
 
         private static string MakeFileName(string prefix, IFormFile file)
         {
-            return prefix + '_' + file.Length.GetHashCode().ToString() + file.Name.GetHashCode().ToString()
-                + DateTime.Now.GetHashCode().ToString() + Path.GetExtension(file.FileName);
+            return prefix + '_' + file.Length.GetHashCode().ToString() + Guid.NewGuid().ToString(); //Why was I not doing this before
+        }
+
+        //From https://learn.microsoft.com/en-us/answers/questions/760483/upload-image-with-resize
+        public static Image ScaleImage(Image image, int maxWidth)
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                throw new Exception();
+            var ratio = (double)maxWidth / image.Width;
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+            var newImage = new Bitmap(newWidth, newHeight);
+            using (var g = Graphics.FromImage(newImage))
+            {
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+            return newImage;
         }
 
         public async Task<IActionResult> Groups()
         {
-            var groups = await pRepository.GetAllGroups();
+            var groups = await pRepository.GetAllGroups(PhotoSize.Medium);
             return View(groups);
         }
 
@@ -145,7 +197,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> EditPhoto(int photoId)
         {
             Photo photo = await pRepository.GetPhoto(photoId);
-            ViewBag.Groups = await pRepository.GetAllGroups();
+            ViewBag.Groups = await pRepository.GetAllGroups(PhotoSize.Medium);
             return View(photo);
         }
 
@@ -232,7 +284,7 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> HiddenPhotos()
         {
-            var photos = await pRepository.GetHiddenPhotos();
+            var photos = await pRepository.GetHiddenPhotos(PhotoSize.Medium);
             return View(photos);
         }
 
@@ -245,7 +297,7 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> HiddenGroups()
         {
-            var groups = await pRepository.GetHiddenGroups();
+            var groups = await pRepository.GetHiddenGroups(PhotoSize.Medium);
             return View(groups);
         }
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PhotoGroup>
+﻿@model IEnumerable<GroupVM>
 @{
 	ViewData["Title"] = "Groups";
 }
@@ -22,15 +22,15 @@
 
 <h1>Groups</h1>
 
-@foreach (PhotoGroup g in Model)
+@foreach (GroupVM g in Model)
 {
-	<h4>@g.GroupName</h4>
-	<span>@g.GroupDescription</span>
+	<h4>@g.Name</h4>
+	<span>@g.Description</span>
 	<hr>
-	@foreach (Photo p in g.Photos)
+	@foreach (PhotoVM p in g.Photos)
 	{
-		string url = "/photos/" + p.PhotoCode;
-		<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
+		string url = "/photos/" + p.Url;
+		<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
 		<hr>
 	}
 	<br>
