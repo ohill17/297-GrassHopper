@@ -138,9 +138,11 @@ namespace GrassHopper.Data.Repositories
 			string filePath = "./wwwroot/photos/" + photo.PhotoCode;
 			try
 			{
-				File.Delete(filePath);
-			}
-			catch (Exception ex)
+				File.Delete(filePath + "SM" + photo.Extension);
+                File.Delete(filePath + "MD" + photo.Extension);
+                File.Delete(filePath + "LG" + photo.Extension);
+            }
+            catch (Exception ex)
 			{
 				Console.WriteLine(ex);
 			}
@@ -174,8 +176,10 @@ namespace GrassHopper.Data.Repositories
 				string filePath = "./wwwroot/photos/" + photo.PhotoCode;
 				try
 				{
-					File.Delete(filePath);
-				}
+                    File.Delete(filePath + "SM" + photo.Extension);
+                    File.Delete(filePath + "MD" + photo.Extension);
+                    File.Delete(filePath + "LG" + photo.Extension);
+                }
 				catch { }
 				dbContext.Photos.Remove(photo);
 			}
