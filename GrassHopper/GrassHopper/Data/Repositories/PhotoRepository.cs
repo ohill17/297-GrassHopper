@@ -15,7 +15,7 @@ namespace GrassHopper.Data.Repositories
 		public async Task<int> AddPhoto(Photo photo)
 		{
 			await dbContext.Photos.AddAsync(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> UpdatePhoto(Photo photo)
@@ -24,13 +24,13 @@ namespace GrassHopper.Data.Repositories
 			oldPhoto.PhotoName = photo.PhotoName;
 			oldPhoto.PhotoDescription = photo.PhotoDescription;
 			dbContext.Photos.Update(oldPhoto);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> AddGroup(PhotoGroup group)
 		{
 			await dbContext.PhotoGroups.AddAsync(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> UpdateGroup(PhotoGroup group)
@@ -39,7 +39,7 @@ namespace GrassHopper.Data.Repositories
 			oldGroup.GroupName = group.GroupName;
 			oldGroup.GroupDescription = group.GroupDescription;
 			dbContext.PhotoGroups.Update(oldGroup);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<List<PhotoVM>> GetAllPhotos(PhotoSize size)
@@ -89,7 +89,7 @@ namespace GrassHopper.Data.Repositories
 				.Where(g => g.IsHidden == false)
 				.Include(g => g.Photos)
 				.ToListAsync();
-			return GVMMaker.MakeGroupVM(groups, size);
+			return VMMaker.MakeGroupVM(groups, size);
 		}
 
 		public async Task<List<GroupVM>> GetHiddenGroups(PhotoSize size)
@@ -98,7 +98,7 @@ namespace GrassHopper.Data.Repositories
 				.Where(g => g.IsHidden)
 				.Include(g => g.Photos)
 				.ToListAsync();
-			return GVMMaker.MakeGroupVM(groups, size);
+			return VMMaker.MakeGroupVM(groups, size);
 		}
 
 		public async Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size)
@@ -120,7 +120,7 @@ namespace GrassHopper.Data.Repositories
 			Photo photo = await GetPhoto(id);
 			photo.IsHidden = true;
 			dbContext.Photos.Update(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> RestorePhoto(int id)
@@ -128,7 +128,7 @@ namespace GrassHopper.Data.Repositories
 			Photo photo = await GetPhoto(id);
 			photo.IsHidden = false;
 			dbContext.Photos.Update(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> DeletePhoto(int id)
@@ -147,7 +147,7 @@ namespace GrassHopper.Data.Repositories
 				Console.WriteLine(ex);
 			}
 			dbContext.Photos.Remove(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> HideGroup(int id)
@@ -155,7 +155,7 @@ namespace GrassHopper.Data.Repositories
 			PhotoGroup group = await GetPhotoGroup(id);
 			group.IsHidden = true;
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> RestoreGroup(int id)
@@ -164,7 +164,7 @@ namespace GrassHopper.Data.Repositories
 			PhotoGroup group = await GetPhotoGroup(id);
 			group.IsHidden = false;
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> DeleteGroup(int id)
@@ -184,7 +184,7 @@ namespace GrassHopper.Data.Repositories
 				dbContext.Photos.Remove(photo);
 			}
 			dbContext.PhotoGroups.Remove(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> RemoveFromGroup(int photoId)
@@ -200,7 +200,7 @@ namespace GrassHopper.Data.Repositories
 			photo.Group = null;
 			dbContext.Photos.Update(photo);
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> AddToGroup(int photoId, int groupId)
@@ -211,7 +211,7 @@ namespace GrassHopper.Data.Repositories
 			group.Photos.Add(photo);
 			dbContext.Photos.Update(photo);
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> BreakGroup(int groupId)
@@ -225,7 +225,7 @@ namespace GrassHopper.Data.Repositories
 			}
 			group.Photos.Clear();
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 	}
 }
