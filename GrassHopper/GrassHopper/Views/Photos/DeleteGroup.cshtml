@@ -6,8 +6,12 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <div class="row p-2">
+
 	<a asp-controller="Photos" asp-action="AddPhoto" class="
 col-md-2">Add a Photo</a>
+
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn col-md-2">Add a Photo</a>
+
 	<span class="col-md-1"></span>
 	<a asp-controller="Photos" asp-action="AddGroup" class="btn col-md-2">Add a Group</a>
 	<span class="col-md-1"></span>
@@ -28,8 +32,8 @@ col-md-2">Add a Photo</a>
 <hr>
 @foreach (Photo p in Model.Photos)
 {
-	string url = "/photos/" + p.PhotoCode;
-	<img src="@url" alt="@p.PhotoDescription">
+	string url = "/photos/" + p.PhotoCode + "LG" + p.Extension;
+	<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
     <hr>
 }
 
@@ -38,9 +42,11 @@ col-md-2">Add a Photo</a>
     <input asp-for="GroupId" hidden>
     <input asp-for="GroupName" hidden>
     <input asp-for="GroupDescription" hidden>
+
     <input type="submit" value="Delete" class="btn btn danger">
+
+    <input type="submit" value="Delete" class="btn">
+
 </form>
 <hr>
-<a asp-controller="Photos" asp-action="HideGroup" asp-route-groupId="@Model.GroupId" class="btn btn-warning">Hide Group</a>
-<hr>
-<a asp-controller="Photos" asp-action="Index" class="btn btn-secondary">Cancel</a>
+<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@Model.GroupId" class="btn">Cancel</a>

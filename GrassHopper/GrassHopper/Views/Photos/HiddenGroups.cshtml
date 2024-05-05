@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PhotoGroup>
+﻿@model IEnumerable<GroupVM>
 @{
 	ViewData["Title"] = "Groups";
 }
@@ -22,22 +22,24 @@
 
 <h1>Hidden Groups</h1>
 
-@foreach (PhotoGroup g in Model)
+@foreach (GroupVM g in Model)
 {
 	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
-	<h4>@g.GroupName</h4>
-	<span>@g.GroupDescription</span>
+	<h4>@g.Name</h4>
+	<span>@g.Description</span>
 	<hr>
-	@foreach (Photo p in g.Photos)
+	@foreach (PhotoVM p in g.Photos)
 	{
-		string url = "/photos/" + p.PhotoCode;
-		<img src="@url" alt="@p.PhotoDescription">
+		string url = "/photos/" + p.Url;
+		<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
 		<hr>
 	}
 	<br>
-	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="
-">Delete Group</a>
+	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
+
+	<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+
 	<hr>
-	<a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@g.GroupId" class="btn btn-success">Restore Group</a>
+	<a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@g.GroupId" class="btn">Restore Group</a>
 	<hr>
 }

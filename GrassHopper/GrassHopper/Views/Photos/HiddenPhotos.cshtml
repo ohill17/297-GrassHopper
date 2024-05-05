@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Photo>
+﻿@model IEnumerable<PhotoVM>
 @{
 	ViewData["Title"] = "Hidden Photos";
 }
@@ -6,9 +6,13 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <div class="row p-2">
+
 	<a asp-controller="Photos" asp-action="AddPhoto" class="
 
 col-md-2">Add a Photo</a>
+   
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn col-md-2">Add a Photo</a>
+
 	<span class="col-md-1"></span>
 	<a asp-controller="Photos" asp-action="AddGroup" class="btn col-md-2">Add a Group</a>
 	<span class="col-md-1"></span>
@@ -24,23 +28,26 @@ col-md-2">Add a Photo</a>
 
 <h1>Hidden photos</h1>
 
-@foreach (Photo p in Model)
+@foreach (PhotoVM p in Model)
 {
 	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
-	string url = "/photos/" + p.PhotoCode;
+	string url = "/photos/" + p.Url;
 	if (p.Group != null)
 	{
 		<h4>@p.Group.GroupName</h4>
 	}
 	else
 	{
-		<h4>@p.PhotoName</h4>
+		<h4>@p.Name</h4>
 	}
-	<img src="@url" alt="@p.PhotoDescription">
-	<figcaption>@p.PhotoDescription</figcaption>
+	<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+	<figcaption>@p.Description</figcaption>
 	<br>
 	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn btn danger">Delete Photo</a>
+
+	<a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@p.PhotoId" class="btn">Edit Photo</a>
+
 	<hr>
-	<a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@p.PhotoId" class="btn btn-success">Restore Photo</a>
+	<a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@p.PhotoId" class="btn">Restore Photo</a>
 	<hr>
 }

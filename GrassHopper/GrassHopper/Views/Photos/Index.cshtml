@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Photo>
+﻿@model IEnumerable<PhotoVM>
 @{
 	ViewData["Title"] = "Photos";
 }
@@ -22,22 +22,22 @@
 
 <h1>Photos</h1>
 
-@foreach (Photo p in Model)
+@foreach (PhotoVM p in Model)
 {
 	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
-	string url = "/photos/" + p.PhotoCode;
+	string url = "/photos/" + p.Url;
 	if (p.Group != null)
 	{
 		<h4>@p.Group.GroupName</h4>
 	}
 	else
 	{
-		<h4>@p.PhotoName</h4>
+		<h4>@p.Name</h4>
 	}
-	<img src="@url" alt="@p.PhotoDescription">
-	<figcaption>@p.PhotoDescription</figcaption>
+	<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+	<figcaption>@p.Description</figcaption>
 	<br>
 	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn danger">Delete Photo</a>
+
 	<hr>
 }
-
