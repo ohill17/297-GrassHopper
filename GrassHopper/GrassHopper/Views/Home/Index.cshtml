@@ -12,7 +12,7 @@
 
 @if (Model != null && Model.Any())
 {
-    @* <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
             {
@@ -22,13 +22,13 @@
         <div class="carousel-inner">
             @for (int i = 0; i < Model.Count(); i++)
             {
-                Photo p = Model.ElementAt(i);
-                string url = "/photos/" + p.PhotoCode;
+                PhotoVM p = Model.ElementAt(i);
+                string url = "/photos/" + p.Url;
                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" src="@url" alt="@p.PhotoName">
+                    <img class="d-block w-100" src="@url" alt="@p.Name">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>@p.PhotoName</h5>
-                        <p>@p.PhotoDescription</p>
+                        <h5>@p.Name</h5>
+                        <p>@p.Description</p>
                     </div>
                 </div>
             }
@@ -41,5 +41,5 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div> *@
+    </div> 
 }
