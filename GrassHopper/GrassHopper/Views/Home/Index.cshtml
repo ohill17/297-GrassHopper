@@ -12,6 +12,9 @@
 
 @if (Model != null && Model.Any())
 {
+
+    <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+
     @* <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
@@ -19,6 +22,7 @@
                 <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
             }
         </ol>
+
         <div class="carousel-inner">
             @for (int i = 0; i < Model.Count(); i++)
             {
@@ -41,5 +45,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div> *@
+
+    </div>
 }
+

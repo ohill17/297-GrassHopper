@@ -39,7 +39,11 @@ else
     <input asp-for="PhotoName" hidden>
     <input asp-for="PhotoDescription" hidden>
     <input asp-for="PhotoCode" hidden>
+
+    <input type="submit" value="Delete" class="btn danger">
+
     <input type="submit" value="Delete" class="btn">
+
 </form>
 <hr>
 <a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@Model.PhotoId" class="btn">Cancel</a>

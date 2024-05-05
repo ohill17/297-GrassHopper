@@ -6,7 +6,12 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <div class="row p-2">
+
+	<a asp-controller="Photos" asp-action="AddPhoto" class="
+col-md-2">Add a Photo</a>
+
 	<a asp-controller="Photos" asp-action="AddPhoto" class="btn col-md-2">Add a Photo</a>
+
 	<span class="col-md-1"></span>
 	<a asp-controller="Photos" asp-action="AddGroup" class="btn col-md-2">Add a Group</a>
 	<span class="col-md-1"></span>
@@ -37,7 +42,11 @@
     <input asp-for="GroupId" hidden>
     <input asp-for="GroupName" hidden>
     <input asp-for="GroupDescription" hidden>
+
+    <input type="submit" value="Delete" class="btn btn danger">
+
     <input type="submit" value="Delete" class="btn">
+
 </form>
 <hr>
 <a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@Model.GroupId" class="btn">Cancel</a>
