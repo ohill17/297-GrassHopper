@@ -10,5 +10,6 @@ namespace GrassHopper.Models
 		public string GroupDescription { get; set; } = null!;
 		public bool IsHidden { get; set; } = false;
 		public List<Photo> Photos { get; set; } = new();
+		public List<Tag> GroupTags { get; set; } = new();
 	}
 }
