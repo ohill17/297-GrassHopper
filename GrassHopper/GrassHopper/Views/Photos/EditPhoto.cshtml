@@ -1,0 +1,58 @@
+﻿@model Photo
+@{
+    ViewData["Title"] = "Edit Photo";
+    string url = "/photos/" + Model.PhotoCode + "LG" + Model.Extension;
+}
+<h1>Edit Photo</h1>
+<form method="post" asp-action="EditPhoto">
+    <input asp-for="PhotoId" hidden>
+    <label asp-for="PhotoName">Name: </label>
+    <input asp-for="PhotoName"><br>
+    <label asp-for="PhotoDescription">Description: </label>
+    <input asp-for="PhotoDescription"><br>
+    <input type="submit" value="Submit">
+</form>
+<hr>
+<img src="@url" alt="@Model.PhotoDescription" style="aspect-ratio:auto; width:50%;">
+<hr>
+<br>
+@if (Model.Group != null)
+{
+    <a asp-controller="Photos" asp-action="UnGroup" asp-route-photoId="@Model.PhotoId" class="btn">Ungroup Photo</a>
+    <br>
+}
+else
+{
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">Add to group</button>
+        <ul class="dropdown-menu">
+            @if (ViewBag.Groups.Count < 1)
+            {
+                <li><a class="dropdown-item" href="#">No groups exist</a></li>
+            }
+            else
+            {
+                foreach (GroupVM g in ViewBag.Groups)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-controller="Photos" asp-action="AddToGroup"
+                           asp-route-photoId="@Model.PhotoId" asp-route-groupId="@g.GroupId">@g.Name</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+}
+<br>
+@if (Model.IsHidden)
+{
+    <a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@Model.PhotoId" class="btn">Restore Photo</a>
+}
+else
+{
+    <a asp-controller="Photos" asp-action="HidePhoto" asp-route-photoId="@Model.PhotoId" class="btn">Hide Photo</a>
+}
+<br><br>
+<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@Model.PhotoId" class="btn">Delete Photo</a>
+<br><br>
+<a asp-controller="Photos" asp-action="Index" class="btn">Cancel</a>

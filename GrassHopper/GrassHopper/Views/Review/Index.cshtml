@@ -1,6 +1,6 @@
 ﻿@model List<Review>
-
-<script>
+    
+ <script>
     let APP_ID = '1146299576721168';
     let PAGE_ID = '227047383835993';
     let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO6NNxotBYr0Tyk8LS8JERQout077xYeY0Dhy5h18asHCsyOpyXl7vvhGBfxaYr3yZBjiM4a7y9sD2aOHUUILVTIyJZAr179SA8ReYy4sMyHVT28QLZCUGSjC2skeplAMF9D2CLd30sxQuKt4iCKifNhIflWDv3FeokeO7ET8tYgT5gnO8ALEDkiMZA4ZBvyL7bCnYqjFxO8IZD';
@@ -39,7 +39,22 @@
         FB.api(PATH, METHOD, PARAMS, CALLBACK);
     };
 </script>
-<script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>
+<script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>  
+     
+
+<div class="container">
+    <div class="body">
+        @foreach (var review in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <div class="name">@review.ReviewerName</div>
+                    <div class="date">@review.ReviewDate</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@review.ReviewBody</p>
+                    <div class="stars">@review.ReviewRating Stars / 5 Stars</div>
+                </div>
 
 
 <div class="body" id="body">
@@ -52,6 +67,30 @@
                 <p class="card-text">-@review.ReviewerName</p>
                 <p class="card-text">@review.ReviewDate</p>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var reviews = document.querySelectorAll(".card");
+        reviews.forEach(function (review, index) {
+            setTimeout(function () {
+                review.classList.add("active");
+            }, 100 * index);
+        });
+    });
+</script>
+
+<style>
+    .card {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+        .card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+</style>

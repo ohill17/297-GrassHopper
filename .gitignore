@@ -397,3 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /GrassHopper/GrassHopper/appsettings.Development.json
+/GrassHopper/GrassHopper/appsettinngs.json
+/GrassHopper/GrassHopper/appsettings.Production.json

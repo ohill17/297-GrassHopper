@@ -25,6 +25,10 @@ namespace GrassHopper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
