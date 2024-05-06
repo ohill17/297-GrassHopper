@@ -12,6 +12,8 @@ namespace GrassHopper.Data.Repositories
         public Task<List<GroupVM>> GetAllGroups(PhotoSize size);
         public Task<List<GroupVM>> GetHiddenGroups(PhotoSize size);
         public Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size);
+        public Task<List<PhotoVM>> GetPhotosByTag(string tag, PhotoSize size);
+        public Task<List<GroupVM>> GetGroupsByTag(string tag, PhotoSize size);
         public Task<int> AddPhoto(Photo photo);
         public Task<int> UpdatePhoto(Photo photo);
         public Task<int> AddGroup(PhotoGroup group);
@@ -25,5 +27,9 @@ namespace GrassHopper.Data.Repositories
         public Task<int> RemoveFromGroup(int photoId);
         public Task<int> AddToGroup(int photoId, int groupId);
         public Task<int> BreakGroup(int groupId); //Dissolves a group, leaving behind all photos that were part of it
+        public Task<int> AddPhotoTag(int photoId, string tag);
+        public Task<int> RemovePhotoTag(int photoId, string tag);
+        public Task<int> AddGroupTag(int groupId, string tag);
+        public Task<int> RemoveGroupTag(int groupId, string tag);
     }
 }

@@ -15,7 +15,7 @@ namespace GrassHopper.Data.Repositories
 		public async Task<int> AddPhoto(Photo photo)
 		{
 			await dbContext.Photos.AddAsync(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> UpdatePhoto(Photo photo)
@@ -24,13 +24,13 @@ namespace GrassHopper.Data.Repositories
 			oldPhoto.PhotoName = photo.PhotoName;
 			oldPhoto.PhotoDescription = photo.PhotoDescription;
 			dbContext.Photos.Update(oldPhoto);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> AddGroup(PhotoGroup group)
 		{
 			await dbContext.PhotoGroups.AddAsync(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> UpdateGroup(PhotoGroup group)
@@ -39,7 +39,7 @@ namespace GrassHopper.Data.Repositories
 			oldGroup.GroupName = group.GroupName;
 			oldGroup.GroupDescription = group.GroupDescription;
 			dbContext.PhotoGroups.Update(oldGroup);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<List<PhotoVM>> GetAllPhotos(PhotoSize size)
@@ -71,15 +71,36 @@ namespace GrassHopper.Data.Repositories
             return photoVMs;
         }
 
+		public async Task<List<PhotoVM>> GetPhotosByTag(string tag, PhotoSize size)
+		{
+			var photos = await dbContext.Photos
+				.Where(p => !p.IsHidden && p.PhotoTags.Any(t => t.TagText == tag))
+				.Include(p => p.PhotoTags)
+				.Include(p => p.Group)
+				.ToListAsync();
+			List<PhotoVM> photoVMs = new();
+			foreach(Photo p in photos)
+			{
+				photoVMs.Add(new PhotoVM(p, size));
+			}
+			return photoVMs;
+		}
+
 		public async Task<Photo> GetPhoto(int id)
 		{
-			return await dbContext.Photos.Where(p => p.PhotoId == id).Include(p => p.Group).FirstAsync();
+			return await dbContext.Photos
+				.Where(p => p.PhotoId == id)
+				.Include(p => p.Group)
+				.Include(p => p.PhotoTags)
+				.FirstAsync();
 		}
 
 		public async Task<PhotoGroup> GetPhotoGroup(int id)
 		{
-			return await dbContext.PhotoGroups.Where(g => g.GroupId == id)
+			return await dbContext.PhotoGroups
+				.Where(g => g.GroupId == id)
 				.Include(g => g.Photos)
+				.Include(g => g.GroupTags)
 				.FirstAsync();
 		}
 
@@ -89,7 +110,7 @@ namespace GrassHopper.Data.Repositories
 				.Where(g => g.IsHidden == false)
 				.Include(g => g.Photos)
 				.ToListAsync();
-			return GVMMaker.MakeGroupVM(groups, size);
+			return VMMaker.MakeGroupVM(groups, size);
 		}
 
 		public async Task<List<GroupVM>> GetHiddenGroups(PhotoSize size)
@@ -98,7 +119,16 @@ namespace GrassHopper.Data.Repositories
 				.Where(g => g.IsHidden)
 				.Include(g => g.Photos)
 				.ToListAsync();
-			return GVMMaker.MakeGroupVM(groups, size);
+			return VMMaker.MakeGroupVM(groups, size);
+		}
+
+		public async Task<List<GroupVM>> GetGroupsByTag(string tag, PhotoSize size)
+		{
+			var groups = await dbContext.PhotoGroups
+				.Where(g => !g.IsHidden && g.GroupTags.Any(t => t.TagText == tag))
+				.Include(g => g.Photos)
+				.ToListAsync();
+			return VMMaker.MakeGroupVM(groups, size);
 		}
 
 		public async Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size)
@@ -120,7 +150,7 @@ namespace GrassHopper.Data.Repositories
 			Photo photo = await GetPhoto(id);
 			photo.IsHidden = true;
 			dbContext.Photos.Update(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> RestorePhoto(int id)
@@ -128,7 +158,7 @@ namespace GrassHopper.Data.Repositories
 			Photo photo = await GetPhoto(id);
 			photo.IsHidden = false;
 			dbContext.Photos.Update(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> DeletePhoto(int id)
@@ -147,7 +177,7 @@ namespace GrassHopper.Data.Repositories
 				Console.WriteLine(ex);
 			}
 			dbContext.Photos.Remove(photo);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> HideGroup(int id)
@@ -155,7 +185,7 @@ namespace GrassHopper.Data.Repositories
 			PhotoGroup group = await GetPhotoGroup(id);
 			group.IsHidden = true;
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> RestoreGroup(int id)
@@ -164,7 +194,7 @@ namespace GrassHopper.Data.Repositories
 			PhotoGroup group = await GetPhotoGroup(id);
 			group.IsHidden = false;
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> DeleteGroup(int id)
@@ -184,7 +214,7 @@ namespace GrassHopper.Data.Repositories
 				dbContext.Photos.Remove(photo);
 			}
 			dbContext.PhotoGroups.Remove(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> RemoveFromGroup(int photoId)
@@ -200,7 +230,7 @@ namespace GrassHopper.Data.Repositories
 			photo.Group = null;
 			dbContext.Photos.Update(photo);
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> AddToGroup(int photoId, int groupId)
@@ -211,7 +241,7 @@ namespace GrassHopper.Data.Repositories
 			group.Photos.Add(photo);
 			dbContext.Photos.Update(photo);
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
 
 		public async Task<int> BreakGroup(int groupId)
@@ -225,7 +255,39 @@ namespace GrassHopper.Data.Repositories
 			}
 			group.Photos.Clear();
 			dbContext.PhotoGroups.Update(group);
-			return dbContext.SaveChanges();
+			return await dbContext.SaveChangesAsync();
 		}
-	}
+
+        public async Task<int> AddPhotoTag(int photoId, string tag)
+        {
+            Photo photo = await GetPhoto(photoId);
+			photo.PhotoTags.Add(new() { TagText = tag });
+			dbContext.Photos.Update(photo);
+			return await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> RemovePhotoTag(int photoId, string tag)
+        {
+            Photo photo = await GetPhoto(photoId);
+            photo.PhotoTags.Remove(new() { TagText = tag });
+            dbContext.Photos.Update(photo);
+            return await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> AddGroupTag(int groupId, string tag)
+        {
+			PhotoGroup group = await GetPhotoGroup(groupId);
+			group.GroupTags.Add(new() { TagText = tag });
+			dbContext.PhotoGroups.Update(group);
+			return await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> RemoveGroupTag(int groupId, string tag)
+        {
+            PhotoGroup group = await GetPhotoGroup(groupId);
+            group.GroupTags.Remove(new() { TagText = tag });
+            dbContext.PhotoGroups.Update(group);
+            return await dbContext.SaveChangesAsync();
+        }
+    }
 }

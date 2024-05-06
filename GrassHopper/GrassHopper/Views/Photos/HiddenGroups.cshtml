@@ -35,7 +35,10 @@
 		<hr>
 	}
 	<br>
+	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
+
 	<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+
 	<hr>
 	<a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@g.GroupId" class="btn">Restore Group</a>
 	<hr>

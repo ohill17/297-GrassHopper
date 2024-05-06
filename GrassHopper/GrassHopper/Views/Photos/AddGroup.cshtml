@@ -6,28 +6,37 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <div class="row p-2">
-	<a asp-controller="Photos" asp-action="AddPhoto" class="btn col-md-2">Add a Photo</a>
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn primary col-md-2">Add a Photo</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="AddGroup" class="btn col-md-2">Add a Group</a>
+	<a asp-controller="Photos" asp-action="AddGroup" class="btn primary col-md-2">Add a Group</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="Index" class="btn col-md-2">View Photos</a>
+	<a asp-controller="Photos" asp-action="Index" class="btn primary col-md-2">View Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="Groups" class="btn col-md-2">View Groups</a>
+	<a asp-controller="Photos" asp-action="Groups" class="btn primary col-md-2">View Groups</a>
 </div>
 <div class="row p-2">
-	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn col-md-2">Hidden Photos</a>
+	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn primary col-md-2">Hidden Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn col-md-2">Hidden Groups</a>
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn primary col-md-2">Hidden Groups</a>
 </div>
 
 <h1>Upload a group of photos: </h1>
-<form method="post" asp-action="AddGroup" enctype="multipart/form-data">
-    <label asp-for="GroupName">Name: </label>
-    <input asp-for="GroupName"><br>
-    <label asp-for="GroupDescription">Description: </label>
-    <input asp-for="GroupDescription"><br>
-    <label asp-for="Files">Upload a file: </label>
-    <input asp-for="Files" type="file" accept="image/*" required multiple><br >
-    <span>Hold down SHIFT or CTRL to select multiple files</span><br>
-    <input type="submit" value="Submit">
+
+<form method="post" asp-action="AddGroup" enctype="multipart/form-data" class="form-container">
+    <div class="form-group">
+        <label asp-for="GroupName">Name:</label>
+        <input asp-for="GroupName" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="GroupDescription">Description:</label>
+        <input asp-for="GroupDescription" class="form-control">
+    </div>
+    <small class="form-text text-muted">Hold down SHIFT or CTRL to select multiple files</small>
+    <div class="form-group">
+        <div class="custom-file">
+            <input asp-for="Files" type="file" class="custom-file-input" accept="image/*" required multiple>
+            <small class="form-text text-muted">Accepted file types: .jpg, .jpeg, .png</small>
+        </div>
+    </div>
+    <button type="submit" class="btn primary primary">Submit</button>
 </form>

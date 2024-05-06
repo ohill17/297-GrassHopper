@@ -37,6 +37,7 @@
 	<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
 	<figcaption>@p.Description</figcaption>
 	<br>
-	<a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@p.PhotoId" class="btn">Edit Photo</a>
+	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn danger">Delete Photo</a>
+
 	<hr>
 }
