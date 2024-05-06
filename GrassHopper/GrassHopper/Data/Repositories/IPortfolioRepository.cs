@@ -13,5 +13,7 @@ namespace GrassHopper.Data.Repositories
         public Task<int> HidePortfolio(int id);
         public Task<int> RestorePortfolio(int id);
         public Task<int> DeletePortfolio(int id);
+        public Task<int> AddPortfolioTag(int id, string tag);
+        public Task<int> RemovePortfolioTag(int id, string tag);
     }
 }

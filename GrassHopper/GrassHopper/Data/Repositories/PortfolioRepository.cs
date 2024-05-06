@@ -64,6 +64,7 @@ namespace GrassHopper.Data.Repositories
                 .Include(p => p.PortfolioThumbnail)
                 .Include(p => p.PortfolioPGroups)
                 .ThenInclude(g => g.Photos)
+                .Include(p => p.PortfolioTags)
                 .Where(p => p.IsHidden)
                 .FirstAsync();
         }
@@ -93,6 +94,22 @@ namespace GrassHopper.Data.Repositories
             oldPortfolio.PortfolioThumbnail = portfolio.PortfolioThumbnail;
             oldPortfolio.PortfolioPGroups = portfolio.PortfolioPGroups;
             dbContext.Portfolios.Update(oldPortfolio);
+            return await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> AddPortfolioTag(int id, string tag)
+        {
+            Portfolio portfolio = await GetPortfolio(id);
+            portfolio.PortfolioTags.Add(new() { TagText = tag });
+            dbContext.Portfolios.Update(portfolio);
+            return await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> RemovePortfolioTag(int id, string tag)
+        {
+            Portfolio portfolio = await GetPortfolio(id);
+            portfolio.PortfolioTags.Remove(new() { TagText = tag });
+            dbContext.Portfolios.Update(portfolio);
             return await dbContext.SaveChangesAsync();
         }
     }
