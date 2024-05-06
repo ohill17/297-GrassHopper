@@ -11,3 +11,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 100);
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    var reviews = document.querySelectorAll(".slide-in-stagger");
+    reviews.forEach(function (review) {
+        setTimeout(function () {
+            review.classList.add("active");
+        }, 200);
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    var reviews = document.querySelectorAll(".slide-in-stagger2");
+    reviews.forEach(function (review) {
+        setTimeout(function () {
+            review.classList.add("active");
+        }, 300);
+    });
+});
