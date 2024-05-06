@@ -82,6 +82,9 @@ namespace GrassHopper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsFromFacebook")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("ReviewBody")
                         .IsRequired()
                         .HasColumnType("longtext");

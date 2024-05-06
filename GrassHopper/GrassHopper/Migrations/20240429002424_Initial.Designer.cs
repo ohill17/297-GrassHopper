@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrassHopper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240415025956_Initial")]
+    [Migration("20240429002424_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,9 @@ namespace GrassHopper.Migrations
                     b.Property<int>("ReviewID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsFromFacebook")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ReviewBody")
                         .IsRequired()
