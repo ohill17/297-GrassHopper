@@ -47,6 +47,17 @@ namespace GrassHopper.Data.Repositories
             return VMMaker.MakePortfolioVM(portfolios);
         }
 
+        public async Task<List<PortfolioVM>> GetPortfoliosByTag(string tag)
+        {
+            var portfolios = await dbContext.Portfolios
+                .Include(p => p.PortfolioThumbnail)
+                .Include(p => p.PortfolioPGroups)
+                .ThenInclude(g => g.Photos)
+                .Where(p => !p.IsHidden && p.PortfolioTags.Any(t => t.TagText == tag))
+                .ToListAsync();
+            return VMMaker.MakePortfolioVM(portfolios);
+        }
+
         public async Task<Portfolio> GetPortfolio(int id)
         {
             return await dbContext.Portfolios

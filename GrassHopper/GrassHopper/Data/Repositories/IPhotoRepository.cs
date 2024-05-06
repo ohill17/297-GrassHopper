@@ -12,6 +12,8 @@ namespace GrassHopper.Data.Repositories
         public Task<List<GroupVM>> GetAllGroups(PhotoSize size);
         public Task<List<GroupVM>> GetHiddenGroups(PhotoSize size);
         public Task<List<PhotoVM>> GetAllUngrouped(PhotoSize size);
+        public Task<List<PhotoVM>> GetPhotosByTag(string tag, PhotoSize size);
+        public Task<List<GroupVM>> GetGroupsByTag(string tag, PhotoSize size);
         public Task<int> AddPhoto(Photo photo);
         public Task<int> UpdatePhoto(Photo photo);
         public Task<int> AddGroup(PhotoGroup group);

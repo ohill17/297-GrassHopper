@@ -71,6 +71,21 @@ namespace GrassHopper.Data.Repositories
             return photoVMs;
         }
 
+		public async Task<List<PhotoVM>> GetPhotosByTag(string tag, PhotoSize size)
+		{
+			var photos = await dbContext.Photos
+				.Where(p => !p.IsHidden && p.PhotoTags.Any(t => t.TagText == tag))
+				.Include(p => p.PhotoTags)
+				.Include(p => p.Group)
+				.ToListAsync();
+			List<PhotoVM> photoVMs = new();
+			foreach(Photo p in photos)
+			{
+				photoVMs.Add(new PhotoVM(p, size));
+			}
+			return photoVMs;
+		}
+
 		public async Task<Photo> GetPhoto(int id)
 		{
 			return await dbContext.Photos.Where(p => p.PhotoId == id).Include(p => p.Group).FirstAsync();
@@ -96,6 +111,15 @@ namespace GrassHopper.Data.Repositories
 		{
 			var groups = await dbContext.PhotoGroups
 				.Where(g => g.IsHidden)
+				.Include(g => g.Photos)
+				.ToListAsync();
+			return VMMaker.MakeGroupVM(groups, size);
+		}
+
+		public async Task<List<GroupVM>> GetGroupsByTag(string tag, PhotoSize size)
+		{
+			var groups = await dbContext.PhotoGroups
+				.Where(g => !g.IsHidden && g.GroupTags.Any(t => t.TagText == tag))
 				.Include(g => g.Photos)
 				.ToListAsync();
 			return VMMaker.MakeGroupVM(groups, size);
