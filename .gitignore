@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+GrassHopper/appsettings.json
+
 # User-specific files
 *.rsuser
 *.suo
@@ -397,3 +399,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /GrassHopper/GrassHopper/appsettings.Development.json
+/GrassHopper/GrassHopper/appsettinngs.json
+/GrassHopper/GrassHopper/appsettings.Production.json

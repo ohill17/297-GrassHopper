@@ -3,6 +3,7 @@ using System;
 using GrassHopper.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrassHopper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240506201237_Backend")]
+    partial class Backend
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +119,6 @@ namespace GrassHopper.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsFromFacebook")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("ReviewBody")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -137,31 +136,6 @@ namespace GrassHopper.Migrations
                     b.HasKey("ReviewID");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("GrassHopper.Models.Tag", b =>
-                {
-                    b.Property<string>("TagText")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int?>("PhotoGroupGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PhotoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PortfolioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TagText");
-
-                    b.HasIndex("PhotoGroupGroupId");
-
-                    b.HasIndex("PhotoId");
-
-                    b.HasIndex("PortfolioId");
-
-                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("GrassHopper.Models.Photo", b =>
@@ -189,38 +163,14 @@ namespace GrassHopper.Migrations
                     b.Navigation("PortfolioThumbnail");
                 });
 
-            modelBuilder.Entity("GrassHopper.Models.Tag", b =>
-                {
-                    b.HasOne("GrassHopper.Models.PhotoGroup", null)
-                        .WithMany("GroupTags")
-                        .HasForeignKey("PhotoGroupGroupId");
-
-                    b.HasOne("GrassHopper.Models.Photo", null)
-                        .WithMany("PhotoTags")
-                        .HasForeignKey("PhotoId");
-
-                    b.HasOne("GrassHopper.Models.Portfolio", null)
-                        .WithMany("PortfolioTags")
-                        .HasForeignKey("PortfolioId");
-                });
-
-            modelBuilder.Entity("GrassHopper.Models.Photo", b =>
-                {
-                    b.Navigation("PhotoTags");
-                });
-
             modelBuilder.Entity("GrassHopper.Models.PhotoGroup", b =>
                 {
-                    b.Navigation("GroupTags");
-
                     b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("GrassHopper.Models.Portfolio", b =>
                 {
                     b.Navigation("PortfolioPGroups");
-
-                    b.Navigation("PortfolioTags");
                 });
 #pragma warning restore 612, 618
         }

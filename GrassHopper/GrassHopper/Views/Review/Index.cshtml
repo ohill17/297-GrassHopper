@@ -1,5 +1,6 @@
 ﻿@model List<Review>
 
+<<<<<<< HEAD
 <script>
     let APP_ID = '1146299576721168';
     let PAGE_ID = '227047383835993';
@@ -51,7 +52,46 @@
                 <p class="card-text">@review.ReviewBody</p>
                 <p class="card-text">-@review.ReviewerName</p>
                 <p class="card-text">@review.ReviewDate</p>
+=======
+<div class="container">
+    <div class="body">
+        @foreach (var review in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <div class="name">@review.ReviewerName</div>
+                    <div class="date">@review.ReviewDate</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@review.ReviewBody</p>
+                    <div class="stars">@review.ReviewRating Stars / 5 Stars</div>
+                </div>
+>>>>>>> Development
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var reviews = document.querySelectorAll(".card");
+        reviews.forEach(function (review, index) {
+            setTimeout(function () {
+                review.classList.add("active");
+            }, 100 * index);
+        });
+    });
+</script>
+
+<style>
+    .card {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+        .card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+</style>
