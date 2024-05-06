@@ -1,7 +1,12 @@
 ﻿@model List<Review>
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <script>
+=======
+    
+ <script>
+>>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
     let APP_ID = '1146299576721168';
     let PAGE_ID = '227047383835993';
     let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO6NNxotBYr0Tyk8LS8JERQout077xYeY0Dhy5h18asHCsyOpyXl7vvhGBfxaYr3yZBjiM4a7y9sD2aOHUUILVTIyJZAr179SA8ReYy4sMyHVT28QLZCUGSjC2skeplAMF9D2CLd30sxQuKt4iCKifNhIflWDv3FeokeO7ET8tYgT5gnO8ALEDkiMZA4ZBvyL7bCnYqjFxO8IZD';
@@ -40,8 +45,10 @@
         FB.api(PATH, METHOD, PARAMS, CALLBACK);
     };
 </script>
-<script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>
+<script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>  
+     
 
+<<<<<<< HEAD
 
 <div class="body" id="body">
     @foreach (var review in Model)
@@ -53,6 +60,8 @@
                 <p class="card-text">-@review.ReviewerName</p>
                 <p class="card-text">@review.ReviewDate</p>
 =======
+=======
+>>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
 <div class="container">
     <div class="body">
         @foreach (var review in Model)
@@ -66,7 +75,21 @@
                     <p class="card-text">@review.ReviewBody</p>
                     <div class="stars">@review.ReviewRating Stars / 5 Stars</div>
                 </div>
+<<<<<<< HEAD
 >>>>>>> Development
+=======
+
+
+<div class="body" id="body">
+    @foreach (var review in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@review.ReviewRating Stars / 5 Stars</h5>
+                <p class="card-text">@review.ReviewBody</p>
+                <p class="card-text">-@review.ReviewerName</p>
+                <p class="card-text">@review.ReviewDate</p>
+>>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
             </div>
         }
     </div>
