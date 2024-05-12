@@ -5,6 +5,13 @@
 
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX THIS LATER-->
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 <h1>Portfolio</h1>
 
 @foreach (var portfolio in Model)
@@ -15,36 +22,52 @@
             <div class="portfolio-default-name"><h3 class="portfolio-name">@portfolio.Name</h3></div>
             <div class="portfolio-default-summary"><span class="portfolio-name">@portfolio.Summary</span></div>
             <div class="portfolio-default-photos">
-                <div class="carousel-inner">
-                    @{
-                        GroupVM? maingroup = portfolio.Groups[0] ?? null;
-                    }
-                    @if (maingroup is not null)
-                    {
-                        @for (int i = 0; i < maingroup.Photos.Count(); i++)
+                <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @for (int i = 0; i < Model.Count(); i++)
                         {
-                            PhotoVM p = maingroup.Photos.ElementAt(i);
-                            string url = "/photos/" + p.Url;
-                            <div class="carousel-item @(i == 0 ? "active" : "")">
-                                <img class="d-block w-100" src="@url" alt="@p.Name">
+                            <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                        }
+                    </ol>
+                    <div class="carousel-inner">
+                        @{
+                            GroupVM? maingroup = portfolio.Groups[0] ?? null;
+                        }
+                        @if (maingroup is not null)
+                        {
+                            @for (int i = 0; i < maingroup.Photos.Count(); i++)
+                            {
+                                PhotoVM p = maingroup.Photos.ElementAt(i);
+                                string url = "/photos/" + p.Url;
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <img class="d-block w-100" src="@url" alt="@p.Name">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>@p.Name</h5>
+                                        <p>@p.Description</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else if (portfolio.Thumbnail is not null)
+                        {
+                            string url = "/photos/" + portfolio.Thumbnail.Url;
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="@url" alt="@portfolio.Thumbnail.Name">
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>@p.Name</h5>
-                                    <p>@p.Description</p>
+                                    <h5>@portfolio.Thumbnail.Name</h5>
+                                    <p>@portfolio.Thumbnail.Description</p>
                                 </div>
                             </div>
                         }
-                    }
-                    else if (portfolio.Thumbnail is not null)
-                    {
-                        string url = "/photos/" + portfolio.Thumbnail.Url;
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="@url" alt="@portfolio.Thumbnail.Name">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>@portfolio.Thumbnail.Name</h5>
-                                <p>@portfolio.Thumbnail.Description</p>
-                            </div>
-                        </div>
-                    }
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
         </div>
