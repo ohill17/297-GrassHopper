@@ -37,7 +37,7 @@
     }
     @if (groups.Count > 0)
     {
-        <select name="pGroupId">
+        <select name="pGroupId" id="groupSelect">
         @foreach (GroupVM g in groups)
         {
             <option value="@g.GroupId">
