@@ -33,15 +33,17 @@ namespace GrassHopper.Controllers
 		[HttpGet]
 		public async Task<IActionResult> CreatePortfolio()
 		{
-			return View();
+            ViewBag.PhotoGroups = await photoRepository.GetAllGroups(PhotoSize.Medium);
+            return View();
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreatePortfolio(Portfolio p)
+		public async Task<IActionResult> CreatePortfolio(Portfolio p, int pGroupId)
 		{
+			PhotoGroup photoGroup = await photoRepository.GetPhotoGroup(pGroupId);
+			p.PortfolioPGroups.Add(photoGroup);
 			await portRepository.AddPortfolio(p);
-			ViewBag.PhotoGroups = await photoRepository.GetAllGroups(PhotoSize.Medium);
-			return RedirectToAction("Admin");
+			return RedirectToAction("PortfolioAdmin");
 		}
 
 		[HttpGet]
@@ -55,13 +57,13 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> EditPortfolio(Portfolio p)
 		{
 			await portRepository.UpdatePortfolio(p);
-			return RedirectToAction("Admin");
+			return RedirectToAction("PortfolioAdmin");
 		}
 
 		public async Task<IActionResult> HidePortfolio(int id)
 		{
 			await portRepository.HidePortfolio(id);
-			return RedirectToAction("Admin");
+			return RedirectToAction("PortfolioAdmin");
 		}
 
 		public async Task<IActionResult> HiddenPortfolios()
@@ -73,7 +75,7 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> RestorePortfolio(int id)
 		{
 			await portRepository.RestorePortfolio(id);
-			return RedirectToAction("Admin");
+			return RedirectToAction("PortfolioAdmin");
 		}
 
 		public async Task<IActionResult> DeletePortfolio(int id)
@@ -84,7 +86,7 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> ConfirmDeletePortfolio(int id)
 		{
 			await portRepository.DeletePortfolio(id);
-			return RedirectToAction("Admin");
+			return RedirectToAction("PortfolioAdmin");
 		}
 	}
 }

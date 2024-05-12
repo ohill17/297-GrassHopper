@@ -268,8 +268,8 @@ input[type="submit"] {
 
 .portfolio-parent {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr) 5fr;
+    grid-template-rows: 1fr 2fr;
     grid-column-gap: 7px;
     grid-row-gap: 7px;
 }
@@ -285,7 +285,7 @@ input[type="submit"] {
 }
 
 .portfolio-default-photos {
-    grid-area: 1 / 3 / 4 / 6;
+    grid-area: 1 / 3 / 4 / 8;
 }
 
 /* COMPARISON BEFORE / AFTER */

@@ -4,7 +4,6 @@
 }
 
 <!--This page needs custom javascript probably for ideal functionality (it definitely needs custom javascript)-->
-
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <h1>Create portfolio item</h1>
@@ -27,13 +26,30 @@
     <div id="layout">
         <div class="portfolio-parent">
             <div class="portfolio-default-name" id="name"><input asp-for="PortfolioName" class="portfolio-name" placeholder="Portfolio Name" required></div>
-            <div class="portfolio-default-summary" id="summary"><input asp-for="PortfolioSummary" class="portfolio-summary" placeholder="Write a summary here" required></div>
+            <div class="portfolio-default-summary" id="summary"><textarea asp-for="PortfolioSummary" class="portfolio-summary" placeholder="Write a summary here" required rows="10" cols="50"></textarea></div>
             <div class="portfolio-default-photos" id="photos">
             </div>
         </div>
     </div>
+    <hr>
     @{
-        List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>(); 
+        List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>();
     }
-    @Html.ListBoxFor(p => p.PortfolioPGroups, new SelectList(groups), "Select photo groups");
+    @if (groups.Count > 0)
+    {
+        <select name="pGroupId">
+        @foreach (GroupVM g in groups)
+        {
+            <option value="@g.GroupId">
+                @g.Name
+            </option>
+        }
+        </select>
+    }
+    else
+    {
+        <span>There are no selectable photo groups.</span>
+    }
+    <hr>
+    <input type="submit" value="Create portfolio item">
 </form>

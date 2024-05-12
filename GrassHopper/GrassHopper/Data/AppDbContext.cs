@@ -17,5 +17,13 @@ namespace GrassHopper.Data
         public DbSet<PhotoGroup> PhotoGroups { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Portfolio>()
+                .HasMany(p => p.PortfolioPGroups)
+                .WithMany(g => g.AssocPortfolios);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
