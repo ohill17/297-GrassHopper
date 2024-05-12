@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Portfolio>
+@{
+    ViewData["Title"] = "Portfolio - Admin";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX THIS LATER-->
+
+<h1>Manage portfolio items</h1>
+
+<div class="row p-2">
+    <a asp-controller="Portfolios" asp-action="CreatePortfolio" class="btn col-md-2">Create a portfolio item</a>
+</div>
+
+
+@foreach (var portfolio in Model)
+{
+    <div class="row p-2">
+        <div class="col-md-2">@portfolio.PortfolioName</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <a asp-controller="Portfolios" asp-action="EditPortfolio" asp-route-id="@portfolio.PortfolioId" class="btn">Edit portfolio item</a>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            @if(portfolio.IsHidden)
+            {
+                <a asp-controller="Portfolios" asp-action="HidePortfolio" asp-route-id="@portfolio.PortfolioId" class="btn">Hide portfolio item</a>
+            }
+            else
+            {
+                <a asp-controller="Portfolios" asp-action="RestorePortfolio" asp-route-id="@portfolio.PortfolioId" class="btn">Restore portfolio item</a>
+            }
+        </div>
+    </div>
+}

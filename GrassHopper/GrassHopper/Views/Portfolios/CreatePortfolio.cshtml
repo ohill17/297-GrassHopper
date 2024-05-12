@@ -1,0 +1,39 @@
+﻿@model Portfolio
+@{
+    ViewData["Title"] = "Create Portfolio Item";
+}
+
+<!--This page needs custom javascript probably for ideal functionality (it definitely needs custom javascript)-->
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
+
+<h1>Create portfolio item</h1>
+<br>
+
+<div class="row p-2">
+    <div class="col-md-5">Portfolio format:</div>
+</div>
+<div class="row p-2">
+    <div class="col-md-2">
+        <span id="default" name="default" class="btn">Default</span>
+    </div>
+    <div class="col-md-2">
+        <span id="compba" name="compba" class="btn">Comparison: Before / After</span>
+    </div>
+</div>
+<br>
+
+<form method="post" asp-action="CreatePortfolio" class="form-container">
+    <div id="layout">
+        <div class="portfolio-parent">
+            <div class="portfolio-default-name" id="name"><input asp-for="PortfolioName" class="portfolio-name" placeholder="Portfolio Name" required></div>
+            <div class="portfolio-default-summary" id="summary"><input asp-for="PortfolioSummary" class="portfolio-summary" placeholder="Write a summary here" required></div>
+            <div class="portfolio-default-photos" id="photos">
+            </div>
+        </div>
+    </div>
+    @{
+        List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>(); 
+    }
+    @Html.ListBoxFor(p => p.PortfolioPGroups, new SelectList(groups), "Select photo groups");
+</form>

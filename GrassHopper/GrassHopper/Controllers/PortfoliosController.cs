@@ -6,19 +6,27 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace GrassHopper.Controllers
 {
-	public class PortfolioController : Controller
+	public class PortfoliosController : Controller
 	{
 		private readonly IPortfolioRepository portRepository;
+		private readonly IPhotoRepository photoRepository;
 		private readonly AppDbContext dbContext;
 
-		public PortfolioController (IPortfolioRepository p, AppDbContext c)
+		public PortfoliosController (IPortfolioRepository po, IPhotoRepository ph, AppDbContext c)
 		{
-			portRepository = p;
+			portRepository = po;
+			photoRepository = ph;
 			dbContext = c;
 		}
 		public async Task<IActionResult> Index()
 		{
 			List<PortfolioVM> portfolios = await portRepository.GetAllPortfolios();
+			return View(portfolios);
+		}
+		
+		public async Task<IActionResult> PortfolioAdmin()
+		{
+			List<Portfolio> portfolios = await portRepository.GetAllPortfoliosAdmin();
 			return View(portfolios);
 		}
 
@@ -32,7 +40,8 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> CreatePortfolio(Portfolio p)
 		{
 			await portRepository.AddPortfolio(p);
-			return RedirectToAction("Index");
+			ViewBag.PhotoGroups = await photoRepository.GetAllGroups(PhotoSize.Medium);
+			return RedirectToAction("Admin");
 		}
 
 		[HttpGet]
@@ -46,13 +55,13 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> EditPortfolio(Portfolio p)
 		{
 			await portRepository.UpdatePortfolio(p);
-			return RedirectToAction("Index");
+			return RedirectToAction("Admin");
 		}
 
 		public async Task<IActionResult> HidePortfolio(int id)
 		{
 			await portRepository.HidePortfolio(id);
-			return RedirectToAction("Index");
+			return RedirectToAction("Admin");
 		}
 
 		public async Task<IActionResult> HiddenPortfolios()
@@ -64,7 +73,7 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> RestorePortfolio(int id)
 		{
 			await portRepository.RestorePortfolio(id);
-			return RedirectToAction("Index");
+			return RedirectToAction("Admin");
 		}
 
 		public async Task<IActionResult> DeletePortfolio(int id)
@@ -75,7 +84,7 @@ namespace GrassHopper.Controllers
 		public async Task<IActionResult> ConfirmDeletePortfolio(int id)
 		{
 			await portRepository.DeletePortfolio(id);
-			return RedirectToAction("Index");
+			return RedirectToAction("Admin");
 		}
 	}
 }

@@ -17,6 +17,7 @@ namespace GrassHopper.Models
             {
                 Groups.Add(new(g, PhotoSize.Medium));
             }
+            Format = portfolio.PortfolioFormat;
         }
         public int PortfolioID { get; set; }
         public string Name { get; set; }
@@ -24,5 +25,6 @@ namespace GrassHopper.Models
         public DateOnly Date { get; set; }
         public PhotoVM? Thumbnail { get; set; }
         public List<GroupVM> Groups { get; set; } = new List<GroupVM>();
+        public PortfolioFormats Format { get; set; }
     }
 }

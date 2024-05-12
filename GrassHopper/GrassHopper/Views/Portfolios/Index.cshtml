@@ -1,0 +1,62 @@
+﻿@model IEnumerable<PortfolioVM>
+@{
+    ViewData["Title"] = "Portfolio";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX THIS LATER-->
+
+<h1>Portfolio</h1>
+
+@foreach (var portfolio in Model)
+{
+    if (portfolio.Format == PortfolioFormats.Default)
+    {
+        <div class="portfolio-parent">
+            <div class="portfolio-default-name"><h3 class="portfolio-name">@portfolio.Name</h3></div>
+            <div class="portfolio-default-summary"><span class="portfolio-name">@portfolio.Summary</span></div>
+            <div class="portfolio-default-photos">
+                <div class="carousel-inner">
+                    @{
+                        GroupVM? maingroup = portfolio.Groups[0] ?? null;
+                    }
+                    @if (maingroup is not null)
+                    {
+                        @for (int i = 0; i < maingroup.Photos.Count(); i++)
+                        {
+                            PhotoVM p = maingroup.Photos.ElementAt(i);
+                            string url = "/photos/" + p.Url;
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img class="d-block w-100" src="@url" alt="@p.Name">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@p.Name</h5>
+                                    <p>@p.Description</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else if (portfolio.Thumbnail is not null)
+                    {
+                        string url = "/photos/" + portfolio.Thumbnail.Url;
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="@url" alt="@portfolio.Thumbnail.Name">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>@portfolio.Thumbnail.Name</h5>
+                                <p>@portfolio.Thumbnail.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else if (portfolio.Format == PortfolioFormats.ComparisonBA)
+    {
+        <div class="portfolio-parent">
+            <div class="portfolio-compba-name"><h3 class="portfolio-name">@portfolio.Name</h3></div>
+            <div class="portfolio-compba-summary"><span class="portfolio-name">@portfolio.Summary</span></div>
+            <div class="portfolio-compba-photos">
+            </div>
+        </div>
+    }
+}
+
