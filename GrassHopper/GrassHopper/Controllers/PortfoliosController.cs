@@ -39,16 +39,19 @@ namespace GrassHopper.Controllers
 		[HttpGet]
 		public async Task<IActionResult> CreatePortfolio()
 		{
-            ViewBag.PhotoGroups = await photoRepository.GetAllGroups(PhotoSize.Medium);
+            ViewBag.PhotoGroups = await photoRepository.GetAllGroups(PhotoSize.Small);
+			ViewBag.Photos = await photoRepository.GetAllPhotos(PhotoSize.Small);
             return View();
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreatePortfolio(Portfolio p, int pGroupId)
+		public async Task<IActionResult> CreatePortfolio(Portfolio p, int pGroupId, int thumbnailId)
 		{
-			PhotoGroup photoGroup = await photoRepository.GetPhotoGroup(pGroupId);
-			p.PortfolioPGroups.Add(photoGroup);
-			await portRepository.AddPortfolio(p);
+			if (pGroupId > 0)
+				p.PortfolioPGroups.Add(await photoRepository.GetPhotoGroup(pGroupId));
+			if (thumbnailId > 0)
+				p.PortfolioThumbnail = await photoRepository.GetPhoto(thumbnailId);
+            await portRepository.AddPortfolio(p);
 			return RedirectToAction("PortfolioAdmin");
 		}
 

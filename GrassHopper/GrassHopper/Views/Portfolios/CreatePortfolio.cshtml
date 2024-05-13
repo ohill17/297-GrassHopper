@@ -23,6 +23,50 @@
 <br>
 
 <form method="post" asp-action="CreatePortfolio" class="form-container">
+    <div class="row p-2">
+        <div class="col-md-4">
+            @{
+                List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>();
+            }
+            @if (groups.Count > 0)
+            {
+                <select name="pGroupId" id="groupSelect">
+                    <option value="0">
+                        Select a photo group
+                    </option>
+                    @foreach (GroupVM g in groups)
+                    {
+                        <option value="@g.GroupId">
+                            @g.Name
+                        </option>
+                    }
+                </select>
+            }
+            else
+            {
+                <span>There are no selectable photo groups.</span>
+            }
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            @{
+                List<PhotoVM> photos = ViewBag.Photos ?? new List<PhotoVM>();
+            }
+            @if (photos.Count > 0)
+            {
+                <select name="thumbnailId" id="thumbnailSelect">
+                    <option value="0">
+                        Select a thumbnail image
+                    </option>
+                    @foreach (PhotoVM p in photos)
+                    {
+                        <option value="@p.PhotoId">@p.Name</option>
+                    }
+                </select>
+            }
+        </div>
+    </div>
+    <hr>
     <div id="layout">
         <div class="portfolio-parent">
             <div class="portfolio-default-name" id="name"><input asp-for="PortfolioName" class="portfolio-name" placeholder="Portfolio Name" required></div>
@@ -31,28 +75,6 @@
             </div>
         </div>
     </div>
-    <hr>
-    @{
-        List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>();
-    }
-    @if (groups.Count > 0)
-    {
-        <select name="pGroupId" id="groupSelect">
-            <option value="0">
-                Select a photo group
-            </option>
-        @foreach (GroupVM g in groups)
-        {
-            <option value="@g.GroupId">
-                @g.Name
-            </option>
-        }
-        </select>
-    }
-    else
-    {
-        <span>There are no selectable photo groups.</span>
-    }
     <hr>
     <input type="submit" value="Create portfolio item">
 </form>

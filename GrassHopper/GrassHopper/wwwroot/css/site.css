@@ -286,6 +286,7 @@ input[type="submit"] {
 
 .portfolio-default-photos {
     grid-area: 1 / 3 / 4 / 8;
+    margin:auto;
 }
 
 /* COMPARISON BEFORE / AFTER */
