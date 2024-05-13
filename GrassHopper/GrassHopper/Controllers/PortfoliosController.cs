@@ -23,6 +23,12 @@ namespace GrassHopper.Controllers
 			List<PortfolioVM> portfolios = await portRepository.GetAllPortfolios();
 			return View(portfolios);
 		}
+
+		public async Task<IActionResult> PortfolioDetails(int id)
+		{
+			PortfolioVM portfolio = new(await portRepository.GetPortfolio(id));
+			return View(portfolio);
+		}
 		
 		public async Task<IActionResult> PortfolioAdmin()
 		{

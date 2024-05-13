@@ -74,7 +74,7 @@ namespace GrassHopper.Data.Repositories
                 .Include(p => p.PortfolioPGroups)
                 .ThenInclude(g => g.Photos)
                 .Include(p => p.PortfolioTags)
-                .Where(p => p.IsHidden)
+                .Where(p => p.PortfolioId == id)
                 .FirstAsync();
         }
 

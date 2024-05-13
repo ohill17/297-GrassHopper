@@ -38,6 +38,9 @@
     @if (groups.Count > 0)
     {
         <select name="pGroupId" id="groupSelect">
+            <option value="0">
+                Select a photo group
+            </option>
         @foreach (GroupVM g in groups)
         {
             <option value="@g.GroupId">
