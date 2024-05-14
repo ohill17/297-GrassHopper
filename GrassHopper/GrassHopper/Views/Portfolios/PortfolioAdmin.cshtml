@@ -18,17 +18,17 @@
         <div class="col-md-2">@portfolio.PortfolioName</div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <a asp-controller="Portfolios" asp-action="EditPortfolio" asp-route-id="@portfolio.PortfolioId" class="btn">Edit portfolio item</a>
+            <a asp-controller="Portfolios" asp-action="EditPortfolioItem" asp-route-id="@portfolio.PortfolioId" class="btn primary">Edit portfolio item</a>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            @if(portfolio.IsHidden)
+            @if(!portfolio.IsHidden)
             {
-                <a asp-controller="Portfolios" asp-action="HidePortfolio" asp-route-id="@portfolio.PortfolioId" class="btn">Hide portfolio item</a>
+                <a asp-controller="Portfolios" asp-action="HidePortfolio" asp-route-id="@portfolio.PortfolioId" class="btn primary">Hide portfolio item</a>
             }
             else
             {
-                <a asp-controller="Portfolios" asp-action="RestorePortfolio" asp-route-id="@portfolio.PortfolioId" class="btn">Restore portfolio item</a>
+                <a asp-controller="Portfolios" asp-action="RestorePortfolio" asp-route-id="@portfolio.PortfolioId" class="btn primary">Restore portfolio item</a>
             }
         </div>
     </div>

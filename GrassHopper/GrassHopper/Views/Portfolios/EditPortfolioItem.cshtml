@@ -1,0 +1,105 @@
+﻿@model Portfolio
+@{
+    ViewData["Title"] = "Edit Portfolio Item";
+}
+
+<h1>Edit portfolio item</h1>
+<br>
+
+<div class="row p-2">
+    <div class="col-md-5">Portfolio format:</div>
+</div>
+<div class="row p-2">
+    <div class="col-md-2">
+        <span id="default" name="default" class="btn">Default</span>
+    </div>
+    <div class="col-md-2">
+        <span id="compba" name="compba" class="btn">Comparison: Before / After</span>
+    </div>
+</div>
+<br>
+
+<form method="post" asp-action="EditPortfolioItem" class="form-container">
+    <input asp-for="PortfolioId" hidden>
+    <div class="row p-2">
+        <div class="col-md-4">
+            @{
+                List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>();
+            }
+            @if (groups.Count > 0)
+            {
+                <select name="pGroupId" id="groupSelect">
+                    <option value="0">
+                        Select a photo group
+                    </option>
+                    @foreach (GroupVM g in groups)
+                    {
+                        @if(Model.PortfolioPGroups.Any(pg => pg.GroupId == g.GroupId))
+                        {
+                            <option value="@g.GroupId" selected>@g.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@g.GroupId">@g.Name</option>
+                        }
+                    }
+                </select>
+            }
+            else
+            {
+                <span>There are no selectable photo groups.</span>
+            }
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            @{
+                List<PhotoVM> photos = ViewBag.Photos ?? new List<PhotoVM>();
+            }
+            @if (photos.Count > 0)
+            {
+                <select name="thumbnailId" id="thumbnailSelect">
+                    <option value="0">
+                        Select a thumbnail image
+                    </option>
+                    @foreach (PhotoVM p in photos)
+                    {
+                        @if (Model.PortfolioThumbnail != null && Model.PortfolioThumbnail.PhotoId == p.PhotoId)
+                        {
+                            <option value="@p.PhotoId" selected>@p.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@p.PhotoId">@p.Name</option>
+                        }
+                    }
+                </select>
+            }
+        </div>
+    </div>
+    <hr>
+    <div id="layout">
+        <div class="portfolio-parent">
+            <div class="portfolio-default-name" id="name"><input asp-for="PortfolioName" class="portfolio-name" placeholder="Portfolio Name" required></div>
+            <div class="portfolio-default-summary" id="summary"><textarea asp-for="PortfolioSummary" class="portfolio-summary" placeholder="Write a summary here" required rows="10" cols="50"></textarea></div>
+            <div class="portfolio-default-photos" id="photos">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <input asp-for="IsHidden" hidden>
+    <label for="shouldHide">Hide this item?</label>
+    @if (Model.IsHidden)
+    {
+        <input name="shouldHide" type="checkbox" checked value="true">
+    }
+    else
+    {
+        <input name="shouldHide" type="checkbox" value="true">
+    }
+    <br>
+    <div class="row p-2">
+        <input type="submit" value="Finalize changes" class="col-md-2">
+        <span class="col-md-1"></span>
+        <a asp-controller="Portfolios" asp-action="DeletePortfolio" asp-route-id="@Model.PortfolioId" class="btn danger col-md-1">Delete</a>
+    </div>
+</form>
