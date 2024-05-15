@@ -3,33 +3,32 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-@*
 @if (Model != null && Model.Any())
 {
-
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
-
-     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
             {
                 <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
             }
         </ol>
-
         <div class="carousel-inner">
             @for (int i = 0; i < Model.Count(); i++)
             {
-                Photo p = Model.ElementAt(i);
-                string url = "/photos/" + p.PhotoCode;
+                PhotoVM p = Model.ElementAt(i);
+                string url = "/photos/" + p.Url;
                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" src="@url" alt="@p.PhotoName">
+                    <img class="d-block w-100" src="@url" alt="@p.Name">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>@p.PhotoName</h5>
-                        <p>@p.PhotoDescription</p>
+                        <h5>@p.Name</h5>
+                        <p>@p.Description</p>
                     </div>
                 </div>
             }
@@ -42,10 +41,5 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-
     </div>
-    
 }
-*@
-
-
