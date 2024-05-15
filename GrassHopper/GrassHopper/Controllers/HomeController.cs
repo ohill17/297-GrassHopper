@@ -26,9 +26,10 @@ namespace GrassHopper.Controllers
 
         public async Task<IActionResult> Index()
         {
-          //  var photos = await prepository.GetAllPhotos(PhotoSize.Medium);
-            return View();
+            var photos = await prepository.GetAllPhotos(PhotoSize.Medium);
+            return View(photos);
         }
+
         public async Task<IActionResult> AboutUs()
         {
             return View();
