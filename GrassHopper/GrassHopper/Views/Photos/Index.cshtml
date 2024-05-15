@@ -22,22 +22,50 @@
 
 <h1>Photos</h1>
 
+<!--
 @foreach (PhotoVM p in Model)
 {
 	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
 	string url = "/photos/" + p.Url;
 	if (p.Group != null)
 	{
-		<h4>@p.Group.GroupName</h4>
+				<h4>@p.Group.GroupName</h4>
 	}
 	else
 	{
-		<h4>@p.Name</h4>
+				<h4>@p.Name</h4>
 	}
-	<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
-	<figcaption>@p.Description</figcaption>
-	<br>
-	<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn danger">Delete Photo</a>
+		<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+		<figcaption>@p.Description</figcaption>
+		<br>
+		<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@p.PhotoId" class="btn danger">Delete Photo</a>
 
-	<hr>
+		<hr>
 }
+-->
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+	@foreach (PhotoVM p in Model)
+	{
+		string url = "/photos/" + @p.Url;
+		<div class="col">
+			<div class="card">
+				<img src="@url" class="card-img-top" alt="@p.Description" />
+				<div class="card-body">
+					@if (p.Group != null)
+					{
+						<h5 class="card-title">@p.Group.GroupName</h5>
+					}
+					else
+					{
+						<h5 class="card-title">@p.Name</h5>
+					}
+					<p class="card-text">@p.Description</p>
+				</div>
+				<div class="card-footer">
+					<a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@p.PhotoId" class="btn">Edit Photo</a>
+				</div>
+			</div>
+		</div>
+	}
+</div>

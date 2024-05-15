@@ -27,23 +27,44 @@ col-md-2">Add a Photo</a>
 </div>
 
 <h1>Groups</h1>
-
+<!--
 @foreach (GroupVM g in Model)
 {
-	<h4>@g.Name</h4>
-	<span>@g.Description</span>
-	<hr>
+		<h4>@g.Name</h4>
+		<span>@g.Description</span>
+		<hr>
 	@foreach (PhotoVM p in g.Photos)
 	{
 		string url = "/photos/" + p.Url;
-		<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
-		<hr>
+				<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+				<hr>
 	}
-	<br>
+		<br>
 
-	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
+		<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
 
-	<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+		<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
 
-	<hr>
+		<hr>
 }
+-->
+
+<div class="card">
+	@foreach (GroupVM g in Model)
+	{
+		<div style="display: flex; flex-wrap:wrap;">
+			@foreach (PhotoVM p in g.Photos)
+			{
+				string url = "/photos/" + p.Url;
+				<img src="@url" class="card-img-top" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+			}
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">@g.Name</h5>
+			<p class="card-text">@g.Description</p>
+		</div>
+		<div class="card-footer">
+			<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+		</div>
+	}
+</div>
