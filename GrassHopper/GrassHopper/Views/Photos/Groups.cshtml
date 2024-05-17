@@ -6,38 +6,60 @@
 <!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <div class="row p-2">
-	<a asp-controller="Photos" asp-action="AddPhoto" class="btn col-md-2">Add a Photo</a>
+	<a asp-controller="Photos" asp-action="AddPhoto" class="btn primary col-md-2">Add a Photo</a>
+
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="AddGroup" class="btn col-md-2">Add a Group</a>
+	<a asp-controller="Photos" asp-action="AddGroup" class="btn primary col-md-2">Add a Group</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="Index" class="btn col-md-2">View Photos</a>
+	<a asp-controller="Photos" asp-action="Index" class="btn primary col-md-2">View Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="Groups" class="btn col-md-2">View Groups</a>
+	<a asp-controller="Photos" asp-action="Groups" class="btn primary col-md-2">View Groups</a>
 </div>
 <div class="row p-2">
-	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn col-md-2">Hidden Photos</a>
+	<a asp-controller="Photos" asp-action="HiddenPhotos" class="btn primary col-md-2">Hidden Photos</a>
 	<span class="col-md-1"></span>
-	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn col-md-2">Hidden Groups</a>
+	<a asp-controller="Photos" asp-action="HiddenGroups" class="btn primary col-md-2">Hidden Groups</a>
 </div>
 
 <h1>Groups</h1>
-
+<!--
 @foreach (GroupVM g in Model)
 {
-	<h4>@g.Name</h4>
-	<span>@g.Description</span>
-	<hr>
+		<h4>@g.Name</h4>
+		<span>@g.Description</span>
+		<hr>
 	@foreach (PhotoVM p in g.Photos)
 	{
 		string url = "/photos/" + p.Url;
-		<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
-		<hr>
+				<img src="@url" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+				<hr>
 	}
-	<br>
+		<br>
 
-	<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
+		<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
 
-	<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+		<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
 
-	<hr>
+		<hr>
 }
+-->
+
+<div class="card">
+	@foreach (GroupVM g in Model)
+	{
+		<div style="display: flex; flex-wrap:wrap;">
+			@foreach (PhotoVM p in g.Photos)
+			{
+				string url = "/photos/" + p.Url;
+				<img src="@url" class="card-img-top" alt="@p.Description" style="aspect-ratio:auto; width:50%;">
+			}
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">@g.Name</h5>
+			<p class="card-text">@g.Description</p>
+		</div>
+		<div class="card-footer">
+			<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+		</div>
+	}
+</div>
