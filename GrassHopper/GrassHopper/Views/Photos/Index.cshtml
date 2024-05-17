@@ -25,7 +25,6 @@
 <!--
 @foreach (PhotoVM p in Model)
 {
-	//THIS MIGHT NOT WORK ON AZURE, TEST AGAIN LATER
 	string url = "/photos/" + p.Url;
 	if (p.Group != null)
 	{

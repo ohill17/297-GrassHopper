@@ -76,14 +76,44 @@ namespace GrassHopper.Migrations
                     b.ToTable("PhotoGroups");
                 });
 
+            modelBuilder.Entity("GrassHopper.Models.Portfolio", b =>
+                {
+                    b.Property<int>("PortfolioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateOnly>("PortfolioDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("PortfolioFormat")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PortfolioName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PortfolioSummary")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("PortfolioThumbnailPhotoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PortfolioId");
+
+                    b.HasIndex("PortfolioThumbnailPhotoId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("GrassHopper.Models.Review", b =>
                 {
                     b.Property<int>("ReviewID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsFromFacebook")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ReviewBody")
                         .IsRequired()
@@ -104,6 +134,46 @@ namespace GrassHopper.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("GrassHopper.Models.Tag", b =>
+                {
+                    b.Property<string>("TagText")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("PhotoGroupGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PhotoId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PortfolioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TagText");
+
+                    b.HasIndex("PhotoGroupGroupId");
+
+                    b.HasIndex("PhotoId");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.ToTable("Tag");
+                });
+
+            modelBuilder.Entity("PhotoGroupPortfolio", b =>
+                {
+                    b.Property<int>("AssocPortfoliosPortfolioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PortfolioPGroupsGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssocPortfoliosPortfolioId", "PortfolioPGroupsGroupId");
+
+                    b.HasIndex("PortfolioPGroupsGroupId");
+
+                    b.ToTable("PhotoGroupPortfolio");
+                });
+
             modelBuilder.Entity("GrassHopper.Models.Photo", b =>
                 {
                     b.HasOne("GrassHopper.Models.PhotoGroup", "Group")
@@ -113,9 +183,60 @@ namespace GrassHopper.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("GrassHopper.Models.Portfolio", b =>
+                {
+                    b.HasOne("GrassHopper.Models.Photo", "PortfolioThumbnail")
+                        .WithMany()
+                        .HasForeignKey("PortfolioThumbnailPhotoId");
+
+                    b.Navigation("PortfolioThumbnail");
+                });
+
+            modelBuilder.Entity("GrassHopper.Models.Tag", b =>
+                {
+                    b.HasOne("GrassHopper.Models.PhotoGroup", null)
+                        .WithMany("GroupTags")
+                        .HasForeignKey("PhotoGroupGroupId");
+
+                    b.HasOne("GrassHopper.Models.Photo", null)
+                        .WithMany("PhotoTags")
+                        .HasForeignKey("PhotoId");
+
+                    b.HasOne("GrassHopper.Models.Portfolio", null)
+                        .WithMany("PortfolioTags")
+                        .HasForeignKey("PortfolioId");
+                });
+
+            modelBuilder.Entity("PhotoGroupPortfolio", b =>
+                {
+                    b.HasOne("GrassHopper.Models.Portfolio", null)
+                        .WithMany()
+                        .HasForeignKey("AssocPortfoliosPortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GrassHopper.Models.PhotoGroup", null)
+                        .WithMany()
+                        .HasForeignKey("PortfolioPGroupsGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GrassHopper.Models.Photo", b =>
+                {
+                    b.Navigation("PhotoTags");
+                });
+
             modelBuilder.Entity("GrassHopper.Models.PhotoGroup", b =>
                 {
+                    b.Navigation("GroupTags");
+
                     b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("GrassHopper.Models.Portfolio", b =>
+                {
+                    b.Navigation("PortfolioTags");
                 });
 #pragma warning restore 612, 618
         }

@@ -262,3 +262,57 @@ input[type="submit"] {
     opacity: 1;
     transform: translateY(0);
 }
+
+
+/* Layouts for portfolio items */
+
+.portfolio-parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) 5fr;
+    grid-template-rows: 1fr 2fr;
+    grid-column-gap: 7px;
+    grid-row-gap: 7px;
+}
+
+/* DEFAULT */
+
+.portfolio-default-name {
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+.portfolio-default-summary {
+    grid-area: 2 / 1 / 4 / 3;
+}
+
+.portfolio-default-photos {
+    grid-area: 1 / 3 / 4 / 8;
+    margin:auto;
+}
+
+/* COMPARISON BEFORE / AFTER */
+
+.portfolio-compba-name {
+
+}
+
+portfolio-compba-summary {
+
+}
+
+portfolio-compba-photos {
+
+}
+
+/* Generic pieces for each portfolio item, feel free to change these for styling */
+
+.portfolio-name {
+
+}
+
+.portfolio-summary {
+
+}
+
+.portfolio-photos {
+
+}

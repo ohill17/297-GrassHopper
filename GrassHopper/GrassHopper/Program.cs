@@ -31,6 +31,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddTransient<IPhotoRepository, PhotoRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+builder.Services.AddTransient<IPortfolioRepository, PortfolioRepository>();
 
 var app = builder.Build();
 

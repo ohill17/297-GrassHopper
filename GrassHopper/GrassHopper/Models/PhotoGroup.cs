@@ -11,5 +11,6 @@ namespace GrassHopper.Models
 		public bool IsHidden { get; set; } = false;
 		public List<Photo> Photos { get; set; } = new();
 		public List<Tag> GroupTags { get; set; } = new();
+		public List<Portfolio> AssocPortfolios { get; set; } = new();
 	}
 }
