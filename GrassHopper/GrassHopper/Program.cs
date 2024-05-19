@@ -61,4 +61,8 @@ using (var scope = app.Services.CreateScope())
     SeedData.Seed(dbContext);
 }
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 app.Run();
+
+

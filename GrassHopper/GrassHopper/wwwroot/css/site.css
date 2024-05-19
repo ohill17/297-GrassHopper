@@ -318,16 +318,13 @@ portfolio-compba-photos {
 }
 
 
-
 .GHC {
-    margin-top: 40px;
-    max-width: 800px;
-    background: #fff;
+    background-color: #E4F7B6;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
+  
 .form-group {
     margin-bottom: 20px;
 }
@@ -338,11 +335,13 @@ portfolio-compba-photos {
         font-weight: bold;
     }
 
+
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ced4da;
+  
     border-radius: 5px;
+    background-color: #D3F288;
 }
 
 .stars {
@@ -376,3 +375,30 @@ portfolio-compba-photos {
     .facebook-btn:hover svg {
         fill: black;
     }
+.accordion-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.accordion-item {
+    background-color: #E4F7B6;
+}
+
+.accordion-button {
+    background-color: #E4F7B6;
+    color: black;
+}
+
+    .accordion-button:hover, .accordion-button:focus {
+        background-color: #D3F288;
+        color: black;
+    }
+
+.accordion-body .row {
+    justify-content: center;
+}
+
+.accordion-button {
+    text-align: center;
+}
