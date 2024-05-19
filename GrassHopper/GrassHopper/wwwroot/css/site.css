@@ -316,3 +316,63 @@ portfolio-compba-photos {
 .portfolio-photos {
 
 }
+
+
+
+.GHC {
+    margin-top: 40px;
+    max-width: 800px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+    .stars span {
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccc;
+    }
+
+        .stars span.active {
+            color: #ffcc00;
+        }
+.facebook-btn {
+    background-color: #0B6FFF;
+}
+
+    .facebook-btn:hover {
+        background-color: #0D64F9;
+    }
+
+    .facebook-btn svg {
+        fill: white;
+        transition: fill 0.3s;
+    }
+
+    .facebook-btn:hover svg {
+        fill: black;
+    }
