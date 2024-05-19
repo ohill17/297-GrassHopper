@@ -1,0 +1,32 @@
+﻿@model GrassHopper.Models.Quote
+
+<div class="container mt-5 slide-in">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Request a Quote</h2>
+            <form asp-action="SubmitQuote" method="post">
+                <div class="mb-3">
+                    <label for="FName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="FName" name="FName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="LName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="LName" name="LName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="PhoneNumber" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" required>
+                </div>
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="Body" class="form-label">Message</label>
+                    <textarea class="form-control" id="Body" name="Body" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

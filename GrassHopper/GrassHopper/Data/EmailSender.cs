@@ -1,28 +1,28 @@
-﻿using System.Net.Mail;
+﻿using GrassHopper.Data;
+using System.Net.Mail;
 using System.Net;
 
-namespace GrassHopper.Data
+public class EmailSender : IEmailSender
 {
-    public class EmailSender : IEmailSender
+    public Task SendEmailAsync(string sender, string subject, string message)
     {
-        public Task SendEmailAsync(string email, string subject, string body)
-        {
-            var mail = "orion123333@gmail.com";
-            var pw = "OrionHill123";
+        var ownerEmail = "orion123333@gmail.com"; // Specify the website owner's email address
 
-            var client = new SmtpClient("orion1233333@gmail.com", 587)
-            {
-                EnableSsl = true,
-                Credentials = new NetworkCredential(mail, pw)
-            };
-            return client.SendMailAsync(
-                new MailMessage(
-                    from: mail,
-                    to: email,
-                    subject,
-                    body
-                    ));
-                
-         }
+        var client = new SmtpClient("smtp.gmail.com", 587)
+        {
+            EnableSsl = true,
+            Credentials = new NetworkCredential("grasshopperquotes@gmail.com", "akmrtwgvfzndxbee") // Update with your email credentials
+        };
+
+        var mail = new MailMessage
+        {
+            From = new MailAddress(sender), // Set the sender dynamically
+            Subject = subject,
+            Body = message
+        };
+
+        mail.To.Add(ownerEmail); // Set the recipient to the website owner's email address
+
+        return client.SendMailAsync(mail);
     }
 }
