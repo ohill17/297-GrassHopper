@@ -15,6 +15,8 @@ namespace GrassHopper.Data
 
         public DbSet<Photo> Photos { get; set; }
         public DbSet<PhotoGroup> PhotoGroups { get; set; }
-        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Review> Reviews { get; set; 
+
+        public DbSet<Token> Tokens { get; set; }
     }
 }
