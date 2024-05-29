@@ -9,5 +9,7 @@ namespace GrassHopper.Models
 
         public string TokenString { get; set; }
 
+        //public int TimeUntilInvalid { get; set; }
+
     }
 }
