@@ -1,0 +1,10 @@
+﻿@model Portfolio
+@{
+    ViewData["Title"] = "Delete Portfolio";
+}
+<h1>Confirm deletion of portfolio item "@Model.PortfolioName"</h1>
+<div class="row p-2">
+    <a asp-controller="Portfolios" asp-action="ConfirmDeletePortfolio" asp-route-id="@Model.PortfolioId" class="btn danger col-md-1">Delete</a>
+    <span class="col-md-1"></span>
+    <a asp-controller="Portfolios" asp-action="EditPortfolioItem" asp-route-id="@Model.PortfolioId" class="btn primary col-md-1">Cancel</a>
+</div>

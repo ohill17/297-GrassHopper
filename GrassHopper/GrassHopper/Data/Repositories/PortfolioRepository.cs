@@ -27,7 +27,7 @@ namespace GrassHopper.Data.Repositories
 
         public async Task<List<PortfolioVM>> GetAllPortfolios()
         {
-            var portfolios =  await dbContext.Portfolios
+            var portfolios = await dbContext.Portfolios
                 .Include(p => p.PortfolioThumbnail)
                 .Include(p => p.PortfolioPGroups)
                 .ThenInclude(g => g.Photos)
@@ -45,6 +45,15 @@ namespace GrassHopper.Data.Repositories
                 .Where(p => p.IsHidden)
                 .ToListAsync();
             return VMMaker.MakePortfolioVM(portfolios);
+        }
+
+        public async Task<List<Portfolio>> GetAllPortfoliosAdmin()
+        {
+            return await dbContext.Portfolios
+                .Include(p => p.PortfolioThumbnail)
+                .Include(p => p.PortfolioPGroups)
+                .ThenInclude(g => g.Photos)
+                .ToListAsync();
         }
 
         public async Task<List<PortfolioVM>> GetPortfoliosByTag(string tag)
@@ -65,7 +74,7 @@ namespace GrassHopper.Data.Repositories
                 .Include(p => p.PortfolioPGroups)
                 .ThenInclude(g => g.Photos)
                 .Include(p => p.PortfolioTags)
-                .Where(p => p.IsHidden)
+                .Where(p => p.PortfolioId == id)
                 .FirstAsync();
         }
 
@@ -93,6 +102,7 @@ namespace GrassHopper.Data.Repositories
             oldPortfolio.PortfolioDate = portfolio.PortfolioDate;
             oldPortfolio.PortfolioThumbnail = portfolio.PortfolioThumbnail;
             oldPortfolio.PortfolioPGroups = portfolio.PortfolioPGroups;
+            oldPortfolio.PortfolioFormat = portfolio.PortfolioFormat;
             dbContext.Portfolios.Update(oldPortfolio);
             return await dbContext.SaveChangesAsync();
         }

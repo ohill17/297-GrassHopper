@@ -19,6 +19,7 @@ builder.Services.AddControllersWithViews()
         o.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var connectionString =
     builder.Configuration.GetConnectionString("MySqlConnection");
@@ -31,6 +32,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddTransient<IPhotoRepository, PhotoRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+builder.Services.AddTransient<IPortfolioRepository, PortfolioRepository>();
 
 var app = builder.Build();
 
@@ -60,4 +62,7 @@ using (var scope = app.Services.CreateScope())
     SeedData.Seed(dbContext);
 }
 
+
 app.Run();
+
+

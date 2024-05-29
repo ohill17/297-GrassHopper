@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PortfolioVM>
+@{
+    ViewData["Title"] = "Portfolio";
+}
+
+<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX THIS LATER-->
+
+<h1>Portfolio</h1>
+<hr>
+@foreach (var portfolio in Model)
+{
+    if (portfolio.Format == PortfolioFormats.Default)
+    {
+        <div class="portfolio-parent">
+            <div class="portfolio-default-name"><h3 class="portfolio-name">@portfolio.Name</h3></div>
+            <div class="portfolio-default-summary"><span class="portfolio-name">@portfolio.Summary</span></div>
+            <div class="portfolio-default-photos">
+                @if (portfolio.Thumbnail is not null)
+                {
+                string url = "/photos/" + portfolio.Thumbnail.Url;
+                    <img src="@url">
+                }
+            </div>
+        </div>
+        <a class="btn primary" asp-controller="Portfolios" asp-action="PortfolioDetails" asp-route-id="@portfolio.PortfolioID">Details</a>
+    }
+    else if (portfolio.Format == PortfolioFormats.ComparisonBA)
+    {
+        <div class="portfolio-parent">
+            <div class="portfolio-compba-name"><h3 class="portfolio-name">@portfolio.Name</h3></div>
+            <div class="portfolio-compba-summary"><span class="portfolio-name">@portfolio.Summary</span></div>
+            <div class="portfolio-compba-photos">
+            </div>
+        </div>
+        <a class="btn primary" asp-controller="Portfolios" asp-action="PortfolioDetails" asp-route-id="@portfolio.PortfolioID">Details</a>
+    }
+    <hr>
+}
+

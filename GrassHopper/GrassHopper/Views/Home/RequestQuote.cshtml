@@ -1,0 +1,36 @@
+﻿@model GrassHopper.Models.Quote
+
+<div class="container mt-5 slide-in materialize-form">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link rel="stylesheet" href="~/css/site2.css">
+    <div class="row justify-content-center">
+        <div class="col s12 m6">
+            <h2 class="mb-4">Request a Quote</h2>
+            <form asp-action="SubmitQuote" method="post">
+                <div class="input-field mb-3">
+                    <input id="FName" type="text" name="FName" class="validate" required>
+                    <label for="FName">First Name</label>
+                </div>
+                <div class="input-field mb-3">
+                    <input id="LName" type="text" name="LName" class="validate" required>
+                    <label for="LName">Last Name</label>
+                </div>
+                <div class="input-field mb-3">
+                    <input id="PhoneNumber" type="tel" name="PhoneNumber" class="validate" required>
+                    <label for="PhoneNumber">Phone Number</label>
+                </div>
+                <div class="input-field mb-3">
+                    <input id="Email" type="email" name="Email" class="validate" required>
+                    <label for="Email">Email</label>
+                </div>
+                <div class="input-field mb-3">
+                    <textarea id="Body" name="Body" class="materialize-textarea validate" rows="4" required></textarea>
+                    <label for="Body">Message</label>
+                </div>
+                <button type="submit" class="btn primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+

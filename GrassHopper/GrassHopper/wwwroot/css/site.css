@@ -23,15 +23,19 @@ body {
 
 .primary {
     background-color: #C3FF0F;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
-.primary:hover {
-    background-color: #A4DB00;
- }
+    .primary:hover {
+        background-color: #A4DB00;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
 .danger {
     background-color: #FF1212;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 .danger:hover {
     background-color: #DE0000
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -261,4 +265,146 @@ input[type="submit"] {
 .slide-in-stagger2.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+
+/* Layouts for portfolio items */
+
+.portfolio-parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) 5fr;
+    grid-template-rows: 1fr 2fr;
+    grid-column-gap: 7px;
+    grid-row-gap: 7px;
+}
+
+/* DEFAULT */
+
+.portfolio-default-name {
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+.portfolio-default-summary {
+    grid-area: 2 / 1 / 4 / 3;
+}
+
+.portfolio-default-photos {
+    grid-area: 1 / 3 / 4 / 8;
+    margin:auto;
+}
+
+/* COMPARISON BEFORE / AFTER */
+
+.portfolio-compba-name {
+
+}
+
+portfolio-compba-summary {
+
+}
+
+portfolio-compba-photos {
+
+}
+
+/* Generic pieces for each portfolio item, feel free to change these for styling */
+
+.portfolio-name {
+
+}
+
+.portfolio-summary {
+
+}
+
+.portfolio-photos {
+
+}
+
+
+.GHC {
+    background-color: #E4F7B6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+  
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+  
+    border-radius: 5px;
+    background-color: #D3F288;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+    .stars span {
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccc;
+    }
+
+        .stars span.active {
+            color: #ffcc00;
+        }
+.facebook-btn {
+    background-color: #0B6FFF;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+    .facebook-btn:hover {
+        background-color: #0D64F9;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .facebook-btn svg {
+        fill: white;
+        transition: fill 0.3s;
+    }
+
+    .facebook-btn:hover svg {
+        fill: black;
+    }
+.accordion-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.accordion-item {
+    background-color: #E4F7B6;
+}
+
+.accordion-button {
+    background-color: #E4F7B6;
+    color: black;
+}
+
+    .accordion-button:hover, .accordion-button:focus {
+        background-color: #D3F288;
+        color: black;
+    }
+
+.accordion-body .row {
+    justify-content: center;
+}
+
+.accordion-button {
+    text-align: center;
 }

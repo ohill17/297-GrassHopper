@@ -1,0 +1,47 @@
+﻿<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<div class="portfolio-parent">
+    <div class="portfolio-default-name"><h3 class="portfolio-name">@Model.Name</h3></div>
+    <div class="portfolio-default-summary"><span class="portfolio-name">@Model.Summary</span></div>
+    <div class="portfolio-default-photos">
+        <!--This carousel needs to be fixed. It's not the right size and I can't be bothered fixing it right now when I have so much other stuff to do-->
+        @{
+            GroupVM? maingroup = Model.Groups[0] ?? null;
+        }
+        <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+            @if (maingroup is not null)
+            {
+                <ol class="carousel-indicators">
+                    @for (int i = 0; i < maingroup.Photos.Count(); i++)
+                    {
+                        <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+                    }
+                </ol>
+                <div class="carousel-inner" style="height:90%">
+                    @for (int i = 0; i < maingroup.Photos.Count(); i++)
+                    {
+                        PhotoVM p = maingroup.Photos.ElementAt(i);
+                        string url = "/photos/" + p.Url;
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img class="d-block w-100" src="@url" alt="@p.Name">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>@p.Name</h5>
+                                <p>@p.Description</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            }
+        </div>
+    </div>
+</div>
