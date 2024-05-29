@@ -45,7 +45,13 @@ namespace GrassHopper.Controllers
 
             // Sending the existing access token to the page
             List<Token> theTokens = _tokenRepo.GetAllTokens();
-            ViewBag.token = theTokens[0].TokenString;
+            if (theTokens.Count > 0)
+            {
+                ViewBag.token = theTokens[0].TokenString;
+            } else
+            {
+                ViewBag.token = "";
+            }
 
             return View(reviews); 
         }

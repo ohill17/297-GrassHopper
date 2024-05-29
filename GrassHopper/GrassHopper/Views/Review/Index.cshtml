@@ -1,15 +1,9 @@
 ﻿@model List<Review>
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-<script>
-=======
     
  <script>
->>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
     let APP_ID = '1146299576721168';
     let APP_SECRET = '643d48308ab141f0c95a7eedb625826c';
-    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO0TNZBDCDQJVilSl6dZB61oQmCZCUZCsRN2vZCCZAoOSZALUVKZAkmww9QXJimDmvfZAtpBynJ4Bo90oiP0KyTZA5PjiK3M1EEbgoZA9kStZCGn6LhTDVqvekCZCbfHbSvlrZCxtkkCZA1XLNM6zZAoj2xxaAXZBU0CifAi5uPZBmrSO5cavf4SGz6N6ZABsBFCQpE4tVuCHj3nZCSSTECdfQe4ZD';
+    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABOyBpEJgqekZAiZCvJwrmdNKBY9wokiVyAqUZBCSr55AnOkivfC3Gk4QQisXFNlT0OxbRCDM97Jh87UBZBJea3poVTPdN0QN8dp0flaZBXhkvbp3mY9BowSRmaRLWQSS4OU4WJ1KdXZAdWqd24jXOcafwZAvvCZCbVbTq79d5bwRqXdTwqtZCXEf07xMpvwgkxDZC0XZAWxIfLgabZCtb';
     let PAGE_ID = '227047383835993';
     let PATH = `/ ${PAGE_ID}/ratings?fields=created_time,review_text,rating`;
     let METHOD = 'GET';
@@ -65,6 +59,7 @@
             }
 
             FB.api(Path1, METHOD, Params1, (response) => {
+                console.log(response);
                 // Long PAccess token
                 //`${VERSION}/${App_Scoped_UID}/accounts?access_token=${response.access_token}`;
                 let long_uaccess_token = response.access_token;
@@ -74,6 +69,7 @@
                 }
 
                 FB.api(Path2, METHOD, Params2, (response) => {
+                    console.log(response);
                     let Long_PAccess_token = response.data[0].access_token;
 
                     let el = document.createElement('a');
@@ -87,26 +83,11 @@
                 })
             });
         }
-        
     };
 </script>
 <script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>  
      
 
-<<<<<<< HEAD
-
-<div class="body" id="body">
-    @foreach (var review in Model)
-    {
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@review.ReviewRating Stars / 5 Stars</h5>
-                <p class="card-text">@review.ReviewBody</p>
-                <p class="card-text">-@review.ReviewerName</p>
-                <p class="card-text">@review.ReviewDate</p>
-=======
-=======
->>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
 <div class="container">
     <div class="body">
         @foreach (var review in Model)
@@ -120,25 +101,12 @@
                     <p class="card-text">@review.ReviewBody</p>
                     <div class="stars">@review.ReviewRating Stars / 5 Stars</div>
                 </div>
-<<<<<<< HEAD
->>>>>>> Development
-=======
-
-
-<div class="body" id="body">
-    @foreach (var review in Model)
-    {
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@review.ReviewRating Stars / 5 Stars</h5>
-                <p class="card-text">@review.ReviewBody</p>
-                <p class="card-text">-@review.ReviewerName</p>
-                <p class="card-text">@review.ReviewDate</p>
->>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
             </div>
         }
-    </div>
 </div>
+
+</div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -158,8 +126,8 @@
         transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-        .card.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .card.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
 </style>
