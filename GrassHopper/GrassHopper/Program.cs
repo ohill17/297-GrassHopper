@@ -19,6 +19,7 @@ builder.Services.AddControllersWithViews()
         o.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var connectionString =
     builder.Configuration.GetConnectionString("MySqlConnection");
@@ -61,4 +62,7 @@ using (var scope = app.Services.CreateScope())
     SeedData.Seed(dbContext);
 }
 
+
 app.Run();
+
+

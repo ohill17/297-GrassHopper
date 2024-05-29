@@ -12,10 +12,11 @@
                         <label for="ReviewerName">Your Name</label>
                         <input type="text" class="form-control" id="ReviewerName" name="ReviewerName" required>
                     </div>
-                    <div class="form-group">
-                        <label for="ReviewBody">Review</label>
-                        <textarea class="form-control" id="ReviewBody" name="ReviewBody" rows="4" required></textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="ReviewBody">Review</label>
+                    <textarea class="form-control" id="ReviewBody" name="ReviewBody" rows="4" maxlength="528" required></textarea>
+                    <small style="color: lightgrey;" id="charCount" class="counter">528 characters remaining</small>
+                </div>
                     <div class="form-group">
                         <label for="ReviewRating">Rating</label>
                         <div class="stars">
