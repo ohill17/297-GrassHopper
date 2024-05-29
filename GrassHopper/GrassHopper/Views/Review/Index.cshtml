@@ -8,41 +8,86 @@
  <script>
 >>>>>>> 3e7ec042600d90a36ed060ea521539a1d7f4fa52
     let APP_ID = '1146299576721168';
+    let APP_SECRET = '643d48308ab141f0c95a7eedb625826c';
+    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO0TNZBDCDQJVilSl6dZB61oQmCZCUZCsRN2vZCCZAoOSZALUVKZAkmww9QXJimDmvfZAtpBynJ4Bo90oiP0KyTZA5PjiK3M1EEbgoZA9kStZCGn6LhTDVqvekCZCbfHbSvlrZCxtkkCZA1XLNM6zZAoj2xxaAXZBU0CifAi5uPZBmrSO5cavf4SGz6N6ZABsBFCQpE4tVuCHj3nZCSSTECdfQe4ZD';
     let PAGE_ID = '227047383835993';
-    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO6NNxotBYr0Tyk8LS8JERQout077xYeY0Dhy5h18asHCsyOpyXl7vvhGBfxaYr3yZBjiM4a7y9sD2aOHUUILVTIyJZAr179SA8ReYy4sMyHVT28QLZCUGSjC2skeplAMF9D2CLd30sxQuKt4iCKifNhIflWDv3FeokeO7ET8tYgT5gnO8ALEDkiMZA4ZBvyL7bCnYqjFxO8IZD';
     let PATH = `/ ${PAGE_ID}/ratings?fields=created_time,review_text,rating`;
     let METHOD = 'GET';
+    let VERSION = 'v19.0';
     let PARAMS = {
         access_token: PAGE_ACCESS_TOKEN
-    };
-    //Note: This is the method that handles the response from the api call
+    }
+    let APP_SCOPED_UID = '306703255792712';
+
+
+
+
+
     let CALLBACK = (response) => {
-        let reviews = response.data; //this is an array of reviews
+        let reviews = response.data; 
         console.log(reviews);
         
-        //let reviewsString = reviews.toString();
-
-        //<a class="nav-link text-dark" asp-area="" asp-controller="Photos" asp-action="Index">Photos</a>
+        // Creating an element with the data encoded in the href so we can send it to controller
         var reviewsString = encodeURIComponent(JSON.stringify(reviews));
-
         let el = document.createElement('a');
         el.setAttribute('href', "/Review/Index?reviewsFromFacebook=" + reviewsString);
- 
         el.innerHTML = "load facebook reviews too";
         document.body.appendChild(el);
-        console.log("the element: " + el);
+        }
 
 
-        };
+
+
 
     window.fbAsyncInit = function () {
         FB.init({
             appId: APP_ID,
             xfbml: true,
-            version: 'v19.0'
+            version: VERSION
         });
 
-        FB.api(PATH, METHOD, PARAMS, CALLBACK);
+        //checking if there is a token from the database to use
+    
+        let t = '@(ViewBag.token)';
+        
+        if (t != "") {
+            // Getting reviews with the token from the database
+            PARAMS.access_token = t;
+            FB.api(PATH, METHOD, PARAMS, CALLBACK);
+        } else {
+            // Long UAccess token
+            //`${VERSION}/oauth/access_token?grant_type=fb_exchange_token&client_id=${APP_ID}&client_secret=${APP_SECRET}&fb_exchange_token=${PAGE_ACCESS_TOKEN}`
+            let Path1 = `/oauth/access_token?grant_type=fb_exchange_token`;
+            let Params1 = {
+                fb_exchange_token: PAGE_ACCESS_TOKEN,
+                client_secret: APP_SECRET,
+                client_id: APP_ID
+            }
+
+            FB.api(Path1, METHOD, Params1, (response) => {
+                // Long PAccess token
+                //`${VERSION}/${App_Scoped_UID}/accounts?access_token=${response.access_token}`;
+                let long_uaccess_token = response.access_token;
+                let Path2 = `/${APP_SCOPED_UID}/accounts?`;
+                let Params2 = {
+                    access_token: long_uaccess_token
+                }
+
+                FB.api(Path2, METHOD, Params2, (response) => {
+                    let Long_PAccess_token = response.data[0].access_token;
+
+                    let el = document.createElement('a');
+                    el.setAttribute('href', "/Review/Index?longPAccessToken=" + Long_PAccess_token);
+                    el.innerHTML = "send long page access token to the controller";
+                    document.body.appendChild(el);
+
+                    // Getting the reviews
+                    PARAMS.access_token = Long_PAccess_token
+                    FB.api(PATH, METHOD, PARAMS, CALLBACK);
+                })
+            });
+        }
+        
     };
 </script>
 <script async defer crossorigin='anonymous' src='https://connect.facebook.net/en_US/sdk.js'></script>  
