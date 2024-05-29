@@ -18,13 +18,13 @@
 <br>
 @if (Model.Group != null)
 {
-    <a asp-controller="Photos" asp-action="UnGroup" asp-route-photoId="@Model.PhotoId" class="btn">Ungroup Photo</a>
+    <a asp-controller="Photos" asp-action="UnGroup" asp-route-photoId="@Model.PhotoId" class="btn primary">Ungroup Photo</a>
     <br>
 }
 else
 {
     <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">Add to group</button>
+        <button class="btn primary primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Add to group</button>
         <ul class="dropdown-menu">
             @if (ViewBag.Groups.Count < 1)
             {
@@ -46,13 +46,13 @@ else
 <br>
 @if (Model.IsHidden)
 {
-    <a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@Model.PhotoId" class="btn">Restore Photo</a>
+    <a asp-controller="Photos" asp-action="RestorePhoto" asp-route-photoId="@Model.PhotoId" class="btn primary primary">Restore Photo</a>
 }
 else
 {
-    <a asp-controller="Photos" asp-action="HidePhoto" asp-route-photoId="@Model.PhotoId" class="btn">Hide Photo</a>
+    <a asp-controller="Photos" asp-action="HidePhoto" asp-route-photoId="@Model.PhotoId" class="btn primary">Hide Photo</a>
 }
 <br><br>
-<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@Model.PhotoId" class="btn">Delete Photo</a>
+<a asp-controller="Photos" asp-action="DeletePhoto" asp-route-photoId="@Model.PhotoId" class="btn primary">Delete Photo</a>
 <br><br>
-<a asp-controller="Photos" asp-action="Index" class="btn">Cancel</a>
+<a asp-controller="Photos" asp-action="Index" class="btn primary">Cancel</a>

@@ -14,6 +14,24 @@ namespace GrassHopper.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "PhotoGroups",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    GroupName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    GroupDescription = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsHidden = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhotoGroups", x => x.GroupId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -29,25 +47,6 @@ namespace GrassHopper.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reviews", x => x.ReviewID);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "PhotoGroups",
-                columns: table => new
-                {
-                    GroupId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    GroupName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    GroupDescription = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsHidden = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PortfolioId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PhotoGroups", x => x.GroupId);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -106,6 +105,31 @@ namespace GrassHopper.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "PhotoGroupPortfolio",
+                columns: table => new
+                {
+                    AssocPortfoliosPortfolioId = table.Column<int>(type: "int", nullable: false),
+                    PortfolioPGroupsGroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhotoGroupPortfolio", x => new { x.AssocPortfoliosPortfolioId, x.PortfolioPGroupsGroupId });
+                    table.ForeignKey(
+                        name: "FK_PhotoGroupPortfolio_PhotoGroups_PortfolioPGroupsGroupId",
+                        column: x => x.PortfolioPGroupsGroupId,
+                        principalTable: "PhotoGroups",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PhotoGroupPortfolio_Portfolios_AssocPortfoliosPortfolioId",
+                        column: x => x.AssocPortfoliosPortfolioId,
+                        principalTable: "Portfolios",
+                        principalColumn: "PortfolioId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Tag",
                 columns: table => new
                 {
@@ -137,9 +161,9 @@ namespace GrassHopper.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhotoGroups_PortfolioId",
-                table: "PhotoGroups",
-                column: "PortfolioId");
+                name: "IX_PhotoGroupPortfolio_PortfolioPGroupsGroupId",
+                table: "PhotoGroupPortfolio",
+                column: "PortfolioPGroupsGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Photos_GroupId",
@@ -165,20 +189,12 @@ namespace GrassHopper.Migrations
                 name: "IX_Tag_PortfolioId",
                 table: "Tag",
                 column: "PortfolioId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_PhotoGroups_Portfolios_PortfolioId",
-                table: "PhotoGroups",
-                column: "PortfolioId",
-                principalTable: "Portfolios",
-                principalColumn: "PortfolioId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_PhotoGroups_Portfolios_PortfolioId",
-                table: "PhotoGroups");
+            migrationBuilder.DropTable(
+                name: "PhotoGroupPortfolio");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

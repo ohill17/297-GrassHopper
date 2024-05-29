@@ -11,17 +11,17 @@ public class EmailSender : IEmailSender
         var client = new SmtpClient("smtp.gmail.com", 587)
         {
             EnableSsl = true,
-            Credentials = new NetworkCredential("grasshopperquotes@gmail.com", "akmrtwgvfzndxbee") // Update with your email credentials
+            Credentials = new NetworkCredential("grasshopperquotes@gmail.com", "akmrtwgvfzndxbee")
         };
 
         var mail = new MailMessage
         {
-            From = new MailAddress(sender), // Set the sender dynamically
+            From = new MailAddress(sender),
             Subject = subject,
             Body = message
         };
 
-        mail.To.Add(ownerEmail); // Set the recipient to the website owner's email address
+        mail.To.Add(ownerEmail); 
 
         return client.SendMailAsync(mail);
     }

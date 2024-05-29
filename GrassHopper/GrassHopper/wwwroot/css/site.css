@@ -23,15 +23,19 @@ body {
 
 .primary {
     background-color: #C3FF0F;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
-.primary:hover {
-    background-color: #A4DB00;
- }
+    .primary:hover {
+        background-color: #A4DB00;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
 .danger {
     background-color: #FF1212;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 .danger:hover {
     background-color: #DE0000
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -361,10 +365,12 @@ portfolio-compba-photos {
         }
 .facebook-btn {
     background-color: #0B6FFF;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
     .facebook-btn:hover {
         background-color: #0D64F9;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .facebook-btn svg {
