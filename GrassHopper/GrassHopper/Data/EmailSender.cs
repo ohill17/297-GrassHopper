@@ -6,7 +6,7 @@ public class EmailSender : IEmailSender
 {
     public Task SendEmailAsync(string sender, string subject, string message)
     {
-        var ownerEmail = "orion123333@gmail.com"; // Specify the website owner's email address
+        var ownerEmail = "Burnesghc@gmail.com"; // Specify the website owner's email address
 
         var client = new SmtpClient("smtp.gmail.com", 587)
         {
