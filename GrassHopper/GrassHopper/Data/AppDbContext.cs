@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace GrassHopper.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUserModel>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }

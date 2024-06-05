@@ -11,8 +11,8 @@ namespace GrassHopper.Models
             var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = provider.GetRequiredService<UserManager<AppUserModel>>();
 
-            string username = "";
-            string password = "";
+            string username = "Admin";
+            string password = "Password123!";
             string roleName = "Admin";
 
             if (await roleManager.FindByNameAsync(roleName) == null)
