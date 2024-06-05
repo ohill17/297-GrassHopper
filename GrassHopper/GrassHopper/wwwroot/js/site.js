@@ -27,3 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300);
     });
 });
+const textarea = document.getElementById('ReviewBody');
+const charCount = document.getElementById('charCount');
+const maxChars = 528;
+
+textarea.addEventListener('input', () => {
+    const remaining = maxChars - textarea.value.length;
+    charCount.textContent = `${remaining} characters remaining`;
+});

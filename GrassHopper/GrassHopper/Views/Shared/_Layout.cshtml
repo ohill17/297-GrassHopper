@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GrassHopper.styles.css" asp-append-version="true" />
+ 
 
 </head>
 <body>
@@ -29,6 +30,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownHome">
                                 <a class="dropdown-item" href="~/Home/Index">Homepage</a>
                                 <a class="dropdown-item" href="~/Home/AboutUs">About Us</a>
+                                <a class="dropdown-item" href="~/Home/RequestQuote">Request a Quote</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -39,6 +41,9 @@
                                 <a class="dropdown-item" href="~/Review/ReviewPost">Write a Review</a>
                                 <a class="dropdown-item" href="~/Review/Index">Read Reviews</a>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Portfolios" asp-action="Index">Portfolio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Photos" asp-action="Index">Photos</a>

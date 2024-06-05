@@ -4,32 +4,47 @@
 }
 
 
+<br />
+<br />
+<div class="container-fluid" style="background-color: rgba(228, 247, 182, 0.9); padding: 50px; border-radius: 15px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h1 class="cta-header">Dream It, Plan It, Build It</h1>
+            <br />
+            <p style="margin-top: 20px;">Welcome to GrassHopper General Construction, your trusted partner for commercial and residential construction in Eugene. With expertise in new construction, renovations, and additions, we bring your vision to life. From bid to final inspection, we work closely with you to ensure projects are completed on time and within budget.</p>
+            <div class="mt-3">
+            
+                <a href="~/Home/RequestQuote" style="margin-top: 110px;" class="btn primary">Request a Free Quote Today</a>
+                <a href="~/Home/AboutUs" style="margin-top: 110px; " class="btn primary">Learn More</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="https://placehold.co/600x400" class="img-fluid" alt="Blank Image">
+        </div>
+    </div>
+</div>
+<br />
+<br />
 
-
-@*
 @if (Model != null && Model.Any())
 {
-
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
-
-     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
             {
                 <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
             }
         </ol>
-
         <div class="carousel-inner">
             @for (int i = 0; i < Model.Count(); i++)
             {
-                Photo p = Model.ElementAt(i);
-                string url = "/photos/" + p.PhotoCode;
+                PhotoVM p = Model.ElementAt(i);
+                string url = "/photos/" + p.Url;
                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" src="@url" alt="@p.PhotoName">
+                    <img class="d-block w-100" src="@url" alt="@p.Name">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>@p.PhotoName</h5>
-                        <p>@p.PhotoDescription</p>
+                        <h5>@p.Name</h5>
+                        <p>@p.Description</p>
                     </div>
                 </div>
             }
@@ -42,10 +57,5 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-
     </div>
-    
 }
-*@
-
-

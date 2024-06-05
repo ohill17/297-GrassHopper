@@ -93,6 +93,9 @@ namespace GrassHopper.Migrations
                     b.Property<DateOnly>("PortfolioDate")
                         .HasColumnType("date");
 
+                    b.Property<int>("PortfolioFormat")
+                        .HasColumnType("int");
+
                     b.Property<string>("PortfolioName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -116,9 +119,6 @@ namespace GrassHopper.Migrations
                     b.Property<int>("ReviewID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsFromFacebook")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ReviewBody")
                         .IsRequired()
@@ -164,6 +164,21 @@ namespace GrassHopper.Migrations
                     b.ToTable("Tag");
                 });
 
+            modelBuilder.Entity("PhotoGroupPortfolio", b =>
+                {
+                    b.Property<int>("AssocPortfoliosPortfolioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PortfolioPGroupsGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssocPortfoliosPortfolioId", "PortfolioPGroupsGroupId");
+
+                    b.HasIndex("PortfolioPGroupsGroupId");
+
+                    b.ToTable("PhotoGroupPortfolio");
+                });
+
             modelBuilder.Entity("GrassHopper.Models.Photo", b =>
                 {
                     b.HasOne("GrassHopper.Models.PhotoGroup", "Group")
@@ -171,13 +186,6 @@ namespace GrassHopper.Migrations
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("GrassHopper.Models.PhotoGroup", b =>
-                {
-                    b.HasOne("GrassHopper.Models.Portfolio", null)
-                        .WithMany("PortfolioPGroups")
-                        .HasForeignKey("PortfolioId");
                 });
 
             modelBuilder.Entity("GrassHopper.Models.Portfolio", b =>
@@ -204,6 +212,21 @@ namespace GrassHopper.Migrations
                         .HasForeignKey("PortfolioId");
                 });
 
+            modelBuilder.Entity("PhotoGroupPortfolio", b =>
+                {
+                    b.HasOne("GrassHopper.Models.Portfolio", null)
+                        .WithMany()
+                        .HasForeignKey("AssocPortfoliosPortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GrassHopper.Models.PhotoGroup", null)
+                        .WithMany()
+                        .HasForeignKey("PortfolioPGroupsGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("GrassHopper.Models.Photo", b =>
                 {
                     b.Navigation("PhotoTags");
@@ -218,8 +241,6 @@ namespace GrassHopper.Migrations
 
             modelBuilder.Entity("GrassHopper.Models.Portfolio", b =>
                 {
-                    b.Navigation("PortfolioPGroups");
-
                     b.Navigation("PortfolioTags");
                 });
 #pragma warning restore 612, 618
