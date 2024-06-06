@@ -4,7 +4,7 @@ using System.IO;
 
 namespace GrassHopper.Data.Repositories
 {
-	public class PhotoRepository : IPhotoRepository
+    public class PhotoRepository : IPhotoRepository
 	{
 		private AppDbContext dbContext;
 

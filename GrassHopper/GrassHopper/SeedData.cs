@@ -1,13 +1,38 @@
 using GrassHopper.Data;
 using GrassHopper.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace GrassHopper
 {
     public class SeedData
     {
-        public static void Seed(AppDbContext context)
+        public static void Seed(IServiceProvider provider, Dictionary<string, string> adminInfo)
         {
+            var context = provider.GetRequiredService<AppDbContext>();
+            var userManager = provider.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            if (!roleManager.Roles.Any())
+            {
+                _ = roleManager.CreateAsync(new IdentityRole("Admin")).Result.Succeeded;
+            }
+
+            if (userManager.FindByNameAsync(adminInfo["AdminUName"]).Result is null)
+            {
+                AppUser admin = new()
+                {
+                    UserName = adminInfo["AdminUName"],
+                    Name = adminInfo["AdminName"]
+                };
+                bool result = userManager.CreateAsync(admin, adminInfo["AdminPass"]).Result.Succeeded;
+                if (result)
+                {
+                    _ = userManager.AddToRoleAsync(admin, "Admin").Result.Succeeded;
+                }
+            }
+
             if (!context.Reviews.Any())
             {
               Review review1 = new Review
