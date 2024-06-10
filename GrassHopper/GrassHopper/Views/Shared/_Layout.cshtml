@@ -45,9 +45,55 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Portfolios" asp-action="Index">Portfolio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Photos" asp-action="Index">Photos</a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Portfolios" asp-action="PortfolioAdmin">Manage Portfolio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Photos" asp-action="Index">Photos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Admin</a>
+                            </li>
+                        }
+                    </ul>
+
+
+                    <ul class="navbar-nav flex-grow-1" style="flex-direction:row-reverse;">
+                        <!--Login and Registration-->
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        // Signed-in user -Log Out button and username
+                            <li class="nav-item">
+                                <form method="post" asp-action="Logout" asp-controller="Account">
+                                    <input type="submit" value="Log Out" class="btn primary" />
+                                    <span class="text-dark">@User.Identity.Name</span>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+                                   asp-action="ChangePassword">
+                                    Change Password
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            var action = ViewContext.RouteData.Values["action"]?.ToString();
+                            // anonymous user - Register link and Log In button
+                            <li class="nav-item">
+                                <a asp-action="Login" asp-controller="Account" class="btn primary">
+                                    Log In
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">
+                                    Register
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

@@ -8,7 +8,7 @@ namespace GrassHopper.Models
         public PhotoVM(Photo p, PhotoSize size = PhotoSize.Medium)
         {
             string sizeExtension;
-            switch(size)
+            switch (size)
             {
                 case PhotoSize.Small:
                     sizeExtension = "SM";
@@ -38,8 +38,8 @@ namespace GrassHopper.Models
 
     public enum PhotoSize
     {
-        Small, 
-        Medium, 
+        Small,
+        Medium,
         Large
     }
 }
