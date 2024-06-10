@@ -62,12 +62,12 @@ namespace GrassHopper.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                review.ReviewDate = DateTime.Now.Date;
                 _context.Reviews.Add(review);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View("Review", "ReviewPost");
+            return View("Review", review);
         }
 
     }
