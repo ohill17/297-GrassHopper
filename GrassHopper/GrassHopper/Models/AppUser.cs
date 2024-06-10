@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GrassHopper.Models
 {
-    public class AppUserModel : IdentityUser
+    public class AppUser : IdentityUser
     {
         public string? Name { get; set; }
 

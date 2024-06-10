@@ -5,16 +5,18 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using GrassHopper.Data;
-using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
 using System.IO;
 using System.Web;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using GrassHopper.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GrassHopper.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PhotosController : Controller
     {
         private readonly IPhotoRepository pRepository;

@@ -1,0 +1,109 @@
+﻿@model UserViewModel
+@{
+	ViewData["Title"] = " | Manage Users | ";
+}
+
+<h1 class="mb-2">Manage Users</h1>
+
+<table class="table table-bordered table-striped table-sm">
+	<thead>
+		<tr><th>Username</th><th>Roles</th><th></th><th></th><th></th></tr>
+	</thead>
+	<tbody>
+		@if (Model.Users.Count() == 0)
+		{
+			<tr><td colspan="5">There are no user accounts.</td></tr>
+		}
+		else
+		{
+			@foreach (AppUser user in Model.Users)
+			{
+				<tr>
+					<td>@user.UserName</td>
+					<td>
+						@if (user.RoleNames != null)
+						{
+							foreach (string roleName in user.RoleNames)
+							{
+								<div>@roleName</div>
+							}
+						}
+					</td>
+					<td>
+						<form method="post" asp-action="Delete"
+							  asp-route-id="@user.Id">
+							<button type="submit" class="btn btn-danger">
+								Delete User
+							</button>
+						</form>
+					</td>
+					<td>
+						<form method="post" asp-action="AddToRole" asp-route-id="@user.Id">
+							<select name="roleName">
+								@foreach (var role in Model.Roles)
+								{
+									<option value="@role.Name">@role.Name</option>
+								}
+							</select>
+							<button type="submit" class="btn btn-primary">
+								Add To Role
+							</button>
+						</form>
+					</td>
+					<td>
+						@if (user.RoleNames.Any())
+						{
+							<form method="post" asp-action="RemoveFromRole" asp-route-id="@user.Id">
+								<select name="roleName">
+									@foreach (var roleName in user.RoleNames)
+									{
+										<option value="@roleName">@roleName</option>
+									}
+								</select>
+								<button type="submit" class="btn btn-warning">
+									Remove From Role
+								</button>
+							</form>
+						}
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+
+<h1 class="mb-2">Manage Roles</h1>
+
+<form method="post" asp-action="CreateRole">
+	<input type="text" name="roleName" required placeholder="Role Name">
+	<button type="submit" class="btn btn-primary">
+		Create Role
+	</button>
+</form>
+
+<br>
+
+@if (Model.Roles.Count() != 0)
+{
+	<table class="table table-bordered table-striped table-sm">
+		<thead>
+			<tr><th>Role</th><th></th></tr>
+		</thead>
+		<tbody>
+			@foreach (var role in Model.Roles)
+			{
+				<tr>
+					<td>@role.Name</td>
+					<td>
+						<form method="post" asp-action="DeleteRole"
+							  asp-route-id="@role.Id">
+							<button type="submit" class="btn btn-danger">
+								Delete Role
+							</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
