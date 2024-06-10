@@ -48,7 +48,7 @@ namespace GrassHopper.Data
                 string dayStr = str.Substring(8, 2);
                 int day = int.Parse(dayStr);
 
-                review.ReviewDate = new DateOnly(year, month, day);
+                review.ReviewDate = new DateTime(year, month, day);
             } 
             if (rating != null)
             {
