@@ -9,13 +9,11 @@ namespace GrassHopper.Controllers
 {
     public class ReviewController : Controller
     {
-        private readonly AppDbContext _context; // Corrected field name
         private readonly IReviewRepository _reviewRepo;
         private readonly ITokenRepository _tokenRepo;
 
-        public ReviewController(AppDbContext context, IReviewRepository reviewRepo, ITokenRepository tokenRepo)
+        public ReviewController(IReviewRepository reviewRepo, ITokenRepository tokenRepo)
         {
-            _context = context;
             _reviewRepo = reviewRepo;
             _tokenRepo = tokenRepo;
         }
@@ -28,7 +26,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken) 
         {
             // Loading facebook reviews onto the page
-            var reviews = _reviewRepo.GetAllReviews();
+            var reviews = await _reviewRepo.GetAllReviews();
             if (reviewsFromFacebook != null && reviewsFromFacebook.Length > 0)
             {
                 Review r = FacebookReviews.NewFromFacebook(HttpUtility.UrlDecode(reviewsFromFacebook));
@@ -44,7 +42,7 @@ namespace GrassHopper.Controllers
             }
 
             // Sending the existing access token to the page
-            List<Token> theTokens = _tokenRepo.GetAllTokens();
+            List<Token> theTokens = await _tokenRepo.GetAllTokens();
             if (theTokens.Count > 0)
             {
                 ViewBag.token = theTokens[0].TokenString;
@@ -58,13 +56,12 @@ namespace GrassHopper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitReview(Review review)
+        public async Task<IActionResult> SubmitReview(Review review)
         {
             if (ModelState.IsValid)
             {
-                review.ReviewDate = DateTime.Now.Date;
-                _context.Reviews.Add(review);
-                _context.SaveChanges();
+                review.ReviewDate = DateTime.Now;
+                await _reviewRepo.AddReview(review);
                 return RedirectToAction("Index");
             }
             return View("Review", review);

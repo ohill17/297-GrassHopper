@@ -1,6 +1,7 @@
 ﻿using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace GrassHopper.Data.Repositories
 {
@@ -23,14 +24,14 @@ namespace GrassHopper.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Token> GetAllTokens()
+        public async Task<List<Token>> GetAllTokens()
         {
-            return dbContext.Tokens.ToList();
+            return await dbContext.Tokens.ToListAsync();
         }
 
         public async Task<Token> GetToken(int id)
         {
-            return dbContext.Tokens.Find(id);
+            return await dbContext.Tokens.FindAsync(id);
         }
 
         public async Task<int> UpdateToken(Token token)
