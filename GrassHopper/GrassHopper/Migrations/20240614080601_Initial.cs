@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GrassHopper.Migrations
 {
-    public partial class FreshForIdentity : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,7 +98,7 @@ namespace GrassHopper.Migrations
                     ReviewBody = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReviewRating = table.Column<int>(type: "int", nullable: false),
-                    ReviewDate = table.Column<DateOnly>(type: "date", nullable: false)
+                    ReviewDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {

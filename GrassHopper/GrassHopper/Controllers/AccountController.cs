@@ -22,7 +22,7 @@ namespace Grasshopper.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Register(RegisterViewModel model)
+		public async Task<IActionResult> Register(RegisterVM model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -55,12 +55,12 @@ namespace Grasshopper.Controllers
 		[HttpGet]
 		public IActionResult LogIn(string returnURL = "")
 		{
-			var model = new LoginViewModel { ReturnUrl = returnURL };
+			var model = new LoginVM { ReturnUrl = returnURL };
 			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> LogIn(LoginViewModel model)
+		public async Task<IActionResult> LogIn(LoginVM model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -93,7 +93,7 @@ namespace Grasshopper.Controllers
 		//[HttpGet]
 		public IActionResult ChangePassword()
 		{
-			var model = new ChangePasswordViewModel
+			var model = new ChangePasswordVM
 			{
 				Username = User.Identity?.Name ?? ""
 			};
@@ -101,7 +101,7 @@ namespace Grasshopper.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+		public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
 		{
 			if (ModelState.IsValid)
 			{

@@ -207,7 +207,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> EditPhoto(Photo photo)
         {
             int result = await pRepository.UpdatePhoto(photo); //Potential hook for later
-            return RedirectToAction("EditPhoto", "Photos", new { photoId = photo.PhotoId });
+            return RedirectToAction("Index", "Photos", new { photoId = photo.PhotoId });
         }
 
         public async Task<IActionResult> UnGroup(int photoId)
@@ -233,7 +233,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> EditGroup(PhotoGroup group)
         {
             int result = await pRepository.UpdateGroup(group);
-            return RedirectToAction("EditGroup", "Photos", new { groupId = group.GroupId });
+            return RedirectToAction("Groups", "Photos", new { groupId = group.GroupId });
         }
 
         public async Task<IActionResult> BreakGroup(int groupId)

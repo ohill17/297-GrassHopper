@@ -11,20 +11,23 @@ using GrassHopper.Models;
 
 namespace GrassHopper.Controllers
 {
-    public class HomeController : Controller
+    public class HomeControllerTests : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext context;
         private readonly IPhotoRepository prepository;
         private readonly IEmailSender _emailSender;
 
-        public EmailSender EmailSender { get; }
-
-        public HomeController(ILogger<HomeController> logger, AppDbContext c, IPhotoRepository p, IEmailSender emailSender)
+        public HomeControllerTests(ILogger<HomeController> logger, AppDbContext c, IPhotoRepository p, IEmailSender emailSender)
         {
             _logger = logger;
             context = c;
             prepository = p;
+            _emailSender = emailSender;
+        }
+
+        public HomeControllerTests(EmailSender emailSender)
+        {
             _emailSender = emailSender;
         }
 
@@ -61,17 +64,18 @@ namespace GrassHopper.Controllers
 
                 // Set up your email sender details
                 var sender = "grasshopperquotes@gmail.com";
-                var subject = $"{quote.FName} {quote.LName} Is Requesting a Quote!";
+                var subject = quote.FName + " " + quote.LName + " " + "Is Requesting a Quote!";
 
                 // Send email using SMTP
                 await _emailSender.SendEmailAsync(sender, subject, message);
 
-                // Redirect to a success page after successful submission
+
+                // Assuming you want to redirect to a success page after successful submission
                 return RedirectToAction("QuoteSubmitted");
             }
 
             // If model state is not valid, return the view to display validation errors
-            return View(quote);
+            return View();
         }
         public IActionResult RequestQuote()
         {

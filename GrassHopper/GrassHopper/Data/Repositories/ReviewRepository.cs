@@ -23,14 +23,14 @@ namespace GrassHopper.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Review> GetAllReviews()
+        public async Task<List<Review>> GetAllReviews()
         {
-            return dbContext.Reviews.ToList();
+            return await dbContext.Reviews.ToListAsync();
         }
 
         public async Task<Review> GetReview(int id)
         {
-            return new();//dbContext.Reviews.Find(id);//Database currently not functional
+            return await dbContext.Reviews.FindAsync(id);
         }
 
         public async Task<int> UpdateReview(Review review)
