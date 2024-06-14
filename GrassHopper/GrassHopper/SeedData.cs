@@ -19,7 +19,19 @@ namespace GrassHopper
                 _ = roleManager.CreateAsync(new IdentityRole("Admin")).Result.Succeeded;
             }
 
-        
+            if (userManager.FindByNameAsync(adminInfo["AdminUName"]).Result is null)
+            {
+                AppUser admin = new()
+                {
+                    UserName = adminInfo["AdminUName"],
+                    Name = adminInfo["AdminName"]
+                };
+                bool result = userManager.CreateAsync(admin, adminInfo["AdminPass"]).Result.Succeeded;
+                if (result)
+                {
+                    _ = userManager.AddToRoleAsync(admin, "Admin").Result.Succeeded;
+                }
+            }
 
             if (!context.Reviews.Any())
             {

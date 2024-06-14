@@ -17,21 +17,21 @@
 	string url = "/photos/" + p.PhotoCode + "LG" + p.Extension;
 	<img src="@url" alt="@p.PhotoDescription" style="aspect-ratio:auto; width:50%;">
     <br />
-    <a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@p.PhotoId" class="btn">Edit Photo</a>
+    <a asp-controller="Photos" asp-action="EditPhoto" asp-route-photoId="@p.PhotoId" class="btn primary">Edit Photo</a>
 	<hr>
 }
 <br>
-<a asp-controller="Photos" asp-action="BreakGroup" asp-route-groupId="@Model.GroupId" class="btn">Dissolve Group</a>
+<a asp-controller="Photos" asp-action="BreakGroup" asp-route-groupId="@Model.GroupId" class="btn primary">Dissolve Group</a>
 <br><br>
 @if (Model.IsHidden)
 {
-    <a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@Model.GroupId" class="btn">Restore Group</a>
+    <a asp-controller="Photos" asp-action="RestoreGroup" asp-route-groupId="@Model.GroupId" class="btn primary">Restore Group</a>
 }
 else
 {
-    <a asp-controller="Photos" asp-action="HideGroup" asp-route-groupId="@Model.GroupId" class="btn">Hide Group</a>
+    <a asp-controller="Photos" asp-action="HideGroup" asp-route-groupId="@Model.GroupId" class="btn primary">Hide Group</a>
 }
 <br><br>
-<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@Model.GroupId" class="btn">Delete Group</a>
+<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@Model.GroupId" class="btn primary">Delete Group</a>
 <br><br>
-<a asp-controller="Photos" asp-action="Groups" class="btn">Cancel</a>
+<a asp-controller="Photos" asp-action="Groups" class="btn primary">Cancel</a>

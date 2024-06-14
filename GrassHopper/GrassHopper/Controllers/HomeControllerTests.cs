@@ -11,20 +11,23 @@ using GrassHopper.Models;
 
 namespace GrassHopper.Controllers
 {
-    public class HomeController : Controller
+    public class HomeControllerTests : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext context;
         private readonly IPhotoRepository prepository;
         private readonly IEmailSender _emailSender;
 
-        public EmailSender EmailSender { get; }
-
-        public HomeController(ILogger<HomeController> logger, AppDbContext c, IPhotoRepository p, IEmailSender emailSender)
+        public HomeControllerTests(ILogger<HomeController> logger, AppDbContext c, IPhotoRepository p, IEmailSender emailSender)
         {
             _logger = logger;
             context = c;
             prepository = p;
+            _emailSender = emailSender;
+        }
+
+        public HomeControllerTests(EmailSender emailSender)
+        {
             _emailSender = emailSender;
         }
 

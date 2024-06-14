@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+﻿
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -8,7 +8,7 @@
     <div class="portfolio-default-photos">
         <!--This carousel needs to be fixed. It's not the right size and I can't be bothered fixing it right now when I have so much other stuff to do-->
         @{
-            GroupVM? maingroup = Model.Groups[0] ?? null;
+            GroupVM? maingroup = Model.Groups.Count > 0 ? Model.Groups[0] : null;
         }
         <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
             @if (maingroup is not null)
@@ -25,7 +25,7 @@
                         PhotoVM p = maingroup.Photos.ElementAt(i);
                         string url = "/photos/" + p.Url;
                         <div class="carousel-item @(i == 0 ? "active" : "")">
-                            <img class="d-block w-100" src="@url" alt="@p.Name">
+                            <img class="d-block" src="@url" alt="@p.Name">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>@p.Name</h5>
                                 <p>@p.Description</p>

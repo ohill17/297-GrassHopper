@@ -186,8 +186,8 @@ namespace GrassHopper.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateOnly>("ReviewDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("ReviewRating")
                         .HasColumnType("int");
