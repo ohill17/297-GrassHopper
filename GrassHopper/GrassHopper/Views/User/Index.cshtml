@@ -32,7 +32,7 @@
 					<td>
 						<form method="post" asp-action="Delete"
 							  asp-route-id="@user.Id">
-							<button type="submit" class="btn btn-danger">
+							<button type="submit" class="btn danger">
 								Delete User
 							</button>
 						</form>
@@ -45,7 +45,7 @@
 									<option value="@role.Name">@role.Name</option>
 								}
 							</select>
-							<button type="submit" class="btn btn-primary">
+							<button type="submit" class="btn primary">
 								Add To Role
 							</button>
 						</form>
@@ -76,7 +76,7 @@
 
 <form method="post" asp-action="CreateRole">
 	<input type="text" name="roleName" required placeholder="Role Name">
-	<button type="submit" class="btn btn-primary">
+	<button type="submit" class="btn primary">
 		Create Role
 	</button>
 </form>
@@ -97,7 +97,7 @@
 					<td>
 						<form method="post" asp-action="DeleteRole"
 							  asp-route-id="@role.Id">
-							<button type="submit" class="btn btn-danger">
+							<button type="submit" class="btn danger">
 								Delete Role
 							</button>
 						</form>

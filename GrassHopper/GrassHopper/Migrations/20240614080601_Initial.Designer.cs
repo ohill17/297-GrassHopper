@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrassHopper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240606002520_FreshForIdentity")]
-    partial class FreshForIdentity
+    [Migration("20240614080601_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,8 +188,8 @@ namespace GrassHopper.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateOnly>("ReviewDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("ReviewRating")
                         .HasColumnType("int");

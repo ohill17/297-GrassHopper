@@ -2,8 +2,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-
+<style>
+    .carousel-item img {
+        width: 25vw; /* 25% of the viewport width */
+        height: auto; /* Maintain aspect ratio */
+        margin: auto; /* Center align the image */
+    }
+</style>
 <br />
 <br />
 <div class="container-fluid" style="background-color: rgba(228, 247, 182, 0.9); padding: 50px; border-radius: 15px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
@@ -28,6 +33,9 @@
 
 @if (Model != null && Model.Any())
 {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
@@ -35,13 +43,13 @@
                 <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
             }
         </ol>
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="height:90%">
             @for (int i = 0; i < Model.Count(); i++)
             {
                 PhotoVM p = Model.ElementAt(i);
                 string url = "/photos/" + p.Url;
                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" src="@url" alt="@p.Name">
+                    <img class="d-block w-73" src="@url" alt="@p.Name">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>@p.Name</h5>
                         <p>@p.Description</p>
@@ -54,8 +62,9 @@
             <span class="sr-only">Previous</span>
         </a>
         <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="carousel-control-next-icon" aria-hidden="false"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
+
 }
