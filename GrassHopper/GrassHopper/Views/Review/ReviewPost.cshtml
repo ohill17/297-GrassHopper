@@ -10,18 +10,18 @@
             <form asp-action="SubmitReview" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label for="ReviewerName">Your Name</label>
-                    <input type="text" class="form-control" id="ReviewerName" name="ReviewerName" required maxlength="100">
-                    <span class="text-danger" data-valmsg-for="ReviewerName" data-valmsg-replace="true"></span>
+                    <label asp-for="ReviewerName">Your Name</label>
+                    <input asp-for="ReviewerName" class="form-control" required />
+                    <span asp-validation-for="ReviewerName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="ReviewBody">Review</label>
-                    <textarea class="form-control" id="ReviewBody" name="ReviewBody" rows="4" maxlength="528" required></textarea>
+                    <label asp-for="ReviewBody">Review</label>
+                    <textarea asp-for="ReviewBody" class="form-control" rows="4" required></textarea>
                     <small style="color: grey;" id="charCount" class="counter">528 characters remaining</small>
-                    <span class="text-danger" data-valmsg-for="ReviewBody" data-valmsg-replace="true"></span>
+                    <span asp-validation-for="ReviewBody" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="ReviewRating">Rating</label>
+                    <label asp-for="ReviewRating">Rating</label>
                     <div class="stars">
                         <span data-value="1">&#9733;</span>
                         <span data-value="2">&#9733;</span>
@@ -29,7 +29,7 @@
                         <span data-value="4">&#9733;</span>
                         <span data-value="5">&#9733;</span>
                     </div>
-                    <select class="form-control d-none" id="ReviewRating" name="ReviewRating" required>
+                    <select asp-for="ReviewRating" class="form-control d-none">
                         <option value="">Select a rating</option>
                         <option value="1">1 Star</option>
                         <option value="2">2 Stars</option>
@@ -37,7 +37,7 @@
                         <option value="4">4 Stars</option>
                         <option value="5">5 Stars</option>
                     </select>
-                    <span class="text-danger" data-valmsg-for="ReviewRating" data-valmsg-replace="true"></span>
+                    <span asp-validation-for="ReviewRating" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn primary">Submit Review</button>
                 &nbsp; Or &nbsp;
@@ -51,13 +51,39 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
 <script>
-    document.querySelectorAll('.stars span').forEach((star, index) => {
-        star.addEventListener('click', () => {
-            document.querySelectorAll('.stars span').forEach((s, i) => {
-                s.classList.toggle('active', i <= index);
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll('.stars span');
+        const reviewRating = document.getElementById('ReviewRating');
+        const form = document.querySelector('form');
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                stars.forEach((s, i) => {
+                    s.classList.toggle('active', i <= index);
+                });
+                reviewRating.value = index + 1;
             });
-            document.getElementById('ReviewRating').value = index + 1;
+        });
+
+        form.addEventListener('submit', function (event) {
+            if (reviewRating.value === '') {
+                event.preventDefault();
+                const errorSpan = document.createElement('span');
+                errorSpan.textContent = 'Please select a rating';
+                errorSpan.classList.add('text-danger');
+
+                const ratingContainer = document.querySelector('.stars');
+                ratingContainer.appendChild(errorSpan);
+
+                setTimeout(() => {
+                    errorSpan.remove();
+                }, 3000);
+            }
         });
     });
 

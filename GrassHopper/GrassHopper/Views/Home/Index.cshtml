@@ -4,9 +4,9 @@
 }
 <style>
     .carousel-item img {
-        width: 25vw; /* 25% of the viewport width */
-        height: auto; /* Maintain aspect ratio */
-        margin: auto; /* Center align the image */
+        width: 25vw; 
+        height: auto; 
+        margin: auto; 
     }
 </style>
 <br />
@@ -30,11 +30,16 @@
 </div>
 <br />
 <br />
-
+@*
+    DO NOT TOUCH !!! 
+*@
 @if (Model != null && Model.Any())
 {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    @*
+    DO NOT TOUCH !!!
+*@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -42,6 +47,9 @@
             {
                 <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
             }
+            @*
+        DO NOT TOUCH !!!
+        *@
         </ol>
         <div class="carousel-inner" style="height:90%">
             @for (int i = 0; i < Model.Count(); i++)
@@ -56,6 +64,9 @@
                     </div>
                 </div>
             }
+            @*
+        YOU GUESSED IT DO. NOT. TOUCH !!!
+        *@
         </div>
         <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -68,3 +79,6 @@
     </div>
 
 }
+@*
+    DO NOT TOUCH !!!
+*@
