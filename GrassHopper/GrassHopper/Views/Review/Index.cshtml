@@ -24,8 +24,6 @@
         console.log(reviews);
         
         // Creating an element with the data encoded in the href so we can send it to controller
-        if ('@(ViewBag.IsAdmin)' == "true") 
-        {
             var reviewsString = encodeURIComponent(JSON.stringify(reviews));
             let el = document.createElement('a');
             el.setAttribute('href', "/Review/Index?reviewsFromFacebook=" + reviewsString);
@@ -36,7 +34,6 @@
                 el.click();
             } 
             el.hidden = true;
-        }
      }
 
 
