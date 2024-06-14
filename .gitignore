@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-GrassHopper/appsettings*
+*appsettings.json
 
 # User-specific files
 *.rsuser
@@ -401,3 +401,4 @@ FodyWeavers.xsd
 /GrassHopper/GrassHopper/appsettings.Development.json
 /GrassHopper/GrassHopper/appsettinngs.json
 /GrassHopper/GrassHopper/appsettings.Production.json
+/GrassHopper/GrassHopper/GrassHopper.csproj
