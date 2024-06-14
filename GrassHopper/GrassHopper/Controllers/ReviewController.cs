@@ -27,12 +27,24 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken) 
         {
+
+            //checking if a user is logged in
+            if (User.IsInRole("Admin"))
+            {
+                ViewData["IsAdmin"] = "true";
+            } else
+            {
+                ViewData["IsAdmin"] = "false";
+            }
+
             // Loading facebook reviews onto the page
+            ViewData["IsLoaded"] = "false";
             var reviews = _reviewRepo.GetAllReviews();
             if (reviewsFromFacebook != null && reviewsFromFacebook.Length > 0)
             {
                 Review r = FacebookReviews.NewFromFacebook(HttpUtility.UrlDecode(reviewsFromFacebook));
                 reviews.Add(r);
+                ViewData["IsLoaded"] = "true";
             }
 
             // Loading an access token into the database
