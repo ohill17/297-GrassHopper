@@ -23,6 +23,17 @@ namespace GrasshopperTests
             Assert.True(rRepo.GetAllReviews().Result.Any());
             Assert.True(rRepo.GetReview(0).Result.ReviewerName == testReviewerName);
         }
+
+        [Fact]
+        public void TestGetReview()
+        {
+            var rRepo = new TestReviewRepository();
+            string testReviewerName = "John Review";
+            rRepo.AddReview(new Review() { ReviewerName = testReviewerName }).Wait();
+            Review rev = rRepo.GetReview(0).Result;
+            Assert.True(rev.ReviewerName == testReviewerName);
+        }
+
         [Fact]
         public async Task SubmitQuote_ValidModel_RedirectsToQuoteSubmitted()
         {

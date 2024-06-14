@@ -3,7 +3,7 @@
  <script>
     let APP_ID = '1146299576721168';
     let APP_SECRET = '643d48308ab141f0c95a7eedb625826c';
-    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABOZBpFxDZBm9xlXDoSwWs6NZCqQA9RpCZCulpEnC1U9K9I1lanHM3zAg29jLAEcwKNwppYZCT77TZAWwGNjDi8PJeRfk8ZCjI0cB0YonZAUwzCjakktWoFvJs93ImgttrFCHyVZBToZBogZCQT0VjEf7g1cD8OYbZAdMvjXoDRHcKQBeZAzU966Xwh2xrJwRPSd75IQzTXmXjeUOC03osZD';
+    let PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABOZB4EHtptccdfT6o2ZA7IdinIQmWlykdoFh6JSM1FwS39Umc6lTGCPFqrk2U2u0rp55v6kivKuceEDd9DjW8kkd8FiVGJKyZBIsAIREwlpZALqy8ZAK8dUEm7cvVJcZAkZA6L4sjWkZAg3paFSawHFqxmlYBH9nmFw3X6FGmoz7QtNNWHflHEu1ZCT97xnQXHREeIltxKeEuAFNAZD';
     let PAGE_ID = '227047383835993';
     let PATH = `/ ${PAGE_ID}/ratings?fields=created_time,review_text,rating`;
     let METHOD = 'GET';
@@ -12,6 +12,8 @@
         access_token: PAGE_ACCESS_TOKEN
     }
     let APP_SCOPED_UID = '306703255792712';
+     let loaded1 = false;
+     let loaded2 = false;
 
 
 
@@ -22,12 +24,20 @@
         console.log(reviews);
         
         // Creating an element with the data encoded in the href so we can send it to controller
-        var reviewsString = encodeURIComponent(JSON.stringify(reviews));
-        let el = document.createElement('a');
-        el.setAttribute('href', "/Review/Index?reviewsFromFacebook=" + reviewsString);
-        el.innerHTML = "load facebook reviews too";
-        document.body.appendChild(el);
+        if ('@(ViewBag.IsAdmin)' == "true") 
+        {
+            var reviewsString = encodeURIComponent(JSON.stringify(reviews));
+            let el = document.createElement('a');
+            el.setAttribute('href', "/Review/Index?reviewsFromFacebook=" + reviewsString);
+            el.setAttribute('class', 'btn primary');
+            el.innerHTML = "Load Reviews From Facebook";
+            document.body.appendChild(el);
+            if ('@(ViewBag.IsLoaded)' == "false") {
+                el.click();
+            } 
+            el.hidden = true;
         }
+     }
 
 
 
@@ -72,10 +82,14 @@
                     console.log(response);
                     let Long_PAccess_token = response.data[0].access_token;
 
-                    let el = document.createElement('a');
-                    el.setAttribute('href', "/Review/Index?longPAccessToken=" + Long_PAccess_token);
-                    el.innerHTML = "send long page access token to the controller";
-                    document.body.appendChild(el);
+                    if ('@(ViewBag.IsAdmin)' == "true") {
+                        let el = document.createElement('a');
+                        el.setAttribute('href', "/Review/Index?longPAccessToken=" + Long_PAccess_token);
+                        el.setAttribute('class', 'btn primary');
+                        el.innerHTML = "send long page access token to the controller";
+                        document.body.appendChild(el);
+                        el.click();
+                    }
 
                     // Getting the reviews
                     PARAMS.access_token = Long_PAccess_token
