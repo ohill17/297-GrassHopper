@@ -71,7 +71,7 @@
 
 		<a asp-controller="Photos" asp-action="DeleteGroup" asp-route-groupId="@g.GroupId" class="btn danger">Delete Group</a>
 
-		<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+		<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn primary">Edit Group</a>
 
 		<hr>
 }
@@ -92,7 +92,7 @@
 			<p class="card-text">@g.Description</p>
 		</div>
 		<div class="card-footer">
-			<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn">Edit Group</a>
+			<a asp-controller="Photos" asp-action="EditGroup" asp-route-groupId="@g.GroupId" class="btn primary">Edit Group</a>
 		</div>
 	}
 </div>

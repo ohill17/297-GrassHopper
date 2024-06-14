@@ -2,7 +2,7 @@
 
 namespace GrassHopper.Models
 {
-    public class ChangePasswordViewModel
+    public class ChangePasswordVM
     {
         public string Username { get; set; } = string.Empty;
 

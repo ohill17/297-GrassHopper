@@ -3,57 +3,95 @@
     ViewData["Title"] = "Leave a Review";
 }
 
-    <div class="container GHC mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <h2 class="mb-4">Your Review</h2>
-                <form asp-action="SubmitReview" method="post">
-                    <div class="form-group">
-                        <label for="ReviewerName">Your Name</label>
-                        <input type="text" class="form-control" id="ReviewerName" name="ReviewerName" required>
-                    </div>
+<div class="container GHC mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h2 class="mb-4">Your Review</h2>
+            <form asp-action="SubmitReview" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label for="ReviewBody">Review</label>
-                    <textarea class="form-control" id="ReviewBody" name="ReviewBody" rows="4" maxlength="528" required></textarea>
-                    <small style="color: grey;" id="charCount" class="counter">528 characters remaining</small>
+                    <label asp-for="ReviewerName">Your Name</label>
+                    <input asp-for="ReviewerName" class="form-control" required />
+                    <span asp-validation-for="ReviewerName" class="text-danger"></span>
                 </div>
-                    <div class="form-group">
-                        <label for="ReviewRating">Rating</label>
-                        <div class="stars">
-                            <span data-value="1">&#9733;</span>
-                            <span data-value="2">&#9733;</span>
-                            <span data-value="3">&#9733;</span>
-                            <span data-value="4">&#9733;</span>
-                            <span data-value="5">&#9733;</span>
-                        </div>
-                        <select class="form-control d-none" id="ReviewRating" name="ReviewRating" required>
-                            <option value="">Select a rating</option>
-                            <option value="1">1 Star</option>
-                            <option value="2">2 Stars</option>
-                            <option value="3">3 Stars</option>
-                            <option value="4">4 Stars</option>
-                            <option value="5">5 Stars</option>
-                        </select>
+                <div class="form-group">
+                    <label asp-for="ReviewBody">Review</label>
+                    <textarea asp-for="ReviewBody" class="form-control" rows="4" required></textarea>
+                    <small style="color: grey;" id="charCount" class="counter">528 characters remaining</small>
+                    <span asp-validation-for="ReviewBody" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReviewRating">Rating</label>
+                    <div class="stars">
+                        <span data-value="1">&#9733;</span>
+                        <span data-value="2">&#9733;</span>
+                        <span data-value="3">&#9733;</span>
+                        <span data-value="4">&#9733;</span>
+                        <span data-value="5">&#9733;</span>
                     </div>
-                    <button type="submit" class="btn primary">Submit Review</button>
-                    &nbsp; Or &nbsp;
-                    <a href="https://facebook.com/Grasshoppergeneralconstruction/reviews" target="_blank" rel="noopener noreferrer" class="btn facebook-btn">
-                        <svg width="24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
-                        </svg>
-                        Write a Review on our Facebook Page
-                    </a>
-                </form>
-            </div>
+                    <select asp-for="ReviewRating" class="form-control d-none">
+                        <option value="">Select a rating</option>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                    </select>
+                    <span asp-validation-for="ReviewRating" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn primary">Submit Review</button>
+                &nbsp; Or &nbsp;
+                <a href="https://facebook.com/Grasshoppergeneralconstruction/reviews" target="_blank" rel="noopener noreferrer" class="btn facebook-btn">
+                    <svg width="24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                    </svg>
+                    Write a Review on our Facebook Page
+                </a>
+            </form>
         </div>
     </div>
-    <script>
-        document.querySelectorAll('.stars span').forEach((star, index) => {
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll('.stars span');
+        const reviewRating = document.getElementById('ReviewRating');
+        const form = document.querySelector('form');
+
+        stars.forEach((star, index) => {
             star.addEventListener('click', () => {
-                document.querySelectorAll('.stars span').forEach((s, i) => {
+                stars.forEach((s, i) => {
                     s.classList.toggle('active', i <= index);
                 });
-                document.getElementById('ReviewRating').value = index + 1;
+                reviewRating.value = index + 1;
             });
         });
-    </script>
+
+        form.addEventListener('submit', function (event) {
+            if (reviewRating.value === '') {
+                event.preventDefault();
+                const errorSpan = document.createElement('span');
+                errorSpan.textContent = 'Please select a rating';
+                errorSpan.classList.add('text-danger');
+
+                const ratingContainer = document.querySelector('.stars');
+                ratingContainer.appendChild(errorSpan);
+
+                setTimeout(() => {
+                    errorSpan.remove();
+                }, 3000);
+            }
+        });
+    });
+
+    const reviewBody = document.getElementById('ReviewBody');
+    const charCount = document.getElementById('charCount');
+
+    reviewBody.addEventListener('input', () => {
+        const remaining = 528 - reviewBody.value.length;
+        charCount.textContent = `${remaining} characters remaining`;
+    });
+</script>

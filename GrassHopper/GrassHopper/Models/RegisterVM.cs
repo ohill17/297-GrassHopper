@@ -2,7 +2,7 @@
 
 namespace GrassHopper.Models
 {
-    public class RegisterViewModel
+    public class RegisterVM
     {
         [Required(ErrorMessage = "Please enter a username.")]
         [StringLength(255)]

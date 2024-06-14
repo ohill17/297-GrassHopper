@@ -2,7 +2,7 @@
 
 namespace GrassHopper.Models
 {
-	public class UserViewModel
+	public class UserVM
 	{
 		private IEnumerable<AppUser> users = new List<AppUser>();
 		private IEnumerable<IdentityRole> roles = new List<IdentityRole>();

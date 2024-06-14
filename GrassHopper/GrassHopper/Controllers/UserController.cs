@@ -26,7 +26,7 @@ namespace GrassHopper.Controllers
 				user.RoleNames = await userManager.GetRolesAsync(user);
 				users.Add(user);
 			}
-			UserViewModel model = new UserViewModel
+			UserVM model = new UserVM
 			{
 				Users = users,
 				Roles = roleManager.Roles.OrderBy(r => r.Name)
