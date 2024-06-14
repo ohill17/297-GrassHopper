@@ -61,18 +61,17 @@ namespace GrassHopper.Controllers
 
                 // Set up your email sender details
                 var sender = "grasshopperquotes@gmail.com";
-                var subject = quote.FName + " " + quote.LName + " " + "Is Requesting a Quote!";
+                var subject = $"{quote.FName} {quote.LName} Is Requesting a Quote!";
 
                 // Send email using SMTP
                 await _emailSender.SendEmailAsync(sender, subject, message);
 
-
-                // Assuming you want to redirect to a success page after successful submission
+                // Redirect to a success page after successful submission
                 return RedirectToAction("QuoteSubmitted");
             }
 
             // If model state is not valid, return the view to display validation errors
-            return View();
+            return View(quote);
         }
         public IActionResult RequestQuote()
         {
