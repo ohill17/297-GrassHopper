@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using GrassHopper.Data;
+using Microsoft.Extensions.Options;
 
 namespace GrassHopper.Controllers
 {
@@ -13,11 +14,13 @@ namespace GrassHopper.Controllers
     {
         private readonly IReviewRepository _reviewRepo;
         private readonly ITokenRepository _tokenRepo;
+        private readonly AppSettings _appSettings;
 
-        public ReviewController(IReviewRepository reviewRepo, ITokenRepository tokenRepo)
+        public ReviewController(IReviewRepository reviewRepo, ITokenRepository tokenRepo, IOptions<AppSettings> appSettings)
         {
             _reviewRepo = reviewRepo;
             _tokenRepo = tokenRepo;
+            _appSettings = appSettings.Value;
         }
 
         public IActionResult ReviewPost()
@@ -28,6 +31,10 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken)
         {
+            ReviewsVM reviewsVM = new ReviewsVM();
+            reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
+            reviewsVM.FacebookAppSecret = _appSettings.FacebookAppSecret;
+            reviewsVM.FacebookRedirectUri = _appSettings.FacebookRedirectUri;
 
             //checking if a user is logged in
             if (User.IsInRole("Admin"))
@@ -47,6 +54,7 @@ namespace GrassHopper.Controllers
                 reviews.Add(r);
                 ViewData["IsLoaded"] = "true";
             }
+            reviewsVM.Reviews = reviews;
 
             // Loading an access token into the database
             if (!string.IsNullOrEmpty(longPAccessToken))
@@ -59,7 +67,7 @@ namespace GrassHopper.Controllers
             var theTokens = await _tokenRepo.GetAllTokens();
             ViewBag.token = theTokens.Count > 0 ? theTokens[0].TokenString : string.Empty;
 
-            return View(reviews);
+            return View(reviewsVM);
         }
 
         [HttpGet]

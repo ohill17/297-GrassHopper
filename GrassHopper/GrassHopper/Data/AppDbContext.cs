@@ -19,6 +19,8 @@ namespace GrassHopper.Data
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
+        public DbSet<AppSettings> AppSettings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Portfolio>()

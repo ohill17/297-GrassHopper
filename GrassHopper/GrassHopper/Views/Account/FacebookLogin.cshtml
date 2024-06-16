@@ -1,4 +1,4 @@
-﻿@model LoginVM
+﻿@model ReviewsVM
 
 
 <!-- Set the element id for the JSON response -->
@@ -7,7 +7,7 @@
 
 <script>
 
-    <!--Add the Facebook SDK for Javascript-- >
+        <!--Add the Facebook SDK for Javascript-- >
 
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -55,51 +55,3 @@
                     };
 
 </script>
-
-
-<h2>Login</h2>
-
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<form method="post" asp-action="LogIn" asp-route-returnUrl="@Model.ReturnUrl">
-    <div class="row mb-2">
-        <label class="col-form-label col-md-2">UserName:</label>
-        <div class="col-md-4">
-            <input asp-for="Username" class="form-control" />
-        </div>
-        <div class="col">
-            <span asp-validation-for="Username" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <label class="col-form-label col-md-2">Password:</label>
-        <div class="col-md-4">
-            <input type="password" asp-for="Password" class="form-control" />
-        </div>
-        <div class="col">
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col offset-md-2">
-            <input type="checkbox" title="Remember Me" asp-for="RememberMe"
-                   class="form-check-inline" />
-            <label>Remember Me</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col offset-md-2">
-            <button type="submit" class="btn btn-primary">Log In</button>
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Cancel</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col offset-md-2">
-            Not registered? <a asp-action="Register">Register as a new user</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col offset-md-2">
-            Not logged in with facebook? <a asp-action="FacebookLogin">Login on Facebook</a>
-        </div>
-    </div>
-</form>

@@ -6,6 +6,10 @@ using GrassHopper;
 using GrassHopper.Data;
 using GrassHopper.Data.Repositories;
 using GrassHopper.Models;
+using System.Configuration;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,9 @@ builder.Services.AddControllersWithViews()
         o.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
+var appSettings = builder.Configuration.GetSection("AppSettings");
+builder.Services.Configure<AppSettings>(appSettings);
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var connectionString =
@@ -31,6 +38,14 @@ Dictionary<string, string> adminInfo = new()
     { "AdminName", builder.Configuration.GetValue<string>("AdminLoginInfo:Name") }
 };
 
+Dictionary<string, string> myAppSettings = new()
+{
+    { "FacebookAppId", builder.Configuration.GetValue<string>("AppSettings:FacebookAppId") },
+    { "FacebookAppSecret", builder.Configuration.GetValue<string>("AppSettings:FacebookAppSecret") },
+    { "FacebookRedirectUri", builder.Configuration.GetValue<string>("AppSettings:FacebookRedirectUri") }
+};
+
+
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -40,6 +55,7 @@ builder.Services.AddTransient<IPhotoRepository, PhotoRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 builder.Services.AddTransient<IPortfolioRepository, PortfolioRepository>();
 builder.Services.AddTransient<ITokenRepository, TokenRepository>();
+builder.Services.AddTransient<IAppSettingsRepository, AppSettingsRepository>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -76,7 +92,7 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     //var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    SeedData.Seed(scope.ServiceProvider, adminInfo);
+    SeedData.Seed(scope.ServiceProvider, adminInfo, myAppSettings);
 }
 
 
