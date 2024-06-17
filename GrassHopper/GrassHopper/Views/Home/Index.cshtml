@@ -2,8 +2,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-
+<style>
+    .carousel-item img {
+        width: 25vw; 
+        height: auto; 
+        margin: auto; 
+    }
+</style>
 <br />
 <br />
 <div class="container-fluid" style="background-color: rgba(228, 247, 182, 0.9); padding: 50px; border-radius: 15px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
@@ -19,43 +24,61 @@
             </div>
         </div>
         <div class="col-md-6">
-            <img src="https://placehold.co/600x400" class="img-fluid" alt="Blank Image">
+            <img src="~/resources/CTA.jpg" class="img-fluid" alt="Image of a Freshly Painted Home">
         </div>
     </div>
 </div>
 <br />
 <br />
-
+@*
+    DO NOT TOUCH !!! 
+*@
 @if (Model != null && Model.Any())
 {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    @*
+    DO NOT TOUCH !!!
+*@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @for (int i = 0; i < Model.Count(); i++)
             {
                 <li data-target="#carouselIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
             }
+            @*
+        DO NOT TOUCH !!!
+        *@
         </ol>
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="height:90%">
             @for (int i = 0; i < Model.Count(); i++)
             {
                 PhotoVM p = Model.ElementAt(i);
                 string url = "/photos/" + p.Url;
                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" src="@url" alt="@p.Name">
+                    <img class="d-block w-73" src="@url" alt="@p.Name">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>@p.Name</h5>
                         <p>@p.Description</p>
                     </div>
                 </div>
             }
+            @*
+        YOU GUESSED IT DO. NOT. TOUCH !!!
+        *@
         </div>
         <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
         <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="carousel-control-next-icon" aria-hidden="false"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
+
 }
+@*
+    DO NOT TOUCH !!!
+*@

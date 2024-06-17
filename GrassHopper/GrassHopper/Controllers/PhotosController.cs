@@ -1,31 +1,23 @@
-﻿//using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
+﻿using Microsoft.AspNetCore.Mvc;
 using GrassHopper.Data;
-using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
-using System.IO;
-using System.Web;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using GrassHopper.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GrassHopper.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PhotosController : Controller
     {
         private readonly IPhotoRepository pRepository;
         private readonly AppDbContext context;
-        //private readonly UserManager<AppUserModel> userManager;
 
-        public PhotosController(IPhotoRepository p, AppDbContext c /*UserManager<AppUserModel> u*/)
+        public PhotosController(IPhotoRepository p, AppDbContext c)
         {
             pRepository = p;
             context = c;
-            //userManager = u;
         }
 
         public async Task<IActionResult> Index()
@@ -205,7 +197,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> EditPhoto(Photo photo)
         {
             int result = await pRepository.UpdatePhoto(photo); //Potential hook for later
-            return RedirectToAction("EditPhoto", "Photos", new { photoId = photo.PhotoId });
+            return RedirectToAction("Index", "Photos", new { photoId = photo.PhotoId });
         }
 
         public async Task<IActionResult> UnGroup(int photoId)
@@ -216,7 +208,7 @@ namespace GrassHopper.Controllers
 
         public async Task<IActionResult> AddToGroup(int photoId, int groupId)
         {
-            int result = await pRepository.AddToGroup(photoId, groupId);
+            await pRepository.AddToGroup(photoId, groupId);
             return RedirectToAction("EditPhoto", "Photos", new { photoId });
         }
 
@@ -231,7 +223,7 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> EditGroup(PhotoGroup group)
         {
             int result = await pRepository.UpdateGroup(group);
-            return RedirectToAction("EditGroup", "Photos", new { groupId = group.GroupId });
+            return RedirectToAction("Groups", "Photos", new { groupId = group.GroupId });
         }
 
         public async Task<IActionResult> BreakGroup(int groupId)

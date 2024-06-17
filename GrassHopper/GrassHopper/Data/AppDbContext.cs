@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace GrassHopper.Data
 {
-    public class AppDbContext : IdentityDbContext<AppUserModel>
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
@@ -18,6 +18,8 @@ namespace GrassHopper.Data
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<AppSettings> AppSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

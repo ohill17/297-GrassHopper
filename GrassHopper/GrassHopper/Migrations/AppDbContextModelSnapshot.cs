@@ -19,7 +19,7 @@ namespace GrassHopper.Migrations
                 .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("GrassHopper.Models.AppUserModel", b =>
+            modelBuilder.Entity("GrassHopper.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -186,8 +186,8 @@ namespace GrassHopper.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateOnly>("ReviewDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("ReviewRating")
                         .HasColumnType("int");
@@ -428,7 +428,7 @@ namespace GrassHopper.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("GrassHopper.Models.AppUserModel", null)
+                    b.HasOne("GrassHopper.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -437,7 +437,7 @@ namespace GrassHopper.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("GrassHopper.Models.AppUserModel", null)
+                    b.HasOne("GrassHopper.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -452,7 +452,7 @@ namespace GrassHopper.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GrassHopper.Models.AppUserModel", null)
+                    b.HasOne("GrassHopper.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -461,7 +461,7 @@ namespace GrassHopper.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("GrassHopper.Models.AppUserModel", null)
+                    b.HasOne("GrassHopper.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

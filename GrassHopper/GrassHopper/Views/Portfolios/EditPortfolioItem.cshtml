@@ -3,7 +3,7 @@
     ViewData["Title"] = "Edit Portfolio Item";
 }
 
-<h1>Edit portfolio item</h1>
+<h1>Edit Portfolio Project</h1>
 <br>
 
 <div class="row p-2">
@@ -11,10 +11,10 @@
 </div>
 <div class="row p-2">
     <div class="col-md-2">
-        <span id="default" name="default" class="btn">Default</span>
+        <span id="default" name="default" class="btn primary">Default</span>
     </div>
     <div class="col-md-2">
-        <span id="compba" name="compba" class="btn">Comparison: Before / After</span>
+        <span id="compba" name="compba" class="btn primary">Comparison: Before / After</span>
     </div>
 </div>
 <br>
@@ -77,11 +77,23 @@
         </div>
     </div>
     <hr>
-    <div id="layout">
-        <div class="portfolio-parent">
-            <div class="portfolio-default-name" id="name"><input asp-for="PortfolioName" class="portfolio-name" placeholder="Portfolio Name" required></div>
-            <div class="portfolio-default-summary" id="summary"><textarea asp-for="PortfolioSummary" class="portfolio-summary" placeholder="Write a summary here" required rows="10" cols="50"></textarea></div>
-            <div class="portfolio-default-photos" id="photos">
+    <div class="container">
+        <div class="row">
+            <div id="layout" class="col-lg-8">
+                <div class="portfolio-parent">
+                    <div class="form-group">
+                        <label for="PortfolioName">Project Name</label>
+                        <input asp-for="PortfolioName" class="form-control portfolio-name" placeholder="Project Name" required>
+
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label for="PortfolioSummary">Project Summary</label>
+                        <textarea asp-for="PortfolioSummary" class="form-control portfolio-summary" placeholder="Write a summary here" required rows="10" style="width: 40vh;"></textarea>
+                    </div>
+                    <div class="portfolio-default-photos">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -98,8 +110,9 @@
     }
     <br>
     <div class="row p-2">
-        <input type="submit" value="Finalize changes" class="col-md-2">
-        <span class="col-md-1"></span>
-        <a asp-controller="Portfolios" asp-action="DeletePortfolio" asp-route-id="@Model.PortfolioId" class="btn danger col-md-1">Delete</a>
+        <div class="form-group">
+            <input type="submit" value="Finalize changes" class="btn primary">
+            <a asp-controller="Portfolios" asp-action="DeletePortfolio" asp-route-id="@Model.PortfolioId" class="btn danger ml-2">Delete</a>
+        </div>
     </div>
 </form>

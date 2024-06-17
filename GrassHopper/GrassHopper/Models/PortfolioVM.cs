@@ -13,7 +13,7 @@ namespace GrassHopper.Models
             Date = portfolio.PortfolioDate;
             if (portfolio.PortfolioThumbnail != null)
                 Thumbnail = new(portfolio.PortfolioThumbnail, PhotoSize.Small);
-            foreach(PhotoGroup g in portfolio.PortfolioPGroups)
+            foreach (PhotoGroup g in portfolio.PortfolioPGroups)
             {
                 Groups.Add(new(g, PhotoSize.Medium));
             }

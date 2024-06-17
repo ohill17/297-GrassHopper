@@ -1,6 +1,7 @@
 ﻿using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace GrassHopper.Data.Repositories
 {
@@ -20,22 +21,39 @@ namespace GrassHopper.Data.Repositories
 
         public async Task<int> DeleteToken(int id)
         {
-            throw new NotImplementedException();
+            var theToken = await dbContext.Tokens.FindAsync(id);
+            if (theToken != null) {
+                dbContext.Tokens.Remove(theToken);
+                return dbContext.SaveChanges();
+            } else
+            {
+                throw new NullReferenceException();
+            }
+            
         }
 
-        public List<Token> GetAllTokens()
+        public async Task<List<Token>> GetAllTokens()
         {
-            return dbContext.Tokens.ToList();
+            return await dbContext.Tokens.ToListAsync();
         }
 
         public async Task<Token> GetToken(int id)
         {
-            return dbContext.Tokens.Find(id);
+            return await dbContext.Tokens.FindAsync(id);
         }
 
         public async Task<int> UpdateToken(Token token)
         {
-            throw new NotImplementedException();
+            Token oldToken = await dbContext.Tokens.FindAsync(token.TokenID);
+            if (oldToken != null)
+            {
+                oldToken.TokenString = token.TokenString;
+                oldToken.TokenLength = token.TokenLength;
+                oldToken.TokenType = token.TokenType;
+                oldToken.CreationTime = token.CreationTime;
+            }
+            dbContext.Tokens.Update(oldToken);
+            return dbContext.SaveChanges();
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using GrassHopper.Data;
 using GrassHopper.Data.Repositories;
 using GrassHopper.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace GrassHopper.Controllers
 {
-	public class PortfoliosController : Controller
+	[Authorize(Roles = "Admin")]
+    public class PortfoliosController : Controller
 	{
 		private readonly IPortfolioRepository portRepository;
 		private readonly IPhotoRepository photoRepository;
@@ -18,12 +19,15 @@ namespace GrassHopper.Controllers
 			photoRepository = ph;
 			dbContext = c;
 		}
+
+		[AllowAnonymous]
 		public async Task<IActionResult> Index()
 		{
 			List<PortfolioVM> portfolios = await portRepository.GetAllPortfolios();
 			return View(portfolios);
 		}
 
+		[AllowAnonymous]
 		public async Task<IActionResult> PortfolioDetails(int id)
 		{
 			PortfolioVM portfolio = new(await portRepository.GetPortfolio(id));
