@@ -94,12 +94,14 @@ namespace Grasshopper.Controllers
             return View(model);
 		}
 
-		public async Task<IActionResult> FacebookLogin()
+		public IActionResult FacebookLogin()
 		{
-            ReviewsVM reviewsVM = new ReviewsVM();
-            reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
-            reviewsVM.FacebookAppSecret = _appSettings.FacebookAppSecret;
-            reviewsVM.FacebookRedirectUri = _appSettings.FacebookRedirectUri;
+            ReviewsVM reviewsVM = new()
+            {
+                FacebookAppId = _appSettings.FacebookAppId,
+                FacebookAppSecret = _appSettings.FacebookAppSecret,
+                FacebookRedirectUri = _appSettings.FacebookRedirectUri
+            };
 
             //checking if a user is logged in
             if (User.IsInRole("Admin"))
@@ -114,12 +116,6 @@ namespace Grasshopper.Controllers
             return View(reviewsVM);
         }
 
-        //public ViewResult AccessDenied()
-        //{
-        //    return View();
-        //}
-
-        //[HttpGet]
         public IActionResult ChangePassword()
 		{
 			var model = new ChangePasswordVM
