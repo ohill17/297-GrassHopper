@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using GrassHopper.Models;
 using Microsoft.Extensions.Options;
-using GrassHopper.Data;
-using System.Web;
 
 namespace Grasshopper.Controllers
 {

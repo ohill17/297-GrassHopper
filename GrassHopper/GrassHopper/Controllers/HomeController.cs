@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using GrassHopper.Data;
 using GrassHopper.Data.Repositories;
@@ -13,17 +8,13 @@ namespace GrassHopper.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext context;
         private readonly IPhotoRepository prepository;
         private readonly IEmailSender _emailSender;
 
         public EmailSender EmailSender { get; }
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext c, IPhotoRepository p, IEmailSender emailSender)
+        public HomeController(IPhotoRepository p, IEmailSender emailSender)
         {
-            _logger = logger;
-            context = c;
             prepository = p;
             _emailSender = emailSender;
         }
@@ -34,7 +25,7 @@ namespace GrassHopper.Controllers
             return View(photos);
         }
 
-        public async Task<IActionResult> AboutUs()
+        public IActionResult AboutUs()
         {
             return View();
         }
