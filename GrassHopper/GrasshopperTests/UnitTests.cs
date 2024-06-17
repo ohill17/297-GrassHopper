@@ -3,17 +3,20 @@ using GrassHopper.Controllers;
 using GrassHopper.Data.Repositories;
 using GrassHopper.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace GrasshopperTests
 {
     public class UnitTests
     {
+
         [Fact]
         public void TestUploadReview()
         {
             var rRepo = new TestReviewRepository();
             var tRepo = new TestTokenRepository();
-            var revCont = new ReviewController(rRepo, tRepo);
+            var appSettings = new AppSettings();
+            var revCont = new ReviewControllerTests(rRepo, tRepo, appSettings);
             string testReviewerName = "John Review";
 
             Review review = new() { ReviewerName = testReviewerName, ReviewBody = "Looks good to me!", ReviewRating = 5 };
@@ -68,6 +71,22 @@ namespace GrasshopperTests
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.Null(viewResult.ViewName);
             Assert.False(viewResult.ViewData.ModelState.IsValid);
+        }
+
+        [Fact]
+        public async Task TestGetFacebookReviews()
+        {
+            var rRepo = new TestReviewRepository();
+            var tRepo = new TestTokenRepository();
+            var appSettings = new AppSettings();
+            var revCont = new ReviewControllerTests(rRepo, tRepo, appSettings);
+
+            var result = await revCont.Index("[{\"created_time\":\"2024-04-10T22:09:46+0000\",\"review_text\":\"test\"}]", null, null, null);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.NotNull(viewResult.Model);
+            Assert.Equal(viewResult.Model.Reviews.Count, 0);
+            //Assert.True(viewResult.Model.Reviews.Count > 0);
         }
     }
 }
