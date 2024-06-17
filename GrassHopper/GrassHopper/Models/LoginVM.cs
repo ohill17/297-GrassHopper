@@ -16,5 +16,8 @@ namespace GrassHopper.Models
 
         public bool RememberMe { get; set; }
 
+        public string FacebookAppId { get; set; }
+        public string FacebookAppSecret { get; set; }
+
     }
 }

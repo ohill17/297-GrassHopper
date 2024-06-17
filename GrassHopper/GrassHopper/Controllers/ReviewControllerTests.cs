@@ -13,17 +13,17 @@ using MessagePack.Resolvers;
 
 namespace GrassHopper.Controllers
 {
-    public class ReviewController : Controller
+    public class ReviewControllerTests : Controller
     {
         private readonly IReviewRepository _reviewRepo;
         private readonly ITokenRepository _tokenRepo;
         private readonly AppSettings _appSettings;
 
-        public ReviewController(IReviewRepository reviewRepo, ITokenRepository tokenRepo, IOptions<AppSettings> appSettings)
+        public ReviewControllerTests(IReviewRepository reviewRepo, ITokenRepository tokenRepo, AppSettings appSettings)
         {
             _reviewRepo = reviewRepo;
             _tokenRepo = tokenRepo;
-            _appSettings = appSettings.Value;
+            _appSettings = appSettings;
         }
 
         public IActionResult ReviewPost()
@@ -35,18 +35,18 @@ namespace GrassHopper.Controllers
         public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken, string longUAccessToken, string updateLongUAccessToken)
         {
             ReviewsVM reviewsVM = new ReviewsVM();
-            reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
+            /*reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
             reviewsVM.FacebookAppSecret = _appSettings.FacebookAppSecret;
-            reviewsVM.FacebookRedirectUri = _appSettings.FacebookRedirectUri;
+            reviewsVM.FacebookRedirectUri = _appSettings.FacebookRedirectUri;*/
 
             //checking if a user is logged in
-            if (User.IsInRole("Admin"))
+         /*   if (User.IsInRole("Admin"))
             {
                 ViewData["IsAdmin"] = "true";
             } else
             {
                 ViewData["IsAdmin"] = "false";
-            }
+            }*/
 
             // Loading facebook reviews onto the page
             ViewData["IsLoaded"] = "false";

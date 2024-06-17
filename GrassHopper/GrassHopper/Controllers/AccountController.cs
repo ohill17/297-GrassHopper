@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using GrassHopper.Models;
+using Microsoft.Extensions.Options;
+using GrassHopper.Data;
+using System.Web;
 
 namespace Grasshopper.Controllers
 {
@@ -8,12 +11,14 @@ namespace Grasshopper.Controllers
 	{
 		private UserManager<AppUser> userManager;
 		private SignInManager<AppUser> signInManager;
+        private readonly AppSettings _appSettings;
 
-		public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr)
+        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, IOptions<AppSettings> appSettings)
 		{
 			userManager = userMngr;
 			signInManager = signInMngr;
-		}
+            _appSettings = appSettings.Value;
+        }
 
 		[HttpGet]
 		public IActionResult Register()
@@ -62,7 +67,10 @@ namespace Grasshopper.Controllers
 		[HttpPost]
 		public async Task<IActionResult> LogIn(LoginVM model)
 		{
-			if (ModelState.IsValid)
+            model.FacebookAppId = _appSettings.FacebookAppId;
+            model.FacebookAppSecret = _appSettings.FacebookAppSecret;
+
+            if (ModelState.IsValid)
 			{
 				var result = await signInManager.PasswordSignInAsync(
 					model.Username, model.Password, isPersistent: model.RememberMe,
@@ -82,16 +90,37 @@ namespace Grasshopper.Controllers
 				}
 			}
 			ModelState.AddModelError("", "Invalid username/password.");
-			return View(model);
+
+            return View(model);
 		}
 
-		//public ViewResult AccessDenied()
-		//{
-		//    return View();
-		//}
+		public async Task<IActionResult> FacebookLogin()
+		{
+            ReviewsVM reviewsVM = new ReviewsVM();
+            reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
+            reviewsVM.FacebookAppSecret = _appSettings.FacebookAppSecret;
+            reviewsVM.FacebookRedirectUri = _appSettings.FacebookRedirectUri;
 
-		//[HttpGet]
-		public IActionResult ChangePassword()
+            //checking if a user is logged in
+            if (User.IsInRole("Admin"))
+            {
+                ViewData["IsAdmin"] = "true";
+            }
+            else
+            {
+                ViewData["IsAdmin"] = "false";
+            }
+
+            return View(reviewsVM);
+        }
+
+        //public ViewResult AccessDenied()
+        //{
+        //    return View();
+        //}
+
+        //[HttpGet]
+        public IActionResult ChangePassword()
 		{
 			var model = new ChangePasswordVM
 			{
