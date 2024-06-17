@@ -3,7 +3,6 @@ using GrassHopper.Data.Repositories;
 using GrassHopper.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace GrassHopper.Controllers
 {

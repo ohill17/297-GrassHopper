@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GrassHopper.Models;
 using GrassHopper.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Web;
 using GrassHopper.Data;
 using Microsoft.Extensions.Options;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using MessagePack.Resolvers;
 
 namespace GrassHopper.Controllers
 {
@@ -34,10 +28,12 @@ namespace GrassHopper.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken, string longUAccessToken, string updateLongUAccessToken)
         {
-            ReviewsVM reviewsVM = new ReviewsVM();
-            reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
-            reviewsVM.FacebookAppSecret = _appSettings.FacebookAppSecret;
-            reviewsVM.FacebookRedirectUri = _appSettings.FacebookRedirectUri;
+            ReviewsVM reviewsVM = new()
+            {
+                FacebookAppId = _appSettings.FacebookAppId,
+                FacebookAppSecret = _appSettings.FacebookAppSecret,
+                FacebookRedirectUri = _appSettings.FacebookRedirectUri
+            };
 
             //checking if a user is logged in
             if (User.IsInRole("Admin"))
