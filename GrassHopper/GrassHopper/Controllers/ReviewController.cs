@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Web;
 using GrassHopper.Data;
 using Microsoft.Extensions.Options;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using MessagePack.Resolvers;
 
 namespace GrassHopper.Controllers
 {
@@ -29,7 +32,7 @@ namespace GrassHopper.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken)
+        public async Task<IActionResult> Index(string reviewsFromFacebook, string longPAccessToken, string longUAccessToken, string updateLongUAccessToken)
         {
             ReviewsVM reviewsVM = new ReviewsVM();
             reviewsVM.FacebookAppId = _appSettings.FacebookAppId;
@@ -59,13 +62,67 @@ namespace GrassHopper.Controllers
             // Loading an access token into the database
             if (!string.IsNullOrEmpty(longPAccessToken))
             {
-                Token t = new Token { TokenString = longPAccessToken };
+                Token t = new Token { 
+                    TokenString = longPAccessToken,
+                    TokenLength = "long",
+                    TokenType = "page",
+                    CreationTime = DateTime.Now
+                };
+                await _tokenRepo.AddToken(t);
+            }
+            if (!string.IsNullOrEmpty(longUAccessToken))
+            {
+                Token t = new Token
+                {
+                    TokenString = longUAccessToken,
+                    TokenLength = "long",
+                    TokenType = "user",
+                    CreationTime = DateTime.Now
+                };
                 await _tokenRepo.AddToken(t);
             }
 
-            // Sending the existing access token to the page
             var theTokens = await _tokenRepo.GetAllTokens();
-            ViewBag.token = theTokens.Count > 0 ? theTokens[0].TokenString : string.Empty;
+
+            // Putting the existing valid access tokens in the ViewBag, but if there are no valid tokens for a type then the value is "none"
+            ViewBag.spaToken = "none";
+            ViewBag.suaToken = "none";
+            ViewBag.luaToken = "none";
+            ViewBag.lpaToken = "none";
+            
+            foreach (Token t in theTokens)
+            {
+                DateTime invalidationDate = t.CreationTime.AddDays(60);
+                if (t.CreationTime < invalidationDate)
+                {
+                    switch (t.TokenLength, t.TokenType)
+                    {
+                        case ("short", "page"):
+                            ViewBag.spaToken = t.TokenString;
+                            break;
+                        case ("short", "user"):
+                            ViewBag.suaToken = t.TokenString;
+                            break;
+                        case ("long", "page"):
+                            ViewBag.lpaToken = t.TokenString;
+                            break;
+                        case ("long", "user"):
+
+                            // Updating existing access tokens if neccesary 
+                            if (updateLongUAccessToken == "true")
+                            {
+                                t.CreationTime = DateTime.Now;
+                                await _tokenRepo.UpdateToken(t);
+                            }
+                            ViewBag.luaToken = t.TokenString;
+                            break;
+                    }
+                } else
+                {
+                    //token is invalid, needs deleted
+                    await _tokenRepo.DeleteToken(t.TokenID);
+                }
+            }
 
             return View(reviewsVM);
         }

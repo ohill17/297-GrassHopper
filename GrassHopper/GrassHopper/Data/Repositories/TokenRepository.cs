@@ -21,7 +21,15 @@ namespace GrassHopper.Data.Repositories
 
         public async Task<int> DeleteToken(int id)
         {
-            throw new NotImplementedException();
+            var theToken = await dbContext.Tokens.FindAsync(id);
+            if (theToken != null) {
+                dbContext.Tokens.Remove(theToken);
+                return dbContext.SaveChanges();
+            } else
+            {
+                throw new NullReferenceException();
+            }
+            
         }
 
         public async Task<List<Token>> GetAllTokens()
@@ -36,7 +44,16 @@ namespace GrassHopper.Data.Repositories
 
         public async Task<int> UpdateToken(Token token)
         {
-            throw new NotImplementedException();
+            Token oldToken = await dbContext.Tokens.FindAsync(token.TokenID);
+            if (oldToken != null)
+            {
+                oldToken.TokenString = token.TokenString;
+                oldToken.TokenLength = token.TokenLength;
+                oldToken.TokenType = token.TokenType;
+                oldToken.CreationTime = token.CreationTime;
+            }
+            dbContext.Tokens.Update(oldToken);
+            return dbContext.SaveChanges();
         }
     }
 }

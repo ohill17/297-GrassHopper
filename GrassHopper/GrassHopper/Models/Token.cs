@@ -9,7 +9,11 @@ namespace GrassHopper.Models
 
         public string TokenString { get; set; }
 
-        //public int TimeUntilInvalid { get; set; }
+        public string TokenLength { get; set; }
+
+        public string TokenType { get; set; }
+
+        public DateTime CreationTime { get; set; }
 
     }
 }

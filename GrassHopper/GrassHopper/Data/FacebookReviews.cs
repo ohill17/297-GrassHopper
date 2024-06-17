@@ -18,7 +18,7 @@ namespace GrassHopper.Data
             //Note: THIS NEEDS TESTED WITH MORE THAN 1 REVIEW
             Review review = new Review();
             string[] strings = r.Split(new char[] { '{', '}' });
-            string content = strings[1];
+            //string content = strings[1];
             strings[0] = "{";
             strings[2] = "}";
             string theString = strings[0] + strings[1] + strings[2];
