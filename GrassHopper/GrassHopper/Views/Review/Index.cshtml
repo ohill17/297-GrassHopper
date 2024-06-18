@@ -1,40 +1,46 @@
-@model ReviewsVM
-
 <script>
     let APP_ID = '@(Model.FacebookAppId)';
     let APP_SECRET = '@(Model.FacebookAppSecret)';
     let PAGE_ID = '227047383835993';
     let METHOD = 'GET';
     let VERSION = 'v19.0';
-    let PATH = `/ ${PAGE_ID}/ratings?fields=created_time,review_text,rating`;
+    let PATH = `/${PAGE_ID}/ratings?fields=created_time,review_text,rating`;
     let PARAMS = {};
 
-    let APP_SCOPED_UID = '306703255792712'; //306703255792712
+    let APP_SCOPED_UID = '306703255792712';
     let SHORT_PAGE_ACCESS_TOKEN = 'EAAQSjasTnxABO5jglSZCjaxWXeSjncX1Qx02nbzcuxZByNP4cxj67aUZBy3PP4aQdAZCbKYibd2FH7C45ZAmASHPs3NheoflxOZCw8nLn17zmS9vjYjxKqC2sCv3AfVESxhVukZAVt1zsAlqZAD6U63Ib7sOpHrUSzVYV9ZCtoDSr0ObhaimFnalrF8Nn31Jui4POyNF78wxtlhHUAIwsh104bsgG';
-
-
-
-
 
     let loadFBReviews = (response) => {
         let reviews = response.data;
         console.log(reviews);
 
-        // Sending the facebook reviews to the controller to be added onto the page
-        var reviewsString = encodeURIComponent(JSON.stringify(reviews));
-        let el = document.createElement('a');
-        el.setAttribute('href', "/Review/Index?reviewsFromFacebook=" + reviewsString);
-        document.body.appendChild(el);
-        if ('@(ViewBag.IsLoaded)' == "false") {
-            el.click();
-        }
-        el.hidden = true;
+        reviews.forEach(review => {
+            let reviewCard = document.createElement('div');
+            reviewCard.className = 'card';
 
-    }
+            reviewCard.innerHTML = `
+                    <div class="card-header">
+                        <div class="name">${review.reviewer_name || 'Anonymous'}</div>
+                        <div class="date">${new Date(review.created_time).toLocaleDateString()}</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">${review.review_text || 'No review text'}</p>
+                        <div class="stars">${review.rating} Stars / 5 Stars</div>
+                    </div>
+                `;
 
+            reviewsContainer.appendChild(reviewCard);
+        });
 
-
-
+        document.addEventListener("DOMContentLoaded", function () {
+            var reviews = document.querySelectorAll(".card");
+            reviews.forEach(function (review, index) {
+                setTimeout(function () {
+                    review.classList.add("active");
+                }, 100 * index);
+            });
+        });
+    };
 
     window.fbAsyncInit = function () {
         FB.init({
@@ -43,43 +49,25 @@
             version: VERSION
         });
 
-        // Check if there is a long page access token available
         if ('@(ViewBag.lpaToken)' != "none") {
-            console.log("There was a long page access token available.");
-            // Get the reviews if there is
             PARAMS.access_token = '@(ViewBag.lpaToken)';
             FB.api(PATH, METHOD, PARAMS, loadFBReviews);
-        } 
-
-        else {
-            console.log("There was not a long page access token available.");
-
-            // Check if theres a long user access token
+        } else {
             if ('@(ViewBag.luaToken)' != "none") {
-                console.log("There was a long user access token available.");
-                // Use the long UAccess token to get a long PAccess token
-                //`${VERSION}/${App_Scoped_UID}/accounts?access_token=${response.access_token}`;
                 let longPAccessTokenPath = `/${APP_SCOPED_UID}/accounts?`;
                 let longPAccessParams = { access_token: '@(ViewBag.luaToken)' }
                 FB.api(longPAccessTokenPath, METHOD, longPAccessParams, (response) => {
                     let long_paccess_token = response.data[0].access_token;
 
-                    // Send the long PAccess token to the controller for storage in the database
                     let el = document.createElement('a');
                     el.setAttribute('href', "/Review/Index?longPAccessToken=" + long_paccess_token);
                     document.body.appendChild(el);
                     el.click();
 
-                    // Load the reviews with the new long PAccess token
-                    PARAMS.access_token = long_paccess_token
+                    PARAMS.access_token = long_paccess_token;
                     FB.api(PATH, METHOD, PARAMS, loadFBReviews);
                 });
-            } 
-
-            else {
-                console.log("There was not a long user access token available.");
-                // Get a long UAccess token
-                //`${VERSION}/oauth/access_token?grant_type=fb_exchange_token&client_id=${APP_ID}&client_secret=${APP_SECRET}&fb_exchange_token=${PAGE_ACCESS_TOKEN}`
+            } else {
                 let longUAccessTokenPath = `/oauth/access_token?grant_type=fb_exchange_token`;
                 let longUAccessTokenParams = {
                     fb_exchange_token: SHORT_PAGE_ACCESS_TOKEN,
@@ -89,27 +77,22 @@
                 FB.api(longUAccessTokenPath, METHOD, longUAccessTokenParams, (response) => {
                     let long_uaccess_token = response.access_token;
 
-                    // Send the long UAccess token to the controller for storage in the database
                     let el = document.createElement('a');
                     el.setAttribute('href', "/Review/Index?longUAccessToken=" + long_uaccess_token);
                     document.body.appendChild(el);
                     el.click();
 
-                    // Use the long UAccess token to get a long PAccess token
-                    //`${VERSION}/${App_Scoped_UID}/accounts?access_token=${response.access_token}`;
                     let longPAccessTokenPath = `/${APP_SCOPED_UID}/accounts?`;
                     let longPAccessParams = { access_token: long_uaccess_token }
                     FB.api(longPAccessTokenPath, METHOD, longPAccessParams, (response) => {
                         let long_paccess_token = response.data[0].access_token;
 
-                        // Send the long PAccess token to the controller for storage in the database
                         let el = document.createElement('a');
                         el.setAttribute('href', "/Review/Index?longPAccessToken=" + long_paccess_token);
                         document.body.appendChild(el);
                         el.click();
 
-                        // Load the reviews with the new long PAccess token
-                        PARAMS.access_token = long_paccess_token
+                        PARAMS.access_token = long_paccess_token;
                         FB.api(PATH, METHOD, PARAMS, loadFBReviews);
                     });
                 });
@@ -134,11 +117,8 @@
                 </div>
             </div>
         }
+    </div>
 </div>
-
-</div>
-
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var reviews = document.querySelectorAll(".card");
@@ -157,8 +137,9 @@
         transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    .card.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
+        .card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
 </style>
