@@ -2,7 +2,12 @@
 @{
     ViewData["Title"] = "Edit Portfolio Item";
 }
-
+<style>
+    #groupSelect:hover, #groupSelect:focus,
+    #thumbnailSelect:hover, #thumbnailSelect:focus {
+        background-color: #BEE85C
+    }
+</style>
 <h1>Edit Portfolio Project</h1>
 <br>
 
@@ -21,16 +26,18 @@
 
 <form method="post" asp-action="EditPortfolioItem" class="form-container">
     <input asp-for="PortfolioId" hidden>
-    <div class="row p-2">
-        <div class="col-md-4">
-            @{
-                List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>();
-            }
-            @if (groups.Count > 0)
-            {
-                <select name="pGroupId" id="groupSelect">
+  <div class="row p-2">
+    <div class="col-md-4">
+        @{
+            List<GroupVM> groups = ViewBag.PhotoGroups ?? new List<GroupVM>();
+        }
+        @if (groups.Count > 0)
+        {
+            <div class="form-group">
+                <label for="groupSelect">Select a photo group</label>
+                <select name="pGroupId" id="groupSelect" class="form-control">
                     <option value="0">
-                        Select a photo group
+                        Photo Group
                     </option>
                     @foreach (GroupVM g in groups)
                     {
@@ -44,22 +51,25 @@
                         }
                     }
                 </select>
-            }
-            else
-            {
-                <span>There are no selectable photo groups.</span>
-            }
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-4">
-            @{
-                List<PhotoVM> photos = ViewBag.Photos ?? new List<PhotoVM>();
-            }
-            @if (photos.Count > 0)
-            {
-                <select name="thumbnailId" id="thumbnailSelect">
+            </div>
+        }
+        else
+        {
+            <span>There are no selectable photo groups.</span>
+        }
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        @{
+            List<PhotoVM> photos = ViewBag.Photos ?? new List<PhotoVM>();
+        }
+        @if (photos.Count > 0)
+        {
+            <div class="form-group">
+                <label for="thumbnailSelect">Select a thumbnail image</label>
+                <select name="thumbnailId" id="thumbnailSelect" class="form-control">
                     <option value="0">
-                        Select a thumbnail image
+                        Thumbnail
                     </option>
                     @foreach (PhotoVM p in photos)
                     {
@@ -73,9 +83,11 @@
                         }
                     }
                 </select>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
+
     <hr>
     <div class="container">
         <div class="row">
@@ -83,13 +95,13 @@
                 <div class="portfolio-parent">
                     <div class="form-group">
                         <label for="PortfolioName">Project Name</label>
-                        <input asp-for="PortfolioName" class="form-control portfolio-name" placeholder="Project Name" required>
+                        <input asp-for="PortfolioName" id="groupSelect" class="form-control portfolio-name" placeholder="Project Name" required>
 
                     </div>
                     <br />
                     <div class="form-group">
                         <label for="PortfolioSummary">Project Summary</label>
-                        <textarea asp-for="PortfolioSummary" class="form-control portfolio-summary" placeholder="Write a summary here" required rows="10" style="width: 40vh;"></textarea>
+                        <textarea asp-for="PortfolioSummary" id="groupSelect" class="form-control portfolio-summary" placeholder="Write a summary here" required rows="10" style="width: 40vh;"></textarea>
                     </div>
                     <div class="portfolio-default-photos">
                     </div>

@@ -2,9 +2,13 @@
 @{
     ViewData["Title"] = "Create Portfolio Item";
 }
+<style>
+    #groupSelect:hover, #groupSelect:focus,
+    #thumbnailSelect:hover, #thumbnailSelect:focus {
+        background-color: #BEE85C
+    }
+</style>
 
-<!--This page needs custom javascript probably for ideal functionality (it definitely needs custom javascript)-->
-<!--THIS PAGE IS NOT STYLED CORRECTLY, FIX LATER-->
 
 <h1>Create portfolio item</h1>
 <br>
@@ -30,9 +34,11 @@
             }
             @if (groups.Count > 0)
             {
-                <select name="pGroupId" id="groupSelect">
+                <div class="form-group">
+                    <label for="groupSelect">Select a photo group</label>
+                    <select name="pGroupId" id="groupSelect" class="form-control">
                     <option value="0">
-                        Select a photo group
+                        Photo Group
                     </option>
                     @foreach (GroupVM g in groups)
                     {
@@ -41,6 +47,7 @@
                         </option>
                     }
                 </select>
+                </div>
             }
             else
             {
@@ -54,27 +61,42 @@
             }
             @if (photos.Count > 0)
             {
-                <select name="thumbnailId" id="thumbnailSelect">
+                <div class="form-group">
+                    <label for="thumbnailSelect">Select a thumbnail image</label>
+                    <select name="thumbnailId" id="thumbnailSelect" class="form-control">
                     <option value="0">
-                        Select a thumbnail image
+                        Thumbnail
                     </option>
                     @foreach (PhotoVM p in photos)
                     {
                         <option value="@p.PhotoId">@p.Name</option>
                     }
-                </select>
+                    </select>
+                </div>
             }
         </div>
     </div>
     <hr>
-    <div id="layout">
-        <div class="portfolio-parent">
-            <div class="portfolio-default-name" id="name"><input asp-for="PortfolioName" class="portfolio-name" placeholder="Portfolio Name" required></div>
-            <div class="portfolio-default-summary" id="summary"><textarea asp-for="PortfolioSummary" class="portfolio-summary" placeholder="Write a summary here" required rows="10" cols="50"></textarea></div>
-            <div class="portfolio-default-photos" id="photos">
+    <div class="container">
+        <div class="row">
+            <div id="layout" class="col-lg-8">
+                <div class="portfolio-parent">
+                    <div class="form-group">
+                        <label for="PortfolioName">Project Name</label>
+                        <input asp-for="PortfolioName" id="groupSelect" class="form-control portfolio-name" placeholder="Project Name" required>
+
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label for="PortfolioSummary">Project Summary</label>
+                        <textarea asp-for="PortfolioSummary" id="groupSelect" class="form-control portfolio-summary" placeholder="Write a summary here" required rows="10" style="width: 40vh;"></textarea>
+                    </div>
+                    <div class="portfolio-default-photos">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <hr>
-    <input type="submit" value="Create portfolio item">
+    <input type="submit" class="btn primary" value="Create portfolio item">
 </form>
